@@ -741,14 +741,14 @@ body {
 }
 
 @media (max-width: 800px) {
-  .demo-body {
-    flex-direction: column;
-  }
   .demo-sidebar {
-    position: static;
+    position: fixed;
+    top: var(--bui-topbar-height);
+    bottom: 0;
+    left: 0;
+    z-index: 999;
     height: auto;
-    width: 100%;
-    min-width: 0;
+    box-shadow: var(--bui-shadow-lg);
   }
   .demo-main {
     padding: var(--bui-space-6);

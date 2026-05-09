@@ -83,9 +83,13 @@ export function App() {
 
   const navigate = (id: PageId) => setPage(id);
 
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 800px)").matches;
+
   return (
     <ThemeProvider theme={theme} onThemeChange={setTheme} tokens={tokens}>
-      <Sidebar.Provider defaultOpen>
+      <Sidebar.Provider defaultOpen={!isMobile}>
         <div className="demo-shell">
           <Topbar>
             <Sidebar.Trigger />
