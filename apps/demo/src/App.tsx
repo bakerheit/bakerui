@@ -94,7 +94,7 @@ export function App() {
           <Topbar>
             <Sidebar.Trigger />
             <Brand />
-            <Badge tone="accent">v0.1</Badge>
+            <Badge tone="accent">v0.2.0</Badge>
             <Topbar.Spacer />
             <Tooltip>
               <Tooltip.Trigger asChild>
