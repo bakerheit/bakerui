@@ -37,6 +37,7 @@ body {
 .demo-main {
   flex: 1;
   min-width: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   scrollbar-gutter: stable;
   padding: var(--bui-space-10) var(--bui-space-12);
@@ -471,8 +472,12 @@ body {
 
 @media (max-width: 900px) {
   .home-hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: var(--bui-space-4) 0;
+  }
+  .home-hero__content,
+  .home-hero__preview {
+    min-width: 0;
   }
   .home-hero__preview-card {
     transform: none;

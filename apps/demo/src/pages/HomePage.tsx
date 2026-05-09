@@ -63,7 +63,7 @@ function Hero({ onExplore }: { onExplore: () => void }) {
           token you can override — no theme objects, no providers required, no CSS-in-JS
           runtime to outlive your project.
         </Text>
-        <HStack gap="3">
+        <HStack gap="3" wrap>
           <Button size="lg" onClick={onExplore}>
             Browse components
           </Button>
