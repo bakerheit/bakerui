@@ -1,0 +1,224 @@
+/* Trigger — looks like an Input with a calendar icon. */
+.bui-datepicker__trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  width: 100%;
+  min-width: 180px;
+  padding: 0 var(--bui-space-3);
+  height: var(--bui-datepicker-h);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  font: inherit;
+  font-size: var(--bui-font-size-sm);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-datepicker__trigger:hover:not(:disabled) {
+  border-color: var(--bui-color-border-strong);
+}
+.bui-datepicker__trigger:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+.bui-datepicker__trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.bui-datepicker__trigger--invalid {
+  border-color: var(--bui-color-danger);
+}
+.bui-datepicker__trigger--placeholder .bui-datepicker__value {
+  color: var(--bui-color-text-muted);
+}
+.bui-datepicker__trigger--sm { --bui-datepicker-h: 28px; font-size: var(--bui-font-size-xs); }
+.bui-datepicker__trigger--md { --bui-datepicker-h: 36px; }
+.bui-datepicker__trigger--lg { --bui-datepicker-h: 44px; font-size: var(--bui-font-size-md); }
+
+.bui-datepicker__value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bui-datepicker__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--bui-radius-sm);
+  color: var(--bui-color-text-muted);
+  cursor: pointer;
+  transition: background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-datepicker__clear:hover {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+
+/* === Popover ============================================================ */
+.bui-datepicker__popover {
+  position: absolute;
+  z-index: var(--bui-z-popover);
+  background: var(--bui-color-surface-raised);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  box-shadow: var(--bui-shadow-lg);
+  padding: var(--bui-space-3);
+  min-width: 280px;
+  user-select: none;
+}
+
+.bui-datepicker__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bui-space-2);
+  padding: 0 var(--bui-space-1) var(--bui-space-2);
+}
+
+.bui-datepicker__navbtn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--bui-radius-md);
+  background: transparent;
+  color: var(--bui-color-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-datepicker__navbtn:hover {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+.bui-datepicker__navbtn:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.bui-datepicker__monthlabel {
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-semibold);
+  color: var(--bui-color-text);
+  text-align: center;
+  flex: 1;
+}
+
+.bui-datepicker__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bui-datepicker__weekrow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.bui-datepicker__weekday {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  font-size: var(--bui-font-size-xs);
+  font-weight: var(--bui-font-weight-semibold);
+  color: var(--bui-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bui-datepicker__day {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--bui-radius-md);
+  background: transparent;
+  color: var(--bui-color-text);
+  font: inherit;
+  font-size: var(--bui-font-size-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-datepicker__day:hover:not(:disabled):not(.bui-datepicker__day--selected) {
+  background: var(--bui-color-bg-muted);
+}
+.bui-datepicker__day:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 1px;
+}
+.bui-datepicker__day:disabled {
+  color: var(--bui-color-text-muted);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.bui-datepicker__day--outside {
+  color: var(--bui-color-text-muted);
+  opacity: 0.5;
+}
+.bui-datepicker__day--today {
+  font-weight: var(--bui-font-weight-semibold);
+  position: relative;
+}
+.bui-datepicker__day--today::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--bui-color-accent);
+}
+.bui-datepicker__day--selected {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+.bui-datepicker__day--selected.bui-datepicker__day--today::after {
+  background: var(--bui-color-accent-fg);
+}
+
+.bui-datepicker__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--bui-space-2);
+  padding-top: var(--bui-space-2);
+  border-top: 1px solid var(--bui-color-border);
+  margin-top: var(--bui-space-2);
+}
+
+.bui-datepicker__footerbtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--bui-color-accent);
+  font: inherit;
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-medium);
+  padding: 4px var(--bui-space-2);
+  border-radius: var(--bui-radius-sm);
+  cursor: pointer;
+}
+.bui-datepicker__footerbtn:hover {
+  background: var(--bui-color-bg-muted);
+}

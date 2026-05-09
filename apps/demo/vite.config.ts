@@ -4,7 +4,8 @@ import { resolve } from "node:path";
 
 // During local development, resolve `bakerui` directly to the package source
 // so changes hot-reload without needing to rebuild the lib.
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "/bakerui/" : "/",
   plugins: [react()],
   resolve: {
     alias: {
@@ -15,4 +16,4 @@ export default defineConfig({
     port: 5173,
     open: true,
   },
-});
+}));

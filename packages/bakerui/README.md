@@ -78,7 +78,7 @@ import "bakerui/tokens.css";
 ## Components
 
 ### Inputs & forms
-`Button` · `Input` · `Textarea` · `Field` · `Checkbox` · `RadioGroup` · `Select` · `Combobox` · `Slider` · `Toggle`
+`Button` · `Input` · `Textarea` · `Field` · `Checkbox` · `RadioGroup` · `Select` · `Combobox` · `DatePicker` · `Slider` · `Toggle`
 
 ### Layout
 `Stack` · `HStack` · `VStack` · `Card` · `Divider`
@@ -90,7 +90,7 @@ import "bakerui/tokens.css";
 `DataTable` · `Avatar` · `AvatarGroup` · `Badge`
 
 ### Overlays
-`Dialog` · `Popover` · `Tooltip` · `DropdownMenu`
+`Dialog` · `Drawer` · `Popover` · `Tooltip` · `DropdownMenu`
 
 ### Feedback
 `Alert` · `Toast` · `Spinner` · `Skeleton` · `ProgressBar`

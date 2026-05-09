@@ -2,27 +2,24 @@
 
 A small, longevity-focused React component library themed entirely with CSS custom properties. No runtime CSS-in-JS, no theme objects, no framework lock-in.
 
-## Repo layout
+[![npm version](https://img.shields.io/npm/v/bakerui.svg?color=2563eb&style=flat-square)](https://www.npmjs.com/package/bakerui)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/bakerui?style=flat-square&color=22c55e)](https://bundlephobia.com/package/bakerui)
+[![types](https://img.shields.io/npm/types/bakerui?style=flat-square&color=3178c6)](https://www.npmjs.com/package/bakerui)
+[![license](https://img.shields.io/npm/l/bakerui?style=flat-square&color=d4d4d8)](./LICENSE)
+[![React 18+](https://img.shields.io/badge/React-18%2B-61dafb?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![Built with Claude](https://img.shields.io/badge/Built%20with-Claude-D97757?style=flat-square&logo=anthropic&logoColor=white)](https://claude.com)
 
-```
-bakerui/
-├── packages/
-│   └── bakerui/      # the library (publishable)
-└── apps/
-    └── demo/         # demo site + theming playground
-```
+---
 
-## Quickstart
+## Install
 
 ```bash
-npm install
-npm run demo        # starts the demo at http://localhost:5173
-npm run build       # builds the library to packages/bakerui/dist
+npm install bakerui
 ```
 
-The demo aliases `bakerui` to the package source, so edits to components hot-reload immediately.
+The package lives on npm at **[npmjs.com/package/bakerui](https://www.npmjs.com/package/bakerui)**. Peer-deps: `react` and `react-dom` (>= 18).
 
-## Using the library
+## Usage
 
 ```tsx
 import { Button, ThemeProvider } from "bakerui";
@@ -38,6 +35,8 @@ export default function App() {
 ```
 
 `ThemeProvider` is optional — bakerui's CSS imports its tokens onto `:root`. The provider just gives you a clean place to flip themes and inject token overrides.
+
+For the full API reference, theming guide, and component list, see [`packages/bakerui/README.md`](./packages/bakerui/README.md).
 
 ## Customization model
 
@@ -79,13 +78,49 @@ See the **Theming Playground** and **Design Tokens** pages in the demo for the f
 
 - **Plain CSS, no runtime style engine.** Emotion and styled-components have churned across React majors. CSS custom properties are stable browser primitives.
 - **Tokens are the API.** No `theme={...}` JS object means no migrations when the theme shape changes — just rename a variable.
-- **No `forwardRef` gotchas.** Every component forwards refs and passes through `className` / `style`, so you can compose without escape hatches.
+- **Refs and props pass through.** Every component forwards refs and passes through `className` / `style`, so you can compose without escape hatches.
 - **Minimal dependencies.** Only `react` and `react-dom` as peers.
 
 ## Components
 
-`Button`, `Input`, `Textarea`, `Field`, `Switch`, `Badge`, `Card` (+ `CardHeader`, `CardBody`, `CardFooter`), `Stack` / `HStack` / `VStack`, `Text`, `Heading`, `ThemeProvider`.
+**Inputs & forms** — `Button`, `Input`, `Textarea`, `Field`, `Checkbox`, `RadioGroup`, `Select`, `Combobox`, `DatePicker`, `Slider`, `Toggle`
+
+**Layout** — `Stack`, `HStack`, `VStack`, `Card`, `Divider`
+
+**Navigation** — `Tabs`, `Breadcrumb`, `Stepper`, `Sidebar`, `Topbar`, `Pagination`
+
+**Data** — `DataTable`, `Avatar`, `AvatarGroup`, `Badge`
+
+**Overlays** — `Dialog`, `Drawer`, `Popover`, `Tooltip`, `DropdownMenu`
+
+**Feedback** — `Alert`, `Toast`, `Spinner`, `Skeleton`, `ProgressBar`
+
+**Disclosure** — `Accordion`
+
+---
+
+## Repo layout
+
+```
+bakerui/
+├── packages/
+│   └── bakerui/      # the library (published to npm)
+└── apps/
+    └── demo/         # demo site + theming playground
+```
+
+## Contributing / running locally
+
+```bash
+git clone https://github.com/bakerheit/bakerui.git
+cd bakerui
+npm install
+npm run demo        # starts the demo at http://localhost:5173
+npm run build       # builds the library to packages/bakerui/dist
+```
+
+The demo aliases `bakerui` to the package source, so edits to components hot-reload immediately.
 
 ## License
 
-MIT
+[MIT](./LICENSE) © bakerheit

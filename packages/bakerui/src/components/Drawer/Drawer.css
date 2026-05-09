@@ -1,0 +1,131 @@
+/* Backdrop is a flex container that anchors the drawer panel to the chosen
+   edge. Padding is 0 so the panel touches the viewport edge. */
+.bui-drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--bui-z-modal);
+  background: var(--bui-color-overlay-backdrop);
+  display: flex;
+  opacity: 0;
+  transition: opacity var(--bui-duration-base) var(--bui-easing-standard);
+}
+.bui-drawer__backdrop[data-state="open"] {
+  opacity: 1;
+}
+
+/* Anchor the panel to the chosen edge. With flex-direction: column the
+   main axis is vertical, so justify-content controls top/bottom and
+   align-items controls left/right (the cross axis fills horizontally). */
+.bui-drawer__backdrop--right  { flex-direction: row;    justify-content: flex-end;   align-items: stretch; }
+.bui-drawer__backdrop--left   { flex-direction: row;    justify-content: flex-start; align-items: stretch; }
+.bui-drawer__backdrop--top    { flex-direction: column; justify-content: flex-start; align-items: stretch; }
+.bui-drawer__backdrop--bottom { flex-direction: column; justify-content: flex-end;   align-items: stretch; }
+
+.bui-drawer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bui-color-surface-raised);
+  color: var(--bui-color-text);
+  box-shadow: var(--bui-shadow-lg);
+  opacity: 0;
+  transition:
+    opacity var(--bui-duration-base) var(--bui-easing-standard),
+    transform var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+.bui-drawer[data-state="open"] {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Slide in from the chosen edge. Translate matches the side it anchors to. */
+.bui-drawer--right  { transform: translateX(16px); height: 100vh; max-width: 100vw; }
+.bui-drawer--left   { transform: translateX(-16px); height: 100vh; max-width: 100vw; }
+.bui-drawer--top    { transform: translateY(-16px); width: 100vw; max-height: 100vh; }
+.bui-drawer--bottom { transform: translateY(16px);  width: 100vw; max-height: 100vh; }
+
+/* Sizes — width for left/right, height for top/bottom. */
+.bui-drawer--right.bui-drawer--sm,
+.bui-drawer--left.bui-drawer--sm   { width: 320px; }
+.bui-drawer--right.bui-drawer--md,
+.bui-drawer--left.bui-drawer--md   { width: 420px; }
+.bui-drawer--right.bui-drawer--lg,
+.bui-drawer--left.bui-drawer--lg   { width: 560px; }
+.bui-drawer--right.bui-drawer--xl,
+.bui-drawer--left.bui-drawer--xl   { width: 720px; }
+.bui-drawer--right.bui-drawer--full,
+.bui-drawer--left.bui-drawer--full { width: 100vw; }
+
+.bui-drawer--top.bui-drawer--sm,
+.bui-drawer--bottom.bui-drawer--sm   { height: 240px; }
+.bui-drawer--top.bui-drawer--md,
+.bui-drawer--bottom.bui-drawer--md   { height: 360px; }
+.bui-drawer--top.bui-drawer--lg,
+.bui-drawer--bottom.bui-drawer--lg   { height: 480px; }
+.bui-drawer--top.bui-drawer--xl,
+.bui-drawer--bottom.bui-drawer--xl   { height: 640px; }
+.bui-drawer--top.bui-drawer--full,
+.bui-drawer--bottom.bui-drawer--full { height: 100vh; }
+
+/* Header / body / footer — match Dialog so the API feels familiar. */
+.bui-drawer__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-1);
+  padding: var(--bui-space-5) var(--bui-space-6) var(--bui-space-3);
+  border-bottom: 1px solid var(--bui-color-border);
+}
+
+.bui-drawer__title {
+  margin: 0;
+  font-size: var(--bui-font-size-lg);
+  font-weight: var(--bui-font-weight-semibold);
+}
+
+.bui-drawer__description {
+  margin: 0;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text-muted);
+}
+
+.bui-drawer__body {
+  padding: var(--bui-space-5) var(--bui-space-6);
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.bui-drawer__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-4) var(--bui-space-6) var(--bui-space-5);
+  border-top: 1px solid var(--bui-color-border);
+  background: var(--bui-color-bg-subtle);
+}
+
+.bui-drawer__close-x {
+  position: absolute;
+  top: var(--bui-space-3);
+  right: var(--bui-space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--bui-color-text-muted);
+  border-radius: var(--bui-radius-md);
+  cursor: pointer;
+  transition: background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-drawer__close-x:hover {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+.bui-drawer__close-x:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}

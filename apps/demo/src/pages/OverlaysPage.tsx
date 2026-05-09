@@ -3,6 +3,7 @@ import {
   Badge,
   Button,
   Dialog,
+  Drawer,
   DropdownMenu,
   Field,
   Heading,
@@ -11,7 +12,9 @@ import {
   Popover,
   Stack,
   Text,
+  Toggle,
   Tooltip,
+  type DrawerSide,
   type Placement,
 } from "bakerui";
 import { DocExample, DocSection } from "../Doc";
@@ -30,6 +33,7 @@ export function OverlaysPage() {
         </Stack>
 
         <DialogSection />
+        <DrawerSection />
         <DropdownMenuSection />
         <PopoverSection />
         <TooltipSection />
@@ -240,6 +244,226 @@ function ControlledDangerDialog() {
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog>
+  );
+}
+
+function DrawerSection() {
+  const [side, setSide] = useState<DrawerSide>("right");
+  const [persistOpen, setPersistOpen] = useState(false);
+
+  return (
+    <DocSection
+      title="Drawer"
+      description="Edge-anchored modal panel. Reuses Dialog's focus trap, ESC, body scroll lock, and backdrop dismissal — but slides in from a chosen side. Same compound API: Trigger / Content / Header / Title / Description / Body / Footer / Close."
+      propsTable={[
+        {
+          name: "open",
+          type: "boolean",
+          description: "Controlled open state. Pair with onOpenChange. Omit for uncontrolled mode.",
+        },
+        {
+          name: "defaultOpen",
+          type: "boolean",
+          default: "false",
+          description: "Initial open state for uncontrolled mode.",
+        },
+        {
+          name: "onOpenChange",
+          type: "(open: boolean) => void",
+          description: "Fires whenever the open state changes.",
+        },
+        {
+          name: "Drawer.Content.side",
+          type: '"left" | "right" | "top" | "bottom"',
+          default: '"right"',
+          description: "Edge to anchor against. Determines slide direction and panel orientation.",
+        },
+        {
+          name: "Drawer.Content.size",
+          type: '"sm" | "md" | "lg" | "xl" | "full"',
+          default: '"md"',
+          description: "Panel width (left/right) or height (top/bottom). \"full\" fills the cross-axis.",
+        },
+        {
+          name: "Drawer.Content.closeOnBackdropClick",
+          type: "boolean",
+          default: "true",
+          description: "Whether clicking outside the panel closes the drawer.",
+        },
+        {
+          name: "Drawer.Content.showCloseButton",
+          type: "boolean",
+          default: "true",
+          description: "Renders the X close button in the top-right corner.",
+        },
+        {
+          name: "Drawer.Trigger.asChild",
+          type: "boolean",
+          description: "Render the trigger as the supplied child (e.g., a custom Button) instead of a default <button>.",
+        },
+      ]}
+    >
+      <DocExample
+        label="Quick settings panel"
+        description="Right-side drawer with a header, body, and footer. Same compound parts as Dialog — only the anchoring changes."
+        code={`<Drawer>
+  <Drawer.Trigger asChild>
+    <Button variant="secondary">Open settings</Button>
+  </Drawer.Trigger>
+  <Drawer.Content side="right" size="md">
+    <Drawer.Header>
+      <Drawer.Title>Workspace settings</Drawer.Title>
+      <Drawer.Description>
+        Adjust how this workspace behaves for everyone on your team.
+      </Drawer.Description>
+    </Drawer.Header>
+    <Drawer.Body>
+      {/* form fields */}
+    </Drawer.Body>
+    <Drawer.Footer>
+      <Drawer.Close asChild>
+        <Button variant="ghost">Cancel</Button>
+      </Drawer.Close>
+      <Button>Save</Button>
+    </Drawer.Footer>
+  </Drawer.Content>
+</Drawer>`}
+      >
+        <Drawer>
+          <Drawer.Trigger asChild>
+            <Button variant="secondary">Open settings</Button>
+          </Drawer.Trigger>
+          <Drawer.Content side="right" size="md">
+            <Drawer.Header>
+              <Drawer.Title>Workspace settings</Drawer.Title>
+              <Drawer.Description>
+                Adjust how this workspace behaves for everyone on your team.
+              </Drawer.Description>
+            </Drawer.Header>
+            <Drawer.Body>
+              <Stack gap="4">
+                <Field label="Workspace name" required>
+                  <Input defaultValue="bakerui core" />
+                </Field>
+                <Field label="Slug" hint="Used in URLs.">
+                  <Input defaultValue="bakerui-core" />
+                </Field>
+                <HStack gap="3" wrap>
+                  <Toggle label="Enable analytics" defaultChecked />
+                  <Toggle label="Allow guest access" />
+                </HStack>
+              </Stack>
+            </Drawer.Body>
+            <Drawer.Footer>
+              <Drawer.Close asChild>
+                <Button variant="ghost">Cancel</Button>
+              </Drawer.Close>
+              <Button>Save changes</Button>
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer>
+      </DocExample>
+
+      <DocExample
+        label="All four sides"
+        description="The same drawer rendered from each edge. Pick a side to preview the slide direction."
+        code={`const [side, setSide] = useState<DrawerSide>("right");
+
+<Drawer>
+  <Drawer.Trigger asChild>
+    <Button>Open from {side}</Button>
+  </Drawer.Trigger>
+  <Drawer.Content side={side} size="sm">
+    {/* ... */}
+  </Drawer.Content>
+</Drawer>`}
+      >
+        <Stack gap="3">
+          <HStack gap="2" wrap>
+            {(["left", "right", "top", "bottom"] as DrawerSide[]).map((s) => (
+              <Button
+                key={s}
+                size="sm"
+                variant={s === side ? "primary" : "secondary"}
+                onClick={() => setSide(s)}
+              >
+                {s}
+              </Button>
+            ))}
+          </HStack>
+          <Drawer>
+            <Drawer.Trigger asChild>
+              <Button>Open from {side}</Button>
+            </Drawer.Trigger>
+            <Drawer.Content side={side} size="sm">
+              <Drawer.Header>
+                <Drawer.Title>Sliding from the {side}</Drawer.Title>
+                <Drawer.Description>
+                  Use the buttons above to switch sides, then re-open.
+                </Drawer.Description>
+              </Drawer.Header>
+              <Drawer.Body>
+                <Text size="sm" tone="muted">
+                  Drawer content adapts to the chosen edge — width on the
+                  left/right, height on the top/bottom.
+                </Text>
+              </Drawer.Body>
+              <Drawer.Footer>
+                <Drawer.Close asChild>
+                  <Button variant="secondary">Got it</Button>
+                </Drawer.Close>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer>
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="Controlled with persistent backdrop"
+        description="Pass `open` + `onOpenChange` to drive the drawer from outside. `closeOnBackdropClick={false}` forces dismissal via the X or a footer button — useful for unsaved-changes flows."
+        code={`const [open, setOpen] = useState(false);
+
+<Drawer open={open} onOpenChange={setOpen}>
+  <Drawer.Trigger asChild>
+    <Button>Open</Button>
+  </Drawer.Trigger>
+  <Drawer.Content closeOnBackdropClick={false}>
+    {/* ... */}
+  </Drawer.Content>
+</Drawer>`}
+      >
+        <Stack gap="3">
+          <HStack gap="2" align="center">
+            <Button onClick={() => setPersistOpen(true)}>Open externally</Button>
+            <Badge tone={persistOpen ? "success" : "neutral"}>
+              {persistOpen ? "open" : "closed"}
+            </Badge>
+          </HStack>
+          <Drawer open={persistOpen} onOpenChange={setPersistOpen}>
+            <Drawer.Content side="right" size="md" closeOnBackdropClick={false}>
+              <Drawer.Header>
+                <Drawer.Title>Unsaved changes</Drawer.Title>
+                <Drawer.Description>
+                  Backdrop clicks are disabled — close via the X or a button below.
+                </Drawer.Description>
+              </Drawer.Header>
+              <Drawer.Body>
+                <Text size="sm">
+                  Useful for forms in progress where accidental dismissal would
+                  lose data.
+                </Text>
+              </Drawer.Body>
+              <Drawer.Footer>
+                <Drawer.Close asChild>
+                  <Button variant="ghost">Discard</Button>
+                </Drawer.Close>
+                <Button onClick={() => setPersistOpen(false)}>Save & close</Button>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer>
+        </Stack>
+      </DocExample>
+    </DocSection>
   );
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "bakerui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A small, longevity-focused React component library themed with CSS variables.",
   "license": "MIT",
   "author": "bakerheit",

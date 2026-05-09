@@ -5,6 +5,7 @@ import {
   Button,
   Checkbox,
   Combobox,
+  DatePicker,
   Divider,
   Field,
   HStack,
@@ -41,6 +42,7 @@ export function FormsPage() {
         <ButtonStateSection />
         <CheckboxSection />
         <ComboboxSection />
+        <DatePickerSection />
         <DividerSection />
         <InputSection />
         <ProgressBarSection />
@@ -1330,6 +1332,197 @@ function InputSection() {
           <Input leadingIcon={<MailIcon />} placeholder="ada@example.com" />
           <Input trailingIcon={<SearchIcon />} placeholder="Search docs" />
         </Stack>
+      </DocExample>
+    </DocSection>
+  );
+}
+
+function DatePickerSection() {
+  const [date, setDate] = useState<Date | null>(new Date());
+  const [bounded, setBounded] = useState<Date | null>(null);
+  const [longFormat, setLongFormat] = useState<Date | null>(new Date());
+
+  // Range example: today + 30 days, weekends disabled.
+  const today = new Date();
+  const today0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const monthFromNow = new Date(
+    today0.getFullYear(),
+    today0.getMonth(),
+    today0.getDate() + 30,
+  );
+
+  return (
+    <DocSection
+      title="DatePicker"
+      description="Calendar-grid date selection in an anchored popover. Localized weekday and month labels via Intl.DateTimeFormat — no date library required. Keyboard nav: arrows step a day, PageUp/Down step a month, Home/End jump to start/end of week, Enter selects."
+      propsTable={[
+        {
+          name: "value",
+          type: "Date | null",
+          description: "Selected date (controlled). Pass `null` to represent no selection.",
+        },
+        {
+          name: "defaultValue",
+          type: "Date | null",
+          description: "Initial date for uncontrolled mode.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: Date | null) => void",
+          description: "Fires when the user picks (or clears) a date.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          default: '"Pick a date"',
+          description: "Shown in the trigger when no date is selected.",
+        },
+        {
+          name: "format",
+          type: "Intl.DateTimeFormatOptions | (date: Date) => string",
+          description: "Controls how the selected date renders in the trigger. Default is medium-style (\"May 8, 2026\").",
+        },
+        {
+          name: "locale",
+          type: "string",
+          description: "BCP-47 locale tag for weekday/month formatting (e.g., \"en-GB\", \"de-DE\"). Defaults to the runtime locale.",
+        },
+        {
+          name: "weekStartsOn",
+          type: "0 | 1 | 2 | 3 | 4 | 5 | 6",
+          default: "0",
+          description: "Day of week the calendar starts on. 0 = Sunday, 1 = Monday.",
+        },
+        {
+          name: "minDate",
+          type: "Date",
+          description: "Earliest selectable date. Days before this are disabled.",
+        },
+        {
+          name: "maxDate",
+          type: "Date",
+          description: "Latest selectable date. Days after this are disabled.",
+        },
+        {
+          name: "disabledDate",
+          type: "(date: Date) => boolean",
+          description: "Custom predicate for disabling individual dates (e.g., weekends).",
+        },
+        {
+          name: "clearable",
+          type: "boolean",
+          default: "false",
+          description: "Show an X button on the trigger and a Clear shortcut in the calendar footer.",
+        },
+        {
+          name: "inputSize",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "Visual size of the trigger field.",
+        },
+        {
+          name: "disabled",
+          type: "boolean",
+          default: "false",
+          description: "Disable the entire control.",
+        },
+        {
+          name: "invalid",
+          type: "boolean",
+          default: "false",
+          description: "Apply error styling and set aria-invalid.",
+        },
+        {
+          name: "placement",
+          type: '"bottom-start" | "bottom-end" | "top-start" | "top-end"',
+          default: '"bottom-start"',
+          description: "Where the calendar popover anchors relative to the trigger.",
+        },
+      ]}
+    >
+      <DocExample
+        label="Default"
+        description="Click the trigger to open the calendar. Pick a date with the mouse or with arrow keys + Enter."
+        code={`const [date, setDate] = useState<Date | null>(new Date());
+
+<DatePicker value={date} onValueChange={setDate} />`}
+      >
+        <Stack gap="3" style={{ maxWidth: 320 }}>
+          <DatePicker value={date} onValueChange={setDate} clearable />
+          <Text size="sm" tone="muted">
+            Selected: {date ? date.toDateString() : "—"}
+          </Text>
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="With Field, bounds, and disabled weekends"
+        description="`minDate` / `maxDate` constrain the visible range; `disabledDate` blocks specific days. Wrap in `Field` to wire labels, hints, and errors."
+        code={`<Field label="Appointment date" required>
+  <DatePicker
+    value={bounded}
+    onValueChange={setBounded}
+    minDate={today}
+    maxDate={thirtyDaysFromNow}
+    disabledDate={(d) => d.getDay() === 0 || d.getDay() === 6}
+    weekStartsOn={1}
+  />
+</Field>`}
+      >
+        <div style={{ maxWidth: 320 }}>
+          <Field
+            label="Appointment date"
+            hint="Weekdays only, within the next 30 days."
+            required
+          >
+            <DatePicker
+              value={bounded}
+              onValueChange={setBounded}
+              minDate={today0}
+              maxDate={monthFromNow}
+              disabledDate={(d) => d.getDay() === 0 || d.getDay() === 6}
+              weekStartsOn={1}
+              placeholder="Choose an appointment"
+            />
+          </Field>
+        </div>
+      </DocExample>
+
+      <DocExample
+        label="Custom format & locale"
+        description="`format` accepts either an `Intl.DateTimeFormatOptions` object or a function. `locale` switches weekday and month names."
+        code={`<DatePicker
+  value={date}
+  onValueChange={setDate}
+  locale="en-GB"
+  weekStartsOn={1}
+  format={{ weekday: "long", year: "numeric", month: "long", day: "numeric" }}
+/>`}
+      >
+        <Stack gap="3" style={{ maxWidth: 360 }}>
+          <DatePicker
+            value={longFormat}
+            onValueChange={setLongFormat}
+            locale="en-GB"
+            weekStartsOn={1}
+            format={{
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }}
+            inputSize="lg"
+          />
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="Disabled"
+        code={`<DatePicker value={new Date()} onValueChange={() => {}} disabled />`}
+      >
+        <div style={{ maxWidth: 280 }}>
+          <DatePicker value={new Date()} onValueChange={() => {}} disabled />
+        </div>
       </DocExample>
     </DocSection>
   );
