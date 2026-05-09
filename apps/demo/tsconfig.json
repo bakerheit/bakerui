@@ -12,7 +12,11 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "bakerui": ["../../packages/bakerui/src/index.ts"]
+    }
   },
   "include": ["src", "vite.config.ts"]
 }
