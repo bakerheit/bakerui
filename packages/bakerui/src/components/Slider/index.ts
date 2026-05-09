@@ -1,0 +1,7 @@
+export { Slider } from "./Slider";
+export type {
+  SliderProps,
+  SliderSize,
+  SingleSliderProps,
+  RangeSliderProps,
+} from "./Slider";

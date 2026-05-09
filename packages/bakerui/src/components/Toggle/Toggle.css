@@ -1,0 +1,58 @@
+.bui-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-3);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text);
+}
+
+.bui-toggle__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.bui-toggle__track {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: var(--bui-color-bg-muted);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-full);
+  transition: background-color var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+.bui-toggle__thumb {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  background: var(--bui-color-surface);
+  border-radius: var(--bui-radius-full);
+  box-shadow: var(--bui-shadow-sm);
+  transition: transform var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+.bui-toggle__input:checked + .bui-toggle__track {
+  background: var(--bui-color-accent);
+  border-color: var(--bui-color-accent);
+}
+
+.bui-toggle__input:checked + .bui-toggle__track .bui-toggle__thumb {
+  transform: translateX(16px);
+}
+
+.bui-toggle__input:focus-visible + .bui-toggle__track {
+  box-shadow: 0 0 0 3px var(--bui-color-focus-ring);
+}
+
+.bui-toggle__input:disabled + .bui-toggle__track {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

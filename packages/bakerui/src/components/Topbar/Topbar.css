@@ -1,0 +1,42 @@
+.bui-topbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--bui-z-popover);
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-3);
+  width: 100%;
+  height: var(--bui-topbar-height);
+  padding: 0 var(--bui-space-5);
+  background: var(--bui-color-bg);
+  color: var(--bui-color-text);
+  border-bottom: 1px solid var(--bui-color-border);
+}
+
+.bui-topbar--static {
+  position: static;
+}
+
+.bui-topbar--borderless {
+  border-bottom: none;
+}
+
+.bui-topbar--elevated {
+  border-bottom: none;
+  box-shadow: var(--bui-shadow-sm);
+}
+
+.bui-topbar__title {
+  font-size: var(--bui-font-size-md);
+  font-weight: var(--bui-font-weight-semibold);
+  color: var(--bui-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.bui-topbar__spacer {
+  flex: 1;
+  min-width: 0;
+}

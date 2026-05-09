@@ -1,0 +1,31 @@
+/*
+ * bakerui minimal reset — applied to bakerui components only.
+ * Scoped via .bui-* classes; does not affect host app globally.
+ */
+
+.bui-root {
+  font-family: var(--bui-font-family);
+  font-size: var(--bui-font-size-md);
+  line-height: var(--bui-line-height-normal);
+  color: var(--bui-color-text);
+  background: var(--bui-color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bui-root *,
+.bui-root *::before,
+.bui-root *::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bui-root *,
+  .bui-root *::before,
+  .bui-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

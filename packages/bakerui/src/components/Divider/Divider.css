@@ -1,0 +1,40 @@
+.bui-divider {
+  border: 0;
+  background: var(--bui-color-border);
+  flex-shrink: 0;
+}
+
+.bui-divider--horizontal {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+}
+
+.bui-divider--vertical {
+  width: 1px;
+  height: auto;
+  align-self: stretch;
+  min-height: 1em;
+  margin: 0;
+}
+
+.bui-divider--labeled {
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-3);
+  background: transparent;
+  height: auto;
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-font-size-xs);
+  font-weight: var(--bui-font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bui-divider--labeled::before,
+.bui-divider--labeled::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--bui-color-border);
+}

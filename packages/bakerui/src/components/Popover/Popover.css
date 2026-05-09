@@ -1,0 +1,35 @@
+.bui-popover-anchor {
+  --bui-anchor-x: 0px;
+  --bui-anchor-y: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--bui-z-popover);
+  transform: translate3d(var(--bui-anchor-x), var(--bui-anchor-y), 0);
+}
+
+.bui-popover {
+  min-width: 220px;
+  max-width: 320px;
+  padding: var(--bui-space-4);
+  background: var(--bui-color-surface-raised);
+  color: var(--bui-color-text);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  box-shadow: var(--bui-shadow-lg);
+  transform-origin: top left;
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity var(--bui-duration-fast) var(--bui-easing-standard),
+    transform var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-popover[data-state="open"] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.bui-popover:focus {
+  outline: none;
+}

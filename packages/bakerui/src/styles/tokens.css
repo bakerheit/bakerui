@@ -1,0 +1,189 @@
+/*
+ * bakerui design tokens
+ *
+ * All components read from these CSS variables. To customize bakerui,
+ * override any variable on :root or a scoped element. To switch themes,
+ * set [data-theme="dark"] on <html> or any container.
+ *
+ * Naming: --bui-{category}-{role}-{step?}
+ *   color  : hsl/oklch values for theming
+ *   space  : layout/sizing scale
+ *   radius : corner rounding
+ *   font   : typography
+ *   shadow : elevation
+ *   motion : transitions
+ */
+
+:root,
+[data-theme="light"] {
+  /* Base palette (raw, theme-agnostic — prefer using semantic tokens below) */
+  --bui-palette-white: #ffffff;
+  --bui-palette-black: #0b0c0f;
+
+  /* Semantic surface & text */
+  --bui-color-bg: #ffffff;
+  --bui-color-bg-subtle: #f7f7f8;
+  --bui-color-bg-muted: #ececef;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-raised: #ffffff;
+  --bui-color-border: #e4e4e7;
+  --bui-color-border-strong: #c8c8cd;
+  --bui-color-text: #18181b;
+  --bui-color-text-muted: #6b7280;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Brand / accent */
+  --bui-color-accent: #2563eb;
+  --bui-color-accent-hover: #1d4ed8;
+  --bui-color-accent-active: #1e40af;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #dbeafe;
+
+  /* Status */
+  --bui-color-success: #16a34a;
+  --bui-color-warning: #d97706;
+  --bui-color-danger: #dc2626;
+  --bui-color-danger-hover: #b91c1c;
+  --bui-color-danger-fg: #ffffff;
+
+  /* Focus ring */
+  --bui-color-focus-ring: #93c5fd;
+
+  /* Spacing scale (4px base) */
+  --bui-space-0: 0;
+  --bui-space-1: 0.25rem;
+  --bui-space-2: 0.5rem;
+  --bui-space-3: 0.75rem;
+  --bui-space-4: 1rem;
+  --bui-space-5: 1.25rem;
+  --bui-space-6: 1.5rem;
+  --bui-space-8: 2rem;
+  --bui-space-10: 2.5rem;
+  --bui-space-12: 3rem;
+  --bui-space-16: 4rem;
+
+  /* Radius */
+  --bui-radius-none: 0;
+  --bui-radius-sm: 4px;
+  --bui-radius-md: 8px;
+  --bui-radius-lg: 12px;
+  --bui-radius-xl: 16px;
+  --bui-radius-full: 9999px;
+
+  /* Typography */
+  --bui-font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --bui-font-family-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --bui-font-size-xs: 0.75rem;
+  --bui-font-size-sm: 0.875rem;
+  --bui-font-size-md: 1rem;
+  --bui-font-size-lg: 1.125rem;
+  --bui-font-size-xl: 1.25rem;
+  --bui-font-size-2xl: 1.5rem;
+  --bui-font-size-3xl: 1.875rem;
+  --bui-font-size-4xl: 2.25rem;
+
+  --bui-font-weight-regular: 400;
+  --bui-font-weight-medium: 500;
+  --bui-font-weight-semibold: 600;
+  --bui-font-weight-bold: 700;
+
+  --bui-line-height-tight: 1.2;
+  --bui-line-height-normal: 1.5;
+  --bui-line-height-relaxed: 1.7;
+
+  /* Shadows */
+  --bui-shadow-xs: 0 1px 1px rgba(15, 23, 42, 0.04);
+  --bui-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --bui-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --bui-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+
+  /* Motion */
+  --bui-duration-fast: 120ms;
+  --bui-duration-base: 180ms;
+  --bui-duration-slow: 280ms;
+  --bui-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Component sizing */
+  --bui-control-height-sm: 28px;
+  --bui-control-height-md: 36px;
+  --bui-control-height-lg: 44px;
+  --bui-control-padding-x-sm: 0.625rem;
+  --bui-control-padding-x-md: 0.875rem;
+  --bui-control-padding-x-lg: 1.125rem;
+  --bui-topbar-height: 56px;
+  /*
+   * How many pixels at the top of the viewport are obscured by sticky
+   * content (e.g. a Topbar). Defaults to 0; the Topbar component sets it
+   * to its own height while mounted. Anchored elements that need to clear
+   * the sticky band should use:
+   *   scroll-margin-top: calc(var(--bui-content-offset) + <any extra padding>);
+   */
+  --bui-content-offset: 0px;
+
+  /* Overlay / layering */
+  --bui-z-popover: 1000;
+  --bui-z-menu: 1000;
+  --bui-z-modal: 1100;
+  --bui-z-tooltip: 1200;
+  --bui-z-toast: 1300;
+
+  --bui-color-overlay-backdrop: rgba(15, 23, 42, 0.45);
+  --bui-overlay-offset: 8px;
+
+  /* Syntax highlighting (light theme) — used by code blocks. */
+  --bui-syntax-bg: #0f172a;
+  --bui-syntax-bg-soft: #111c33;
+  --bui-syntax-fg: #e2e8f0;
+  --bui-syntax-comment: #64748b;
+  --bui-syntax-string: #fca5a5;
+  --bui-syntax-keyword: #c4b5fd;
+  --bui-syntax-boolean: #fdba74;
+  --bui-syntax-number: #86efac;
+  --bui-syntax-tag: #93c5fd;
+  --bui-syntax-component: #fcd34d;
+  --bui-syntax-attribute: #5eead4;
+  --bui-syntax-function: #67e8f9;
+  --bui-syntax-punctuation: #94a3b8;
+  --bui-syntax-bracket: #cbd5e1;
+}
+
+[data-theme="dark"] {
+  --bui-color-bg: #0b0c0f;
+  --bui-color-bg-subtle: #15171b;
+  --bui-color-bg-muted: #1f2126;
+  --bui-color-surface: #15171b;
+  --bui-color-surface-raised: #1c1f24;
+  --bui-color-border: #2a2d33;
+  --bui-color-border-strong: #3a3e46;
+  --bui-color-text: #f4f4f5;
+  --bui-color-text-muted: #a1a1aa;
+  --bui-color-text-inverse: #0b0c0f;
+
+  --bui-color-accent: #60a5fa;
+  --bui-color-accent-hover: #3b82f6;
+  --bui-color-accent-active: #2563eb;
+  --bui-color-accent-fg: #0b0c0f;
+  --bui-color-accent-soft: #1e3a8a;
+
+  --bui-color-success: #22c55e;
+  --bui-color-warning: #f59e0b;
+  --bui-color-danger: #f87171;
+  --bui-color-danger-hover: #ef4444;
+  --bui-color-danger-fg: #0b0c0f;
+
+  --bui-color-focus-ring: #60a5fa;
+
+  --bui-shadow-xs: 0 1px 1px rgba(0, 0, 0, 0.4);
+  --bui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.35);
+  --bui-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+  --bui-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.55), 0 4px 6px -4px rgba(0, 0, 0, 0.35);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.6);
+
+  /* Syntax (dark theme stays close — lighten a couple of hues for contrast). */
+  --bui-syntax-bg: #0a0d14;
+  --bui-syntax-bg-soft: #11151f;
+  --bui-syntax-fg: #e2e8f0;
+}

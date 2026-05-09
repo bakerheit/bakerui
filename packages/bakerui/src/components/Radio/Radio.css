@@ -1,0 +1,90 @@
+.bui-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+}
+.bui-radio-group--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--bui-space-4);
+}
+
+.bui-radio {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--bui-space-2);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text);
+}
+
+.bui-radio__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.bui-radio__circle {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border: 1px solid var(--bui-color-border-strong);
+  border-radius: 50%;
+  background: var(--bui-color-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-radio__circle::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bui-color-accent-fg);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--bui-duration-fast) var(--bui-easing-standard),
+    transform var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-radio__input:checked + .bui-radio__circle {
+  background: var(--bui-color-accent);
+  border-color: var(--bui-color-accent);
+}
+.bui-radio__input:checked + .bui-radio__circle::after {
+  opacity: 1;
+  transform: scale(1);
+}
+.bui-radio__input:focus-visible + .bui-radio__circle {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+.bui-radio__input:disabled + .bui-radio__circle {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bui-radio__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: var(--bui-line-height-tight);
+}
+
+.bui-radio__label {
+  font-weight: var(--bui-font-weight-medium);
+}
+
+.bui-radio__description {
+  font-size: var(--bui-font-size-xs);
+  color: var(--bui-color-text-muted);
+}

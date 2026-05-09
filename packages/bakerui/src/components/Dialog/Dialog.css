@@ -1,0 +1,101 @@
+.bui-dialog__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--bui-z-modal);
+  background: var(--bui-color-overlay-backdrop);
+  display: grid;
+  place-items: center;
+  padding: var(--bui-space-6);
+  opacity: 0;
+  transition: opacity var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+.bui-dialog__backdrop[data-state="open"] {
+  opacity: 1;
+}
+
+.bui-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - var(--bui-space-12));
+  display: flex;
+  flex-direction: column;
+  background: var(--bui-color-surface-raised);
+  color: var(--bui-color-text);
+  border-radius: var(--bui-radius-lg);
+  box-shadow: var(--bui-shadow-lg);
+  overflow: hidden;
+  transform: translateY(8px) scale(0.98);
+  opacity: 0;
+  transition:
+    opacity var(--bui-duration-base) var(--bui-easing-standard),
+    transform var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+.bui-dialog[data-state="open"] {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.bui-dialog--sm { max-width: 360px; }
+.bui-dialog--md { max-width: 480px; }
+.bui-dialog--lg { max-width: 720px; }
+
+.bui-dialog__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-1);
+  padding: var(--bui-space-5) var(--bui-space-6) var(--bui-space-3);
+}
+
+.bui-dialog__title {
+  margin: 0;
+  font-size: var(--bui-font-size-lg);
+  font-weight: var(--bui-font-weight-semibold);
+}
+
+.bui-dialog__description {
+  margin: 0;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text-muted);
+}
+
+.bui-dialog__body {
+  padding: var(--bui-space-3) var(--bui-space-6);
+  overflow: auto;
+}
+
+.bui-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-4) var(--bui-space-6) var(--bui-space-5);
+  border-top: 1px solid var(--bui-color-border);
+  background: var(--bui-color-bg-subtle);
+}
+
+.bui-dialog__close-x {
+  position: absolute;
+  top: var(--bui-space-3);
+  right: var(--bui-space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--bui-color-text-muted);
+  border-radius: var(--bui-radius-md);
+  cursor: pointer;
+  transition: background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-dialog__close-x:hover {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+.bui-dialog__close-x:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}

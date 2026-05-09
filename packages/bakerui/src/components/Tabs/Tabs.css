@@ -1,0 +1,95 @@
+.bui-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-4);
+}
+
+.bui-tabs--vertical {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.bui-tabs__list {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: var(--bui-space-1);
+  border-bottom: 1px solid var(--bui-color-border);
+}
+
+.bui-tabs--vertical .bui-tabs__list {
+  flex-direction: column;
+  align-items: stretch;
+  border-bottom: none;
+  border-right: 1px solid var(--bui-color-border);
+  min-width: 180px;
+}
+
+.bui-tabs__trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-3) var(--bui-space-4);
+  font-family: inherit;
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-medium);
+  color: var(--bui-color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--bui-radius-sm) var(--bui-radius-sm) 0 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color var(--bui-duration-fast) var(--bui-easing-standard),
+    background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-tabs__trigger:hover:not([aria-disabled="true"]):not([data-state="active"]) {
+  color: var(--bui-color-text);
+}
+.bui-tabs__trigger[data-state="active"] {
+  color: var(--bui-color-text);
+}
+.bui-tabs__trigger:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: -2px;
+  border-radius: var(--bui-radius-sm);
+}
+.bui-tabs__trigger[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.bui-tabs__indicator {
+  position: absolute;
+  background: var(--bui-color-accent);
+  pointer-events: none;
+  transition:
+    transform var(--bui-duration-base) var(--bui-easing-standard),
+    width var(--bui-duration-base) var(--bui-easing-standard),
+    height var(--bui-duration-base) var(--bui-easing-standard);
+}
+.bui-tabs:not(.bui-tabs--vertical) .bui-tabs__indicator {
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+.bui-tabs--vertical .bui-tabs__indicator {
+  right: -1px;
+  top: 0;
+  width: 2px;
+  border-radius: 2px 0 0 2px;
+}
+.bui-tabs__indicator[data-empty="true"] {
+  display: none;
+}
+
+.bui-tabs__panel {
+  outline: none;
+}
+.bui-tabs__panel:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--bui-radius-sm);
+}

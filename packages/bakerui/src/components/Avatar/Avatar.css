@@ -1,0 +1,75 @@
+.bui-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+  width: var(--bui-avatar-size, 40px);
+  height: var(--bui-avatar-size, 40px);
+  border-radius: 50%;
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+  font-weight: var(--bui-font-weight-semibold);
+  font-size: calc(var(--bui-avatar-size, 40px) * 0.4);
+  line-height: 1;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+}
+
+.bui-avatar--xs { --bui-avatar-size: 24px; }
+.bui-avatar--sm { --bui-avatar-size: 32px; }
+.bui-avatar--md { --bui-avatar-size: 40px; }
+.bui-avatar--lg { --bui-avatar-size: 48px; }
+.bui-avatar--xl { --bui-avatar-size: 64px; }
+
+.bui-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bui-avatar__fallback {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Tones — used for the fallback background. */
+.bui-avatar--accent {
+  background: color-mix(in srgb, var(--bui-color-accent) 16%, var(--bui-color-bg));
+  color: var(--bui-color-accent);
+}
+.bui-avatar--success {
+  background: color-mix(in srgb, var(--bui-color-success) 16%, var(--bui-color-bg));
+  color: var(--bui-color-success);
+}
+.bui-avatar--warning {
+  background: color-mix(in srgb, var(--bui-color-warning) 16%, var(--bui-color-bg));
+  color: var(--bui-color-warning);
+}
+.bui-avatar--danger {
+  background: color-mix(in srgb, var(--bui-color-danger) 16%, var(--bui-color-bg));
+  color: var(--bui-color-danger);
+}
+
+/* Group */
+.bui-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.bui-avatar-group .bui-avatar {
+  border: 2px solid var(--bui-color-bg);
+  box-sizing: content-box;
+}
+
+.bui-avatar-group .bui-avatar:not(:first-child) {
+  margin-left: calc(var(--bui-avatar-size, 40px) * -0.3);
+}
+
+.bui-avatar-group__overflow {
+  /* Same shape as Avatar but renders count text. */
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text-muted);
+}

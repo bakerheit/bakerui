@@ -1,0 +1,176 @@
+.bui-sidebar {
+  --bui-sidebar-width: 240px;
+  width: var(--bui-sidebar-width);
+  min-width: var(--bui-sidebar-width);
+  height: 100%;
+  color: var(--bui-color-text);
+  overflow: hidden;
+  transition:
+    width var(--bui-duration-base) var(--bui-easing-standard),
+    min-width var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+.bui-sidebar[data-state="closed"] {
+  width: 0;
+  min-width: 0;
+}
+
+/* The inner pane stays at full width while the outer collapses, so children
+ * don't compress mid-animation. */
+.bui-sidebar__inner {
+  width: var(--bui-sidebar-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bui-color-bg-subtle);
+}
+
+.bui-sidebar--left .bui-sidebar__inner {
+  border-right: 1px solid var(--bui-color-border);
+}
+.bui-sidebar--right .bui-sidebar__inner {
+  border-left: 1px solid var(--bui-color-border);
+}
+
+.bui-sidebar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-3);
+  padding: var(--bui-space-4) var(--bui-space-5);
+  border-bottom: 1px solid var(--bui-color-border);
+  min-height: 56px;
+}
+
+.bui-sidebar__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--bui-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-3);
+}
+
+.bui-sidebar__footer {
+  padding: var(--bui-space-3) var(--bui-space-4);
+  border-top: 1px solid var(--bui-color-border);
+}
+
+.bui-sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bui-sidebar__group-label {
+  padding: var(--bui-space-2) var(--bui-space-3) var(--bui-space-1);
+  font-size: var(--bui-font-size-xs);
+  font-weight: var(--bui-font-weight-semibold);
+  color: var(--bui-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.bui-sidebar__separator {
+  margin: var(--bui-space-2) var(--bui-space-1);
+  height: 1px;
+  border: none;
+  background: var(--bui-color-border);
+}
+
+.bui-sidebar__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-3);
+  width: 100%;
+  padding: var(--bui-space-2) var(--bui-space-3);
+  font-family: inherit;
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-medium);
+  color: var(--bui-color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--bui-radius-md);
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-sidebar__item:hover:not([aria-disabled="true"]) {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+
+.bui-sidebar__item:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 1px;
+}
+
+.bui-sidebar__item--active {
+  background: var(--bui-color-accent-soft);
+  color: var(--bui-color-accent);
+}
+.bui-sidebar__item--active:hover {
+  background: var(--bui-color-accent-soft);
+  color: var(--bui-color-accent);
+}
+
+.bui-sidebar__item[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bui-sidebar__item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.bui-sidebar__item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bui-sidebar__item-trailing {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Trigger ============================================================ */
+.bui-sidebar-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  cursor: pointer;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-sidebar-trigger:hover {
+  background: var(--bui-color-bg-subtle);
+  border-color: var(--bui-color-border-strong);
+}
+.bui-sidebar-trigger:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}

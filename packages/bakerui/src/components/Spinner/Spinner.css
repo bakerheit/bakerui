@@ -1,0 +1,19 @@
+.bui-spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  animation: bui-spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+
+.bui-spinner--sm { font-size: 14px; }
+.bui-spinner--md { font-size: 18px; }
+.bui-spinner--lg { font-size: 28px; }
+
+@keyframes bui-spin {
+  to { transform: rotate(360deg); }
+}

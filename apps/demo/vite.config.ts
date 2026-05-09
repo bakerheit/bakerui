@@ -1,0 +1,18 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { resolve } from "node:path";
+
+// During local development, resolve `bakerui` directly to the package source
+// so changes hot-reload without needing to rebuild the lib.
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      bakerui: resolve(__dirname, "../../packages/bakerui/src/index.ts"),
+    },
+  },
+  server: {
+    port: 5173,
+    open: true,
+  },
+});

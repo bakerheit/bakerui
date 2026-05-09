@@ -1,0 +1,149 @@
+.bui-stepper {
+  --bui-step-size: 28px;
+}
+.bui-stepper--sm {
+  --bui-step-size: 22px;
+}
+
+.bui-stepper__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bui-step {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+/* === Indicator (the circle) ============================================== */
+.bui-step__indicator {
+  width: var(--bui-step-size);
+  height: var(--bui-step-size);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--bui-font-size-xs);
+  font-weight: var(--bui-font-weight-semibold);
+  background: var(--bui-color-bg);
+  color: var(--bui-color-text-muted);
+  border: 2px solid var(--bui-color-border);
+  flex-shrink: 0;
+  z-index: 1;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-step[data-status="active"] .bui-step__indicator {
+  border-color: var(--bui-color-accent);
+  color: var(--bui-color-accent);
+  box-shadow: 0 0 0 4px var(--bui-color-accent-soft);
+}
+.bui-step[data-status="complete"] .bui-step__indicator {
+  background: var(--bui-color-accent);
+  border-color: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+.bui-step[data-status="error"] .bui-step__indicator {
+  background: var(--bui-color-danger);
+  border-color: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+}
+.bui-step[data-status="disabled"] {
+  opacity: 0.5;
+}
+
+/* === Text ================================================================ */
+.bui-step__title {
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-medium);
+  color: var(--bui-color-text);
+}
+.bui-step[data-status="upcoming"] .bui-step__title {
+  color: var(--bui-color-text-muted);
+}
+.bui-step[data-status="active"] .bui-step__title {
+  color: var(--bui-color-accent);
+}
+.bui-step[data-status="error"] .bui-step__title {
+  color: var(--bui-color-danger);
+}
+.bui-step__description {
+  font-size: var(--bui-font-size-xs);
+  color: var(--bui-color-text-muted);
+  margin-top: 2px;
+}
+
+/* === Horizontal ========================================================== */
+.bui-stepper--horizontal .bui-stepper__list {
+  display: flex;
+  align-items: flex-start;
+}
+.bui-stepper--horizontal .bui-step {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.bui-stepper--horizontal .bui-step__text {
+  margin-top: var(--bui-space-2);
+  max-width: 200px;
+}
+/* Connector line going right from this step's indicator. */
+.bui-stepper--horizontal .bui-step::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--bui-step-size) / 2);
+  left: calc(50% + var(--bui-step-size) / 2 + var(--bui-space-2));
+  width: calc(100% - var(--bui-step-size) - var(--bui-space-4));
+  height: 2px;
+  background: var(--bui-color-border);
+  transform: translateY(-50%);
+  transition: background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-stepper--horizontal .bui-step[data-last]::after {
+  display: none;
+}
+.bui-stepper--horizontal .bui-step[data-status="complete"]::after {
+  background: var(--bui-color-accent);
+}
+
+/* === Vertical ============================================================ */
+.bui-stepper--vertical .bui-stepper__list {
+  display: flex;
+  flex-direction: column;
+}
+.bui-stepper--vertical .bui-step {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--bui-space-3);
+  padding-bottom: var(--bui-space-5);
+}
+.bui-stepper--vertical .bui-step:last-child {
+  padding-bottom: 0;
+}
+.bui-stepper--vertical .bui-step__text {
+  padding-top: 2px;
+  flex: 1;
+}
+/* Connector line going down from this step's indicator. */
+.bui-stepper--vertical .bui-step::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--bui-step-size) + var(--bui-space-1));
+  bottom: 0;
+  left: calc(var(--bui-step-size) / 2 - 1px);
+  width: 2px;
+  background: var(--bui-color-border);
+  transition: background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-stepper--vertical .bui-step[data-last]::after {
+  display: none;
+}
+.bui-stepper--vertical .bui-step[data-status="complete"]::after {
+  background: var(--bui-color-accent);
+}

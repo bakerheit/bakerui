@@ -1,0 +1,158 @@
+.bui-toaster {
+  position: fixed;
+  z-index: var(--bui-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-4);
+  pointer-events: none;
+  width: min(100%, 380px);
+  max-width: 100vw;
+  /* The container is just a positioning frame; only the toasts inside
+   * should paint. (The shared .bui-root rule sets a page background.) */
+  background: transparent;
+}
+
+.bui-toaster--top-right { top: 0; right: 0; }
+.bui-toaster--top-left { top: 0; left: 0; }
+.bui-toaster--top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+.bui-toaster--bottom-right {
+  bottom: 0;
+  right: 0;
+  flex-direction: column-reverse;
+}
+.bui-toaster--bottom-left {
+  bottom: 0;
+  left: 0;
+  flex-direction: column-reverse;
+}
+.bui-toaster--bottom-center {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.bui-toast {
+  --bui-toast-enter-x: 0;
+  --bui-toast-enter-y: -8px;
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bui-space-3);
+  width: 100%;
+  padding: var(--bui-space-3) var(--bui-space-4);
+  background: var(--bui-color-surface-raised);
+  color: var(--bui-color-text);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  box-shadow: var(--bui-shadow-lg);
+  opacity: 0;
+  transform: translate3d(var(--bui-toast-enter-x), var(--bui-toast-enter-y), 0);
+  transition:
+    opacity var(--bui-duration-base) var(--bui-easing-standard),
+    transform var(--bui-duration-base) var(--bui-easing-standard);
+}
+
+/* Per-position enter direction (slide in from the screen edge). */
+.bui-toaster--top-right .bui-toast,
+.bui-toaster--bottom-right .bui-toast {
+  --bui-toast-enter-x: 16px;
+  --bui-toast-enter-y: 0;
+}
+.bui-toaster--top-left .bui-toast,
+.bui-toaster--bottom-left .bui-toast {
+  --bui-toast-enter-x: -16px;
+  --bui-toast-enter-y: 0;
+}
+.bui-toaster--top-center .bui-toast {
+  --bui-toast-enter-x: 0;
+  --bui-toast-enter-y: -16px;
+}
+.bui-toaster--bottom-center .bui-toast {
+  --bui-toast-enter-x: 0;
+  --bui-toast-enter-y: 16px;
+}
+
+.bui-toast[data-state="open"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.bui-toast[data-state="closed"] {
+  opacity: 0;
+  transform: translate3d(var(--bui-toast-enter-x), var(--bui-toast-enter-y), 0);
+}
+
+/* Tone accents (left border) */
+.bui-toast--info { border-left: 3px solid var(--bui-color-accent); }
+.bui-toast--success { border-left: 3px solid var(--bui-color-success); }
+.bui-toast--warning { border-left: 3px solid var(--bui-color-warning); }
+.bui-toast--danger { border-left: 3px solid var(--bui-color-danger); }
+
+.bui-toast__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.bui-toast--info .bui-toast__icon { color: var(--bui-color-accent); }
+.bui-toast--success .bui-toast__icon { color: var(--bui-color-success); }
+.bui-toast--warning .bui-toast__icon { color: var(--bui-color-warning); }
+.bui-toast--danger .bui-toast__icon { color: var(--bui-color-danger); }
+
+.bui-toast__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bui-toast__title {
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-semibold);
+  line-height: var(--bui-line-height-tight);
+}
+
+.bui-toast__description {
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text-muted);
+  line-height: var(--bui-line-height-normal);
+}
+
+.bui-toast__actions {
+  display: flex;
+  gap: var(--bui-space-2);
+  margin-top: var(--bui-space-2);
+}
+
+.bui-toast__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: -2px -4px -2px 0;
+  border: none;
+  background: transparent;
+  color: var(--bui-color-text-muted);
+  border-radius: var(--bui-radius-sm);
+  cursor: pointer;
+  transition: color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-toast__close:hover { color: var(--bui-color-text); }
+.bui-toast__close:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}

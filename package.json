@@ -1,0 +1,15 @@
+{
+  "name": "bakerui-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=bakerui",
+    "dev": "npm run dev --workspace=demo",
+    "demo": "npm run dev --workspace=demo",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  }
+}

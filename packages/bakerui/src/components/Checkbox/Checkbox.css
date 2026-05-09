@@ -1,0 +1,77 @@
+.bui-checkbox {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--bui-space-2);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text);
+}
+
+.bui-checkbox__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.bui-checkbox__box {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border: 1px solid var(--bui-color-border-strong);
+  border-radius: var(--bui-radius-sm);
+  background: var(--bui-color-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bui-color-accent-fg);
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-checkbox__check {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+}
+
+.bui-checkbox__input:checked + .bui-checkbox__box,
+.bui-checkbox__input:indeterminate + .bui-checkbox__box {
+  background: var(--bui-color-accent);
+  border-color: var(--bui-color-accent);
+}
+.bui-checkbox__input:checked + .bui-checkbox__box .bui-checkbox__check {
+  opacity: 1;
+}
+.bui-checkbox__input:indeterminate + .bui-checkbox__box .bui-checkbox__check {
+  opacity: 1;
+  /* swap path via CSS pseudo? Simpler: render dash via separate element. */
+}
+.bui-checkbox__input:focus-visible + .bui-checkbox__box {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+.bui-checkbox__input:disabled + .bui-checkbox__box {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bui-checkbox__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: var(--bui-line-height-tight);
+}
+
+.bui-checkbox__label {
+  font-weight: var(--bui-font-weight-medium);
+}
+
+.bui-checkbox__description {
+  font-size: var(--bui-font-size-xs);
+  color: var(--bui-color-text-muted);
+}
