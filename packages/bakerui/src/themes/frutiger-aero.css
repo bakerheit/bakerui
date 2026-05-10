@@ -1,0 +1,255 @@
+/*
+ * bakerui theme preset — "frutiger-aero"
+ *
+ * Y2K / Vista-era aero glass: glossy, saturated, skeuomorphic. Where the
+ * "glassx" preset is a matte Liquid Glass frost, this one is wet-shiny —
+ * Aqua buttons with a hard top-bright / bottom-dark gloss split, sky
+ * gradient backdrops with bubble bokeh, and jewel-tone accents.
+ *
+ *   import "bakerui/themes/frutiger-aero.css";
+ *   <ThemeProvider preset="frutiger-aero"> ... </ThemeProvider>
+ *
+ * Recipe per surface:
+ *   1. Translucent base + lighter backdrop blur than the glass preset
+ *   2. Two-stop linear gradient (50/50 split) for the wet gloss
+ *   3. Bright inset top edge + subtle inset bottom shadow for depth
+ *   4. Saturated color-tinted outer shadow
+ */
+
+/* ---- Light (sky / water) ---- */
+[data-theme-preset="frutiger-aero"] {
+  --bui-color-bg: #b3e0ff;
+  --bui-color-bg-subtle: rgba(255, 255, 255, 0.5);
+  --bui-color-bg-muted: rgba(255, 255, 255, 0.35);
+
+  --bui-color-surface: rgba(255, 255, 255, 0.65);
+  --bui-color-surface-raised: rgba(255, 255, 255, 0.78);
+
+  --bui-color-border: rgba(120, 200, 255, 0.55);
+  --bui-color-border-strong: rgba(40, 140, 220, 0.7);
+
+  --bui-color-text: #002b5c;
+  --bui-color-text-muted: #1d4f7c;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Vivid Aqua sky-blue accent. */
+  --bui-color-accent: #00a8e8;
+  --bui-color-accent-hover: #008ec9;
+  --bui-color-accent-active: #0072a8;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: rgba(0, 168, 232, 0.18);
+
+  --bui-color-success: #2ecc40;
+  --bui-color-warning: #ff9500;
+  --bui-color-danger: #ff3b30;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: rgba(0, 168, 232, 0.55);
+
+  /* Pill controls; chunky rounded surfaces. */
+  --bui-radius-sm: 8px;
+  --bui-radius-md: 999px;
+  --bui-radius-lg: 18px;
+  --bui-radius-xl: 24px;
+
+  /* Cyan-tinted soft shadows so surfaces feel like wet glass. */
+  --bui-shadow-xs: 0 1px 2px rgba(0, 70, 130, 0.1);
+  --bui-shadow-sm: 0 2px 8px rgba(0, 90, 170, 0.15), 0 1px 2px rgba(0, 60, 120, 0.08);
+  --bui-shadow-md: 0 8px 24px rgba(0, 100, 180, 0.18), 0 2px 6px rgba(0, 60, 120, 0.1);
+  --bui-shadow-lg: 0 16px 40px rgba(0, 110, 200, 0.25), 0 6px 12px rgba(0, 60, 120, 0.12);
+
+  --bui-color-overlay-backdrop: rgba(0, 50, 100, 0.4);
+
+  /* Internal tokens for the layered gloss effect. The button gloss is more
+     dramatic than the panel gloss (sharper 50/50 split). */
+  --bui-aero-panel-gloss: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.25) 48%,
+    rgba(255, 255, 255, 0.05) 52%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  --bui-aero-button-gloss: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  --bui-aero-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 -1px 1px 0 rgba(0, 70, 130, 0.08);
+}
+
+/* ---- Dark (deep ocean) ---- */
+[data-theme-preset="frutiger-aero"][data-theme="dark"] {
+  --bui-color-bg: #001a36;
+  --bui-color-bg-subtle: rgba(255, 255, 255, 0.05);
+  --bui-color-bg-muted: rgba(255, 255, 255, 0.08);
+
+  --bui-color-surface: rgba(10, 50, 90, 0.5);
+  --bui-color-surface-raised: rgba(15, 70, 120, 0.62);
+
+  --bui-color-border: rgba(0, 200, 255, 0.18);
+  --bui-color-border-strong: rgba(0, 200, 255, 0.32);
+
+  --bui-color-text: #e0f7ff;
+  --bui-color-text-muted: #8fbfd9;
+  --bui-color-text-inverse: #001a36;
+
+  --bui-color-accent: #00d4ff;
+  --bui-color-accent-hover: #00b8e0;
+  --bui-color-accent-active: #009ec0;
+  --bui-color-accent-fg: #001a36;
+  --bui-color-accent-soft: rgba(0, 212, 255, 0.22);
+
+  --bui-color-success: #4ade80;
+  --bui-color-warning: #ffb732;
+  --bui-color-danger: #ff6b6b;
+  --bui-color-danger-fg: #001a36;
+
+  --bui-color-focus-ring: rgba(0, 212, 255, 0.6);
+
+  --bui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --bui-shadow-sm: 0 4px 14px rgba(0, 30, 60, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --bui-shadow-md: 0 12px 32px rgba(0, 40, 80, 0.6), 0 2px 6px rgba(0, 0, 0, 0.45);
+  --bui-shadow-lg: 0 20px 48px rgba(0, 100, 180, 0.45), 0 8px 16px rgba(0, 0, 0, 0.5);
+
+  --bui-color-overlay-backdrop: rgba(0, 10, 25, 0.65);
+
+  --bui-aero-panel-gloss: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 48%,
+    rgba(0, 0, 0, 0.05) 52%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+  --bui-aero-button-gloss: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  --bui-aero-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(0, 200, 255, 0.08),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Sky / ocean backdrop with bubble bokeh ----
+   The Aero look depends on a saturated backdrop: vertical sky gradient
+   with scattered translucent "bubbles" (radial gradients sized to look
+   like out-of-focus light orbs). */
+[data-theme-preset="frutiger-aero"].bui-root-page,
+[data-theme-preset="frutiger-aero"] .bui-root-page {
+  background:
+    radial-gradient(circle at 12% 78%, rgba(255, 255, 255, 0.45) 0%, transparent 4%),
+    radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.35) 0%, transparent 3%),
+    radial-gradient(circle at 78% 65%, rgba(255, 255, 255, 0.4) 0%, transparent 5%),
+    radial-gradient(circle at 88% 22%, rgba(255, 255, 255, 0.3) 0%, transparent 3.5%),
+    radial-gradient(circle at 45% 85%, rgba(255, 255, 255, 0.5) 0%, transparent 4%),
+    radial-gradient(circle at 65% 12%, rgba(255, 255, 255, 0.32) 0%, transparent 3%),
+    radial-gradient(circle at 32% 50%, rgba(255, 255, 255, 0.25) 0%, transparent 2.5%),
+    radial-gradient(at 50% 100%, rgba(126, 217, 255, 0.6) 0%, transparent 60%),
+    linear-gradient(180deg, #4fb3e8 0%, #87ceeb 35%, #c4e7f5 75%, #e8f5fe 100%);
+  background-attachment: fixed;
+}
+
+[data-theme-preset="frutiger-aero"][data-theme="dark"].bui-root-page,
+[data-theme-preset="frutiger-aero"][data-theme="dark"] .bui-root-page {
+  background:
+    radial-gradient(circle at 18% 72%, rgba(0, 212, 255, 0.18) 0%, transparent 3%),
+    radial-gradient(circle at 76% 30%, rgba(0, 212, 255, 0.22) 0%, transparent 4%),
+    radial-gradient(circle at 42% 88%, rgba(120, 220, 255, 0.18) 0%, transparent 3%),
+    radial-gradient(circle at 88% 78%, rgba(0, 212, 255, 0.15) 0%, transparent 3.5%),
+    radial-gradient(at 50% 100%, rgba(0, 100, 170, 0.55) 0%, transparent 60%),
+    radial-gradient(at 30% 0%, rgba(0, 60, 120, 0.4) 0%, transparent 60%),
+    linear-gradient(180deg, #001a36 0%, #002a55 50%, #003366 100%);
+  background-attachment: fixed;
+}
+
+/* ---- Glossy panels ---- */
+[data-theme-preset="frutiger-aero"] .bui-card,
+[data-theme-preset="frutiger-aero"] .bui-dialog,
+[data-theme-preset="frutiger-aero"] .bui-popover,
+[data-theme-preset="frutiger-aero"] .bui-tooltip,
+[data-theme-preset="frutiger-aero"] .bui-toast,
+[data-theme-preset="frutiger-aero"] .bui-alert,
+[data-theme-preset="frutiger-aero"] .bui-accordion,
+[data-theme-preset="frutiger-aero"] .bui-table-wrapper,
+[data-theme-preset="frutiger-aero"] .bui-input,
+[data-theme-preset="frutiger-aero"] .bui-select,
+[data-theme-preset="frutiger-aero"] .bui-combobox-trigger,
+[data-theme-preset="frutiger-aero"] .bui-tabs-list,
+[data-theme-preset="frutiger-aero"] .bui-button--secondary,
+[data-theme-preset="frutiger-aero"] .bui-topbar,
+[data-theme-preset="frutiger-aero"] .bui-sidebar,
+[data-theme-preset="frutiger-aero"] .bui-dropdown-menu,
+[data-theme-preset="frutiger-aero"] .bui-datepicker {
+  backdrop-filter: blur(10px) saturate(170%);
+  -webkit-backdrop-filter: blur(10px) saturate(170%);
+  background-image: var(--bui-aero-panel-gloss);
+  box-shadow: var(--bui-aero-rim), var(--bui-shadow-md);
+  border-color: var(--bui-color-border);
+}
+
+/* Multi-line containers shouldn't use the pill radius. */
+[data-theme-preset="frutiger-aero"] .bui-accordion,
+[data-theme-preset="frutiger-aero"] .bui-alert,
+[data-theme-preset="frutiger-aero"] .bui-toast {
+  border-radius: var(--bui-radius-lg);
+}
+
+/* Topbar/sidebar: keep the gloss + rim, drop the float shadow. */
+[data-theme-preset="frutiger-aero"] .bui-topbar,
+[data-theme-preset="frutiger-aero"] .bui-sidebar {
+  box-shadow: var(--bui-aero-rim);
+}
+
+/* Soften accordion item separators. */
+[data-theme-preset="frutiger-aero"] .bui-accordion__item + .bui-accordion__item {
+  border-top-color: rgba(255, 255, 255, 0.4);
+}
+[data-theme-preset="frutiger-aero"][data-theme="dark"] .bui-accordion__item + .bui-accordion__item {
+  border-top-color: rgba(0, 200, 255, 0.1);
+}
+
+/* ---- Aqua-style primary buttons ----
+   The 50/50 gloss split is what makes this read as Y2K Aqua rather than
+   modern frosted glass. The accent color is the base; the gradient adds
+   a wet-glass shine on top. */
+[data-theme-preset="frutiger-aero"] .bui-button--primary {
+  background-image: var(--bui-aero-button-gloss);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.18),
+    0 4px 10px rgba(0, 168, 232, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.12);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+[data-theme-preset="frutiger-aero"][data-theme="dark"] .bui-button--primary {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 4px 14px rgba(0, 212, 255, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+}
+
+/* Ghost buttons get a glassy hover. */
+[data-theme-preset="frutiger-aero"] .bui-button--ghost:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme-preset="frutiger-aero"][data-theme="dark"] .bui-button--ghost:not(:disabled):hover {
+  background: rgba(0, 212, 255, 0.1);
+}
+
+/* Topbar bottom edge: faint cyan rim instead of a hard border. */
+[data-theme-preset="frutiger-aero"] .bui-topbar {
+  border-bottom-color: rgba(120, 200, 255, 0.4);
+}
+[data-theme-preset="frutiger-aero"][data-theme="dark"] .bui-topbar {
+  border-bottom-color: rgba(0, 200, 255, 0.1);
+}

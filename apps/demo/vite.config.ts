@@ -8,9 +8,15 @@ export default defineConfig(({ command }) => ({
   base: command === "build" ? "/bakerui/" : "/",
   plugins: [react()],
   resolve: {
-    alias: {
-      bakerui: resolve(__dirname, "../../packages/bakerui/src/index.ts"),
-    },
+    // Use the array form so the alias only matches the bare specifier
+    // `bakerui` — subpaths like `bakerui/themes/brutalist.css` fall through
+    // to normal package resolution (package.json `exports`).
+    alias: [
+      {
+        find: /^bakerui$/,
+        replacement: resolve(__dirname, "../../packages/bakerui/src/index.ts"),
+      },
+    ],
   },
   server: {
     port: 5173,

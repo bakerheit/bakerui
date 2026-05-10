@@ -51,7 +51,7 @@ function Hero({ onExplore }: { onExplore: () => void }) {
     <div className="home-hero">
       <Stack gap="5" className="home-hero__content">
         <HStack gap="2" wrap>
-          <Badge tone="accent">v0.1.0</Badge>
+          <Badge tone="accent">v0.3.0</Badge>
           <Badge tone="neutral">React 18+</Badge>
           <Badge tone="success">Zero runtime deps</Badge>
         </HStack>

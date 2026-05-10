@@ -1,0 +1,134 @@
+/*
+ * bakerui theme preset — "brutalist"
+ *
+ * High-contrast, no-radius, thick-bordered, hard-shadow design language
+ * inspired by neo-brutalist web design. Opt in:
+ *
+ *   import "bakerui/themes/brutalist.css";
+ *   <ThemeProvider preset="brutalist"> ... </ThemeProvider>
+ *
+ * Includes both light and dark variants — `[data-theme="dark"]` overrides
+ * surface/text/shadow colors while keeping the brutalist identity.
+ */
+
+/* ---- Light (default) ---- */
+[data-theme-preset="brutalist"] {
+  /* Surfaces */
+  --bui-color-bg: #fefce8;
+  --bui-color-bg-subtle: #fef9c3;
+  --bui-color-bg-muted: #fde68a;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-raised: #ffffff;
+
+  /* Type & borders — pure black is the brutalist signature */
+  --bui-color-border: #0a0a0a;
+  --bui-color-border-strong: #0a0a0a;
+  --bui-color-text: #0a0a0a;
+  --bui-color-text-muted: #404040;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Hot pink primary, harsh and unmistakable */
+  --bui-color-accent: #ec4899;
+  --bui-color-accent-hover: #db2777;
+  --bui-color-accent-active: #be185d;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #fbcfe8;
+
+  --bui-color-success: #16a34a;
+  --bui-color-warning: #f59e0b;
+  --bui-color-danger: #dc2626;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: #0a0a0a;
+
+  /* No rounding anywhere */
+  --bui-radius-none: 0;
+  --bui-radius-sm: 0;
+  --bui-radius-md: 0;
+  --bui-radius-lg: 0;
+  --bui-radius-xl: 0;
+  --bui-radius-full: 0;
+
+  /* Hard offset shadows */
+  --bui-shadow-color: #0a0a0a;
+  --bui-shadow-xs: 2px 2px 0 0 #0a0a0a;
+  --bui-shadow-sm: 3px 3px 0 0 #0a0a0a;
+  --bui-shadow-md: 5px 5px 0 0 #0a0a0a;
+  --bui-shadow-lg: 8px 8px 0 0 #0a0a0a;
+
+  --bui-color-overlay-backdrop: rgba(10, 10, 10, 0.6);
+}
+
+/* ---- Dark variant ---- */
+[data-theme-preset="brutalist"][data-theme="dark"] {
+  --bui-color-bg: #1a0f1f;
+  --bui-color-bg-subtle: #251628;
+  --bui-color-bg-muted: #2f1d33;
+  --bui-color-surface: #0f0612;
+  --bui-color-surface-raised: #1a0f1f;
+
+  /* Pure white borders/text — inverse of the light brutalist */
+  --bui-color-border: #fafafa;
+  --bui-color-border-strong: #fafafa;
+  --bui-color-text: #fafafa;
+  --bui-color-text-muted: #c0c0c8;
+  --bui-color-text-inverse: #0a0a0a;
+
+  /* Hot pink stays — slightly brighter for dark contrast */
+  --bui-color-accent: #f472b6;
+  --bui-color-accent-hover: #ec4899;
+  --bui-color-accent-active: #db2777;
+  --bui-color-accent-fg: #0a0a0a;
+  --bui-color-accent-soft: #831843;
+
+  --bui-color-success: #4ade80;
+  --bui-color-warning: #fbbf24;
+  --bui-color-danger: #f87171;
+  --bui-color-danger-fg: #0a0a0a;
+
+  --bui-color-focus-ring: #fafafa;
+
+  /* White hard shadows so they read on dark surfaces */
+  --bui-shadow-color: #fafafa;
+  --bui-shadow-xs: 2px 2px 0 0 #fafafa;
+  --bui-shadow-sm: 3px 3px 0 0 #fafafa;
+  --bui-shadow-md: 5px 5px 0 0 #fafafa;
+  --bui-shadow-lg: 8px 8px 0 0 #fafafa;
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.75);
+}
+
+/* Component-level overrides — both modes share these. There's no
+   border-width token, so widen at the component layer. */
+[data-theme-preset="brutalist"] .bui-button,
+[data-theme-preset="brutalist"] .bui-input,
+[data-theme-preset="brutalist"] .bui-card,
+[data-theme-preset="brutalist"] .bui-table-wrapper,
+[data-theme-preset="brutalist"] .bui-badge,
+[data-theme-preset="brutalist"] .bui-alert,
+[data-theme-preset="brutalist"] .bui-tabs-list,
+[data-theme-preset="brutalist"] .bui-select,
+[data-theme-preset="brutalist"] .bui-combobox-trigger,
+[data-theme-preset="brutalist"] .bui-dialog,
+[data-theme-preset="brutalist"] .bui-popover,
+[data-theme-preset="brutalist"] .bui-tooltip,
+[data-theme-preset="brutalist"] .bui-toast {
+  border-width: 2px;
+  border-color: var(--bui-color-border);
+}
+
+/* Press-down active state that "absorbs" the shadow */
+[data-theme-preset="brutalist"] .bui-button:not(:disabled):not(.bui-button--ghost) {
+  box-shadow: 3px 3px 0 0 var(--bui-shadow-color);
+}
+[data-theme-preset="brutalist"] .bui-button:not(:disabled):not(.bui-button--ghost):active {
+  box-shadow: 0 0 0 0 var(--bui-shadow-color);
+  transform: translate(3px, 3px);
+}
+
+[data-theme-preset="brutalist"] .bui-button--secondary {
+  background: var(--bui-color-surface);
+}
+[data-theme-preset="brutalist"] .bui-button--ghost {
+  border-color: transparent;
+}

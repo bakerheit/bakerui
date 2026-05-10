@@ -9,6 +9,11 @@ import {
   Tooltip,
   type ThemeName,
 } from "bakerui";
+import "bakerui/themes/brutalist.css";
+import "bakerui/themes/soft.css";
+import "bakerui/themes/terminal.css";
+import "bakerui/themes/glassx.css";
+import "bakerui/themes/frutiger-aero.css";
 import { HomePage } from "./pages/HomePage";
 import { ComponentsPage } from "./pages/ComponentsPage";
 import { DataPage } from "./pages/DataPage";
@@ -70,6 +75,7 @@ const ALL_NAV: NavItem[] = NAV_GROUPS.flatMap((g) => g.items);
 export function App() {
   const [page, setPage] = useState<PageId>("home");
   const [theme, setTheme] = useState<ThemeName>("light");
+  const [preset, setPreset] = useState<string | undefined>(undefined);
   const [accent, setAccent] = useState<string>("");
   const mainRef = useRef<HTMLElement | null>(null);
   const [tocSlot, setTocSlot] = useState<HTMLElement | null>(null);
@@ -88,13 +94,19 @@ export function App() {
     window.matchMedia("(max-width: 800px)").matches;
 
   return (
-    <ThemeProvider theme={theme} onThemeChange={setTheme} tokens={tokens}>
+    <ThemeProvider
+      theme={theme}
+      onThemeChange={setTheme}
+      preset={preset}
+      onPresetChange={setPreset}
+      tokens={tokens}
+    >
       <Sidebar.Provider defaultOpen={!isMobile}>
         <div className="demo-shell">
           <Topbar>
             <Sidebar.Trigger />
             <Brand />
-            <Badge tone="accent">v0.2.0</Badge>
+            <Badge tone="accent">v0.3.0</Badge>
             <Topbar.Spacer />
             <Tooltip>
               <Tooltip.Trigger asChild>
@@ -167,6 +179,8 @@ export function App() {
                   <ThemingPage
                     theme={theme}
                     setTheme={setTheme}
+                    preset={preset}
+                    setPreset={setPreset}
                     accent={accent}
                     setAccent={setAccent}
                   />

@@ -8,9 +8,17 @@
   font-size: var(--bui-font-size-md);
   line-height: var(--bui-line-height-normal);
   color: var(--bui-color-text);
-  background: var(--bui-color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page-background paint is separated from .bui-root so that portaled
+   components (Tooltip, Popover, Toaster, etc.) which carry `bui-root` for
+   token inheritance don't accidentally paint a page background inside
+   their fixed/positioned containers. ThemeProvider applies this class to
+   its outer wrapper. */
+.bui-root-page {
+  background: var(--bui-color-bg);
 }
 
 .bui-root *,

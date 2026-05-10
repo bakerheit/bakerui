@@ -745,6 +745,78 @@ body {
   white-space: nowrap;
 }
 
+/* Mobile: reflow the props table as stacked cards. The 4 columns (name, type,
+   default, description) get squeezed below ~640px, so collapse each row into
+   a card with column labels injected via pseudo-elements. */
+@media (max-width: 640px) {
+  .doc-props-table .bui-table-wrapper {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .doc-props-table .bui-table {
+    display: block;
+  }
+  .doc-props-table .bui-table__head {
+    display: none;
+  }
+  .doc-props-table .bui-table__body {
+    display: block;
+  }
+  .doc-props-table .bui-table__tr {
+    display: block;
+    border: 1px solid var(--bui-color-border);
+    border-radius: var(--bui-radius-md);
+    padding: var(--bui-space-3) var(--bui-space-4);
+    margin-bottom: var(--bui-space-3);
+    background: var(--bui-color-surface);
+  }
+  .doc-props-table .bui-table__tr:last-child {
+    margin-bottom: 0;
+  }
+  .doc-props-table .bui-table--zebra .bui-table__body tr:nth-child(even) td {
+    background: transparent;
+  }
+  .doc-props-table .bui-table__td {
+    display: block;
+    padding: 0;
+    border: none;
+    white-space: normal;
+    width: auto !important;
+  }
+  .doc-props-table .bui-table__td:first-child {
+    white-space: normal;
+    padding-bottom: var(--bui-space-2);
+    border-bottom: 1px solid var(--bui-color-border);
+    margin-bottom: var(--bui-space-3);
+  }
+  .doc-props-table .bui-table__td:first-child .doc-prop-name code {
+    font-size: var(--bui-font-size-md);
+  }
+  .doc-props-table .bui-table__td + .bui-table__td {
+    margin-top: var(--bui-space-3);
+  }
+  .doc-props-table .bui-table__td:nth-child(n + 2)::before {
+    display: block;
+    font-size: var(--bui-font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bui-color-text-muted);
+    font-weight: var(--bui-font-weight-medium);
+    margin-bottom: var(--bui-space-1);
+  }
+  .doc-props-table .bui-table__td:nth-child(2)::before {
+    content: "Type";
+  }
+  .doc-props-table .bui-table__td:nth-child(3)::before {
+    content: "Default";
+  }
+  .doc-props-table .bui-table__td:nth-child(4)::before {
+    content: "Description";
+  }
+}
+
 @media (max-width: 800px) {
   .demo-sidebar {
     position: fixed;

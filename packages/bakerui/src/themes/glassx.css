@@ -1,0 +1,247 @@
+/*
+ * bakerui theme preset — "glassx"
+ *
+ * A more extreme version of `glass`: surfaces are markedly more
+ * transparent and the blur is dialed down to "slight" instead of "heavy
+ * frost". Popovers, tooltips, and dropdowns push the transparency further
+ * so they read as a thin sheet of glass rather than a frosted card. The
+ * bright specular rim does most of the work of defining edges.
+ *
+ *   import "bakerui/themes/glassx.css";
+ *   <ThemeProvider preset="glassx"> ... </ThemeProvider>
+ */
+
+/* ---- Light ---- */
+[data-theme-preset="glassx"] {
+  --bui-color-bg: #e0e7ff;
+  --bui-color-bg-subtle: rgba(255, 255, 255, 0.3);
+  --bui-color-bg-muted: rgba(255, 255, 255, 0.2);
+
+  /* Markedly more transparent than `glass`. The rim + tint do the work. */
+  --bui-color-surface: rgba(255, 255, 255, 0.28);
+  --bui-color-surface-raised: rgba(255, 255, 255, 0.4);
+
+  /* A brighter rim compensates for the lower fill opacity. */
+  --bui-color-border: rgba(255, 255, 255, 0.55);
+  --bui-color-border-strong: rgba(255, 255, 255, 0.85);
+
+  /* Dark text holds up against the colorful backdrop bleed-through. */
+  --bui-color-text: #0b1424;
+  --bui-color-text-muted: #475569;
+  --bui-color-text-inverse: #ffffff;
+
+  --bui-color-accent: #007aff;
+  --bui-color-accent-hover: #006ae6;
+  --bui-color-accent-active: #0058c4;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: rgba(0, 122, 255, 0.15);
+
+  --bui-color-success: #34c759;
+  --bui-color-warning: #ff9f0a;
+  --bui-color-danger: #ff3b30;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: rgba(0, 122, 255, 0.5);
+
+  --bui-radius-sm: 10px;
+  --bui-radius-md: 999px;
+  --bui-radius-lg: 26px;
+  --bui-radius-xl: 32px;
+
+  --bui-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --bui-shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --bui-shadow-md: 0 12px 40px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.05);
+  --bui-shadow-lg: 0 24px 64px rgba(15, 23, 42, 0.18), 0 8px 16px rgba(15, 23, 42, 0.08);
+
+  --bui-color-overlay-backdrop: rgba(15, 23, 42, 0.22);
+
+  /* Layered effect tokens. The tint is lighter than `glass` so the
+     backdrop shows through more clearly. */
+  --bui-glassx-tint: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  --bui-glassx-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px 0 rgba(15, 23, 42, 0.05);
+
+  /* Floaty layers (popovers/tooltips/dropdowns) get an even more
+     transparent treatment so they read as suspended glass. */
+  --bui-glassx-floaty-bg: rgba(255, 255, 255, 0.18);
+  --bui-glassx-floaty-tint: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+}
+
+/* ---- Dark ---- */
+[data-theme-preset="glassx"][data-theme="dark"] {
+  --bui-color-bg: #0a0a18;
+  --bui-color-bg-subtle: rgba(255, 255, 255, 0.03);
+  --bui-color-bg-muted: rgba(255, 255, 255, 0.05);
+
+  --bui-color-surface: rgba(255, 255, 255, 0.06);
+  --bui-color-surface-raised: rgba(255, 255, 255, 0.1);
+
+  --bui-color-border: rgba(255, 255, 255, 0.12);
+  --bui-color-border-strong: rgba(255, 255, 255, 0.22);
+
+  --bui-color-text: #f5f7fb;
+  --bui-color-text-muted: #b9bdc8;
+  --bui-color-text-inverse: #0a0a18;
+
+  --bui-color-accent: #0a84ff;
+  --bui-color-accent-hover: #339cff;
+  --bui-color-accent-active: #006ae6;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: rgba(10, 132, 255, 0.22);
+
+  --bui-color-success: #30d158;
+  --bui-color-warning: #ff9f0a;
+  --bui-color-danger: #ff453a;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: rgba(10, 132, 255, 0.6);
+
+  --bui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --bui-shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --bui-shadow-md: 0 12px 40px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --bui-shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.65), 0 8px 16px rgba(0, 0, 0, 0.45);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.55);
+
+  --bui-glassx-tint: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  --bui-glassx-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
+
+  --bui-glassx-floaty-bg: rgba(255, 255, 255, 0.04);
+  --bui-glassx-floaty-tint: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* ---- Backdrop (same family as glass; nudged a touch warmer) ---- */
+[data-theme-preset="glassx"].bui-root-page,
+[data-theme-preset="glassx"] .bui-root-page {
+  background:
+    radial-gradient(at 18% 8%, rgba(255, 105, 180, 0.5) 0%, transparent 45%),
+    radial-gradient(at 82% 18%, rgba(64, 180, 255, 0.5) 0%, transparent 50%),
+    radial-gradient(at 70% 90%, rgba(180, 100, 255, 0.45) 0%, transparent 55%),
+    radial-gradient(at 8% 78%, rgba(80, 220, 200, 0.4) 0%, transparent 55%),
+    linear-gradient(135deg, #ffe3f1 0%, #d9e7ff 45%, #d6f7ee 100%);
+  background-attachment: fixed;
+}
+
+[data-theme-preset="glassx"][data-theme="dark"].bui-root-page,
+[data-theme-preset="glassx"][data-theme="dark"] .bui-root-page {
+  background:
+    radial-gradient(at 15% 12%, rgba(168, 85, 247, 0.55) 0%, transparent 50%),
+    radial-gradient(at 85% 22%, rgba(34, 211, 238, 0.5) 0%, transparent 55%),
+    radial-gradient(at 72% 88%, rgba(236, 72, 153, 0.45) 0%, transparent 55%),
+    radial-gradient(at 18% 76%, rgba(59, 130, 246, 0.4) 0%, transparent 55%),
+    linear-gradient(135deg, #1a1543 0%, #0a0a18 50%, #1c1430 100%);
+  background-attachment: fixed;
+}
+
+/* ---- Standard glassy surfaces: light blur, more transparency ----
+   Blur dialed down from glass's 28px to 12px so backdrop colors keep
+   their hue rather than fading toward a uniform frost. */
+[data-theme-preset="glassx"] .bui-card,
+[data-theme-preset="glassx"] .bui-dialog,
+[data-theme-preset="glassx"] .bui-toast,
+[data-theme-preset="glassx"] .bui-alert,
+[data-theme-preset="glassx"] .bui-accordion,
+[data-theme-preset="glassx"] .bui-table-wrapper,
+[data-theme-preset="glassx"] .bui-input,
+[data-theme-preset="glassx"] .bui-select,
+[data-theme-preset="glassx"] .bui-combobox-trigger,
+[data-theme-preset="glassx"] .bui-tabs-list,
+[data-theme-preset="glassx"] .bui-button--secondary,
+[data-theme-preset="glassx"] .bui-topbar,
+[data-theme-preset="glassx"] .bui-sidebar {
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  background-image: var(--bui-glassx-tint);
+  box-shadow: var(--bui-glassx-rim), var(--bui-shadow-md);
+  border-color: var(--bui-color-border);
+}
+
+/* ---- Floaty surfaces: even more transparent, lighter blur ----
+   Popovers, tooltips, dropdown menus, and combobox content sit
+   "above" everything else and should feel like a thin sheet of glass
+   rather than a frosted card. ~6px blur is just enough to break up
+   sharp shapes underneath without fogging the backdrop. */
+[data-theme-preset="glassx"] .bui-popover,
+[data-theme-preset="glassx"] .bui-tooltip,
+[data-theme-preset="glassx"] .bui-dropdown-menu,
+[data-theme-preset="glassx"] .bui-combobox-content,
+[data-theme-preset="glassx"] .bui-datepicker {
+  background-color: var(--bui-glassx-floaty-bg);
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  background-image: var(--bui-glassx-floaty-tint);
+  box-shadow: var(--bui-glassx-rim), var(--bui-shadow-lg);
+  border-color: var(--bui-color-border);
+}
+
+/* Multi-line containers shouldn't pill. */
+[data-theme-preset="glassx"] .bui-accordion,
+[data-theme-preset="glassx"] .bui-alert,
+[data-theme-preset="glassx"] .bui-toast {
+  border-radius: var(--bui-radius-lg);
+}
+
+/* Topbar/sidebar stay flush. */
+[data-theme-preset="glassx"] .bui-topbar,
+[data-theme-preset="glassx"] .bui-sidebar {
+  box-shadow: var(--bui-glassx-rim);
+}
+
+/* Soften accordion separators against the colorful backdrop. */
+[data-theme-preset="glassx"] .bui-accordion__item + .bui-accordion__item {
+  border-top-color: rgba(255, 255, 255, 0.25);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-accordion__item + .bui-accordion__item {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Primary buttons keep solid accent + soft glow so actions sing. */
+[data-theme-preset="glassx"] .bui-button--primary {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
+    0 4px 14px rgba(0, 122, 255, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-button--primary {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.25),
+    0 4px 18px rgba(10, 132, 255, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Ghost buttons: glass-on-hover. */
+[data-theme-preset="glassx"] .bui-button--ghost:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-button--ghost:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Topbar bottom edge as a faint rim. */
+[data-theme-preset="glassx"] .bui-topbar {
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-topbar {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}

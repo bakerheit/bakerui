@@ -1,0 +1,99 @@
+/*
+ * bakerui theme preset — "soft"
+ *
+ * Pillowy, pastel, generous-radius design language. Calm warm surfaces,
+ * lavender accent, soft diffused shadows. Opt in:
+ *
+ *   import "bakerui/themes/soft.css";
+ *   <ThemeProvider preset="soft"> ... </ThemeProvider>
+ *
+ * Includes both light and dark variants; the dark variant uses deep plum
+ * surfaces and keeps the lavender glow.
+ */
+
+/* ---- Light (default) ---- */
+[data-theme-preset="soft"] {
+  /* Warm cream surfaces */
+  --bui-color-bg: #fdf8f4;
+  --bui-color-bg-subtle: #f7efe8;
+  --bui-color-bg-muted: #ede2d8;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-raised: #ffffff;
+
+  --bui-color-border: #ead7c4;
+  --bui-color-border-strong: #d4b896;
+
+  --bui-color-text: #4a3528;
+  --bui-color-text-muted: #8b7560;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Lavender accent */
+  --bui-color-accent: #a78bfa;
+  --bui-color-accent-hover: #8b5cf6;
+  --bui-color-accent-active: #7c3aed;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #ede9fe;
+
+  --bui-color-success: #6ee7b7;
+  --bui-color-warning: #fcd34d;
+  --bui-color-danger: #fb7185;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: #c4b5fd;
+
+  /* Generous rounding */
+  --bui-radius-sm: 8px;
+  --bui-radius-md: 14px;
+  --bui-radius-lg: 20px;
+  --bui-radius-xl: 28px;
+
+  /* Wide diffuse shadows — almost glow */
+  --bui-shadow-xs: 0 2px 4px rgba(167, 139, 250, 0.08);
+  --bui-shadow-sm: 0 4px 12px rgba(167, 139, 250, 0.1), 0 1px 3px rgba(74, 53, 40, 0.04);
+  --bui-shadow-md: 0 8px 24px rgba(167, 139, 250, 0.12), 0 2px 6px rgba(74, 53, 40, 0.06);
+  --bui-shadow-lg: 0 16px 40px rgba(167, 139, 250, 0.16), 0 6px 12px rgba(74, 53, 40, 0.06);
+
+  --bui-color-overlay-backdrop: rgba(74, 53, 40, 0.35);
+
+  --bui-control-height-md: 40px;
+  --bui-control-height-lg: 48px;
+}
+
+/* ---- Dark variant ---- */
+[data-theme-preset="soft"][data-theme="dark"] {
+  /* Deep plum/aubergine surfaces */
+  --bui-color-bg: #1a1424;
+  --bui-color-bg-subtle: #221a30;
+  --bui-color-bg-muted: #2d2240;
+  --bui-color-surface: #251c34;
+  --bui-color-surface-raised: #2f2440;
+
+  --bui-color-border: #3d2e54;
+  --bui-color-border-strong: #5b3f7e;
+
+  --bui-color-text: #f3eafa;
+  --bui-color-text-muted: #b8a4d0;
+  --bui-color-text-inverse: #1a1424;
+
+  /* Brighter lavender so it glows on dark plum */
+  --bui-color-accent: #c4b5fd;
+  --bui-color-accent-hover: #a78bfa;
+  --bui-color-accent-active: #8b5cf6;
+  --bui-color-accent-fg: #1a1424;
+  --bui-color-accent-soft: #4c2c8a;
+
+  --bui-color-success: #6ee7b7;
+  --bui-color-warning: #fcd34d;
+  --bui-color-danger: #fb7185;
+  --bui-color-danger-fg: #1a1424;
+
+  --bui-color-focus-ring: #c4b5fd;
+
+  /* Glowy shadows — keep the soft identity in the dark */
+  --bui-shadow-xs: 0 2px 4px rgba(167, 139, 250, 0.18);
+  --bui-shadow-sm: 0 4px 16px rgba(167, 139, 250, 0.22), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --bui-shadow-md: 0 8px 28px rgba(167, 139, 250, 0.25), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --bui-shadow-lg: 0 20px 48px rgba(167, 139, 250, 0.3), 0 8px 16px rgba(0, 0, 0, 0.4);
+
+  --bui-color-overlay-backdrop: rgba(13, 9, 19, 0.7);
+}

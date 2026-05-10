@@ -1,0 +1,112 @@
+/*
+ * bakerui theme preset — "terminal"
+ *
+ * Monospace, sharp-cornered, glow-on-focus. Light is amber-on-paper
+ * (typewriter / printed manual); dark is the green-on-black CRT. Opt in:
+ *
+ *   import "bakerui/themes/terminal.css";
+ *   <ThemeProvider preset="terminal"> ... </ThemeProvider>
+ */
+
+/* ---- Light (paper / typewriter) ---- */
+[data-theme-preset="terminal"] {
+  /* Cream paper surfaces */
+  --bui-color-bg: #f5efe0;
+  --bui-color-bg-subtle: #ede4ce;
+  --bui-color-bg-muted: #e0d4b8;
+  --bui-color-surface: #faf6ea;
+  --bui-color-surface-raised: #ffffff;
+
+  --bui-color-border: #5c4a2f;
+  --bui-color-border-strong: #3d2f1c;
+
+  /* Deep ink-brown for text — like a typewriter ribbon */
+  --bui-color-text: #2b1f10;
+  --bui-color-text-muted: #6b563a;
+  --bui-color-text-inverse: #faf6ea;
+
+  /* Burnt amber accent — old printed manual */
+  --bui-color-accent: #b45309;
+  --bui-color-accent-hover: #92400e;
+  --bui-color-accent-active: #78350f;
+  --bui-color-accent-fg: #faf6ea;
+  --bui-color-accent-soft: #fde68a;
+
+  --bui-color-success: #15803d;
+  --bui-color-warning: #b45309;
+  --bui-color-danger: #991b1b;
+  --bui-color-danger-fg: #faf6ea;
+
+  --bui-color-focus-ring: #b45309;
+
+  /* Sharp corners only */
+  --bui-radius-sm: 0;
+  --bui-radius-md: 0;
+  --bui-radius-lg: 0;
+  --bui-radius-xl: 0;
+  --bui-radius-full: 0;
+
+  --bui-shadow-xs: none;
+  --bui-shadow-sm: 0 0 0 1px rgba(60, 47, 28, 0.15);
+  --bui-shadow-md: 0 0 0 1px rgba(60, 47, 28, 0.25);
+  --bui-shadow-lg: 0 0 0 1px rgba(60, 47, 28, 0.35), 0 4px 12px rgba(60, 47, 28, 0.1);
+
+  --bui-color-overlay-backdrop: rgba(60, 47, 28, 0.5);
+
+  /* Mono everywhere — the look depends on it */
+  --bui-font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+}
+
+/* ---- Dark (CRT) ---- */
+[data-theme-preset="terminal"][data-theme="dark"] {
+  --bui-color-bg: #050a08;
+  --bui-color-bg-subtle: #0a120e;
+  --bui-color-bg-muted: #0f1a14;
+  --bui-color-surface: #050a08;
+  --bui-color-surface-raised: #0a120e;
+
+  --bui-color-border: #1f4d3a;
+  --bui-color-border-strong: #2da46e;
+
+  /* Phosphor green */
+  --bui-color-text: #4ade80;
+  --bui-color-text-muted: #16a34a;
+  --bui-color-text-inverse: #050a08;
+
+  /* Cyan accent — the secondary terminal color */
+  --bui-color-accent: #22d3ee;
+  --bui-color-accent-hover: #06b6d4;
+  --bui-color-accent-active: #0891b2;
+  --bui-color-accent-fg: #050a08;
+  --bui-color-accent-soft: #164e63;
+
+  --bui-color-success: #4ade80;
+  --bui-color-warning: #facc15;
+  --bui-color-danger: #f87171;
+  --bui-color-danger-fg: #050a08;
+
+  --bui-color-focus-ring: #22d3ee;
+
+  --bui-shadow-xs: none;
+  --bui-shadow-sm: 0 0 0 1px rgba(74, 222, 128, 0.15);
+  --bui-shadow-md: 0 0 0 1px rgba(74, 222, 128, 0.2), 0 0 12px rgba(74, 222, 128, 0.1);
+  --bui-shadow-lg: 0 0 0 1px rgba(34, 211, 238, 0.3), 0 0 24px rgba(34, 211, 238, 0.15);
+
+  --bui-color-overlay-backdrop: rgba(5, 10, 8, 0.85);
+}
+
+/* CRT-style glow only in dark mode */
+[data-theme-preset="terminal"][data-theme="dark"] .bui-button--primary {
+  text-shadow: 0 0 6px rgba(34, 211, 238, 0.4);
+}
+[data-theme-preset="terminal"][data-theme="dark"] .bui-button:focus-visible,
+[data-theme-preset="terminal"][data-theme="dark"] .bui-input:focus-visible,
+[data-theme-preset="terminal"][data-theme="dark"] .bui-input:focus-within {
+  box-shadow: 0 0 0 2px var(--bui-color-focus-ring), 0 0 12px rgba(34, 211, 238, 0.4);
+  outline: none;
+}
+[data-theme-preset="terminal"][data-theme="dark"] h1,
+[data-theme-preset="terminal"][data-theme="dark"] h2,
+[data-theme-preset="terminal"][data-theme="dark"] h3 {
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.35);
+}

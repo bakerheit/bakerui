@@ -1,6 +1,6 @@
 {
   "name": "bakerui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A small, longevity-focused React component library themed with CSS variables.",
   "license": "MIT",
   "author": "bakerheit",
@@ -24,11 +24,17 @@
       "require": "./dist/bakerui.cjs"
     },
     "./styles.css": "./dist/styles.css",
-    "./tokens.css": "./src/styles/tokens.css"
+    "./tokens.css": "./src/styles/tokens.css",
+    "./themes/brutalist.css": "./src/themes/brutalist.css",
+    "./themes/soft.css": "./src/themes/soft.css",
+    "./themes/terminal.css": "./src/themes/terminal.css",
+    "./themes/glassx.css": "./src/themes/glassx.css",
+    "./themes/frutiger-aero.css": "./src/themes/frutiger-aero.css"
   },
   "files": [
     "dist",
     "src/styles",
+    "src/themes",
     "README.md",
     "LICENSE"
   ],
