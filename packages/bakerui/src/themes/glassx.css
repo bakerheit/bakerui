@@ -184,7 +184,7 @@
 [data-theme-preset="glassx"] .bui-tooltip,
 [data-theme-preset="glassx"] .bui-dropdown-menu,
 [data-theme-preset="glassx"] .bui-combobox-content,
-[data-theme-preset="glassx"] .bui-datepicker {
+[data-theme-preset="glassx"] .bui-datepicker__popover {
   background-color: var(--bui-glassx-floaty-bg);
   backdrop-filter: blur(6px) saturate(140%);
   -webkit-backdrop-filter: blur(6px) saturate(140%);

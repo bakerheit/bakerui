@@ -185,7 +185,7 @@
 [data-theme-preset="frutiger-aero"] .bui-topbar,
 [data-theme-preset="frutiger-aero"] .bui-sidebar,
 [data-theme-preset="frutiger-aero"] .bui-dropdown-menu,
-[data-theme-preset="frutiger-aero"] .bui-datepicker {
+[data-theme-preset="frutiger-aero"] .bui-datepicker__popover {
   backdrop-filter: blur(10px) saturate(170%);
   -webkit-backdrop-filter: blur(10px) saturate(170%);
   background-image: var(--bui-aero-panel-gloss);

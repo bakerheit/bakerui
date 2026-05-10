@@ -21,5 +21,9 @@ export default defineConfig(({ command }) => ({
   server: {
     port: 5173,
     open: true,
+    // Listen on all network interfaces so the dev server is reachable from
+    // other devices on the same wifi (e.g. mobile testing). Vite prints both
+    // the localhost URL and the LAN URL on startup.
+    host: true,
   },
 }));
