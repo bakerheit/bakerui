@@ -102,69 +102,84 @@
   --bui-font-size-lg: 0.875rem;
 }
 
-/* ---- Dark (Hi-Contrast Black) ----
-   The Windows 95 "Hi-Contrast Black" accessibility scheme: pure black
-   desktop, near-black surfaces, sharp white text, cyan as the selection
-   accent. The bevels invert — light edges (now mid-gray and white)
-   define raised surfaces against the black. */
+/* ---- Dark (Windows 95 "If It Had Dark Mode") ----
+   Not the Hi-Contrast Black scheme — instead, what Win95 would have
+   looked like if Microsoft had shipped a dark theme: dark teal/navy
+   desktop, medium-grey window chrome, the full four-color bevel still
+   visible (highlights become mid-grey, shadows become pure black), white
+   text, and a vivid Win95-blue accent in place of navy. The bevels are
+   the load-bearing element — every raised surface still reads as a
+   physical chrome panel. */
 [data-theme-preset="94-doors"][data-theme="dark"] {
-  --bui-color-bg: #000000;
-  --bui-color-bg-subtle: #1a1a1a;
+  /* Inverted teal — the desktop reads as a Win95 teal pulled into night.
+     Surfaces sit on top in medium-grey chrome. */
+  --bui-color-bg: #003c40;
+  --bui-color-bg-subtle: #3a3a3a;
   --bui-color-bg-muted: #2a2a2a;
-  --bui-color-surface: #000000;
-  --bui-color-surface-raised: #1a1a1a;
+  --bui-color-surface: #3a3a3a;
+  --bui-color-surface-raised: #3a3a3a;
 
-  --bui-color-border: #ffffff;
-  --bui-color-border-strong: #ffffff;
+  /* Black hairlines still separate things where bevels can't. White text
+     on chrome — the dark-mode inversion of black-on-chrome. */
+  --bui-color-border: #000000;
+  --bui-color-border-strong: #000000;
   --bui-color-text: #ffffff;
-  --bui-color-text-muted: #c0c0c0;
+  --bui-color-text-muted: #b8b8b8;
   --bui-color-text-inverse: #000000;
 
-  /* Cyan replaces navy — it pops on pure black */
-  --bui-color-accent: #00ffff;
-  --bui-color-accent-hover: #00d4d4;
-  --bui-color-accent-active: #00a8a8;
-  --bui-color-accent-fg: #000000;
-  --bui-color-accent-soft: #003a3a;
+  /* Mid-blue — a Win95-era selection blue lifted enough to read on the
+     grey chrome. Sits between #000080 (light-mode navy) and #1084d0
+     (title-bar cyan). */
+  --bui-color-accent: #3a78c8;
+  --bui-color-accent-hover: #4a8cd8;
+  --bui-color-accent-active: #2c5fa0;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #1e3050;
 
-  --bui-color-success: #00ff00;
-  --bui-color-warning: #ffff00;
-  --bui-color-danger: #ff5555;
-  --bui-color-danger-fg: #000000;
+  /* Classic Win95 16-color palette, brightened for dark context */
+  --bui-color-success: #5a9c5a;
+  --bui-color-warning: #c0a060;
+  --bui-color-danger: #c05858;
+  --bui-color-danger-fg: #ffffff;
 
   --bui-color-focus-ring: #ffffff;
 
-  /* Bevels invert: outer light becomes mid-gray, inner light becomes
-     dark gray, so the raised edge still reads against the black panel. */
-  --bui-94d-bevel-outer-light: #808080;
+  /* Bevels for raised chrome on a #3a3a3a base:
+     - outer light: light grey (the "lit" top-left edge)
+     - outer dark:  pure black (the "shadow" bottom-right edge)
+     - inner light: a step up from base (subtle highlight band)
+     - inner dark:  a step down from base (subtle shadow band)
+     The contrast between outer-light and outer-dark is what defines
+     raised vs sunken. */
+  --bui-94d-bevel-outer-light: #a8a8a8;
   --bui-94d-bevel-outer-dark: #000000;
-  --bui-94d-bevel-inner-light: #404040;
-  --bui-94d-bevel-inner-dark: #000000;
-  --bui-94d-title-grad: linear-gradient(90deg, #000000 0%, #008080 100%);
+  --bui-94d-bevel-inner-light: #5a5a5a;
+  --bui-94d-bevel-inner-dark: #1c1c1c;
+  --bui-94d-title-grad: linear-gradient(90deg, #1e3f7c 0%, #2080c0 100%);
 
   --bui-shadow-xs:
-    inset 1px 1px 0 0 #808080,
+    inset 1px 1px 0 0 #a8a8a8,
     inset -1px -1px 0 0 #000000,
-    inset 2px 2px 0 0 #404040,
-    inset -2px -2px 0 0 #000000;
+    inset 2px 2px 0 0 #5a5a5a,
+    inset -2px -2px 0 0 #1c1c1c;
   --bui-shadow-sm:
-    inset 1px 1px 0 0 #808080,
+    inset 1px 1px 0 0 #a8a8a8,
     inset -1px -1px 0 0 #000000,
-    inset 2px 2px 0 0 #404040,
-    inset -2px -2px 0 0 #000000;
+    inset 2px 2px 0 0 #5a5a5a,
+    inset -2px -2px 0 0 #1c1c1c;
   --bui-shadow-md:
-    inset 1px 1px 0 0 #808080,
+    inset 1px 1px 0 0 #a8a8a8,
     inset -1px -1px 0 0 #000000,
-    inset 2px 2px 0 0 #404040,
-    inset -2px -2px 0 0 #000000;
+    inset 2px 2px 0 0 #5a5a5a,
+    inset -2px -2px 0 0 #1c1c1c;
   --bui-shadow-lg:
-    inset 1px 1px 0 0 #808080,
+    inset 1px 1px 0 0 #a8a8a8,
     inset -1px -1px 0 0 #000000,
-    inset 2px 2px 0 0 #404040,
-    inset -2px -2px 0 0 #000000,
+    inset 2px 2px 0 0 #5a5a5a,
+    inset -2px -2px 0 0 #1c1c1c,
     2px 2px 0 0 rgba(0, 0, 0, 0.6);
 
-  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.85);
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.7);
 }
 
 /* ---- Raised panels ----
@@ -237,7 +252,7 @@
 [data-theme-preset="94-doors"][data-theme="dark"] .bui-datepicker__trigger,
 [data-theme-preset="94-doors"][data-theme="dark"] .bui-timepicker__trigger,
 [data-theme-preset="94-doors"][data-theme="dark"] .bui-input-wrapper {
-  background: #000000;
+  background: #1f1f1f;
   color: var(--bui-color-text);
 }
 
