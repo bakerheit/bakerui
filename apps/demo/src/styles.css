@@ -891,3 +891,261 @@ body {
   gap: var(--bui-space-2);
   overflow: auto;
 }
+
+
+/* ========================================================================
+ * Settings page templates
+ * ======================================================================== */
+
+.settings-template-preview {
+  /* Reset z-index context so any sticky/positioned children inside the
+     template position relative to this container, not the demo's main pane. */
+  isolation: isolate;
+}
+
+/* --- Sidebar template (vertical nav + content pane) --- */
+.settings-sidebar-template {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--bui-space-6);
+  align-items: start;
+}
+
+.settings-sidebar-template__nav {
+  position: sticky;
+  top: var(--bui-space-4);
+}
+
+.settings-sidebar-template__nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: var(--bui-space-3) var(--bui-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--bui-radius-md);
+  background: transparent;
+  color: var(--bui-color-text);
+  cursor: pointer;
+  font-family: inherit;
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.settings-sidebar-template__nav-item:hover {
+  background: var(--bui-color-bg-subtle);
+}
+
+.settings-sidebar-template__nav-item[data-active] {
+  background: var(--bui-color-accent-soft);
+  border-color: color-mix(in srgb, var(--bui-color-accent) 30%, transparent);
+}
+
+.settings-sidebar-template__nav-label {
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-medium);
+}
+
+@media (max-width: 720px) {
+  .settings-sidebar-template {
+    grid-template-columns: 1fr;
+  }
+  .settings-sidebar-template__nav {
+    position: static;
+  }
+  /* On narrow screens, lay the nav items out as a horizontal scroller so
+     they read like tabs without rebuilding the markup. */
+  .settings-sidebar-template__nav > div {
+    flex-direction: row !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .settings-sidebar-template__nav > div::-webkit-scrollbar {
+    display: none;
+  }
+  .settings-sidebar-template__nav-item {
+    flex-shrink: 0;
+  }
+  .settings-sidebar-template__nav-desc {
+    display: none;
+  }
+}
+
+/* ========================================================================
+ * Auth page templates (Login / Register)
+ * ======================================================================== */
+
+.auth-template-preview {
+  /* Each template paints its own page background, so frame the preview
+     with a subtle border to keep it visually contained inside the demo. */
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.auth-template {
+  width: 100%;
+  background: var(--bui-color-bg);
+  color: var(--bui-color-text);
+  min-height: 600px;
+  display: flex;
+}
+
+.auth-template__mark {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--bui-radius-md);
+  background: linear-gradient(
+    135deg,
+    var(--bui-color-accent),
+    color-mix(in srgb, var(--bui-color-accent) 60%, white)
+  );
+  display: inline-block;
+}
+
+.auth-template__brand-name {
+  font-weight: var(--bui-font-weight-semibold);
+  font-size: var(--bui-font-size-lg);
+  color: var(--bui-color-text);
+}
+
+.auth-template__or {
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-3);
+  font-size: var(--bui-font-size-xs);
+  color: var(--bui-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.auth-template__or::before,
+.auth-template__or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--bui-color-border);
+}
+
+.auth-template__link {
+  color: var(--bui-color-accent);
+  text-decoration: none;
+  font-weight: var(--bui-font-weight-medium);
+}
+.auth-template__link:hover {
+  text-decoration: underline;
+}
+
+.auth-template__terms {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bui-space-2);
+  cursor: pointer;
+}
+.auth-template__terms input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* --- Centered variant --- */
+.auth-template--centered {
+  align-items: center;
+  justify-content: center;
+  padding: var(--bui-space-10) var(--bui-space-6);
+}
+.auth-template__centered-shell {
+  width: 100%;
+  max-width: 400px;
+}
+.auth-template__card {
+  width: 100%;
+}
+.auth-template__stepper-shell {
+  max-width: 560px;
+}
+
+/* --- Split variant --- */
+.auth-template--split {
+  align-items: stretch;
+  flex-direction: row;
+}
+.auth-template__split-form {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bui-space-10) var(--bui-space-8);
+}
+.auth-template__split-form-inner {
+  width: 100%;
+  max-width: 400px;
+}
+.auth-template__split-hero {
+  flex: 1;
+  position: relative;
+  background:
+    radial-gradient(at 30% 20%, color-mix(in srgb, var(--bui-color-accent) 60%, transparent) 0%, transparent 55%),
+    radial-gradient(at 80% 80%, color-mix(in srgb, var(--bui-color-accent) 35%, #1e1b4b) 0%, transparent 60%),
+    linear-gradient(135deg, var(--bui-color-accent), color-mix(in srgb, var(--bui-color-accent) 40%, #1e1b4b));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bui-space-12);
+}
+.auth-template__split-hero--benefits {
+  align-items: flex-start;
+  padding-top: var(--bui-space-16);
+}
+.auth-template__split-hero-overlay {
+  max-width: 380px;
+}
+
+@media (max-width: 800px) {
+  .auth-template--split {
+    flex-direction: column;
+  }
+  .auth-template__split-hero {
+    /* Hide the marketing panel on narrow screens — the form deserves the
+       full viewport. */
+    display: none;
+  }
+}
+
+/* --- Minimal variant --- */
+.auth-template--minimal {
+  align-items: stretch;
+  justify-content: center;
+  padding: var(--bui-space-10) var(--bui-space-6);
+}
+.auth-template__minimal-shell {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* --- Stepper plan picker --- */
+.auth-template__plan-card {
+  width: 100%;
+  text-align: left;
+  padding: var(--bui-space-4);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  background: var(--bui-color-surface);
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--bui-color-text);
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.auth-template__plan-card:hover {
+  border-color: var(--bui-color-border-strong);
+}
+.auth-template__plan-card[data-active] {
+  border-color: var(--bui-color-accent);
+  background: var(--bui-color-accent-soft);
+}

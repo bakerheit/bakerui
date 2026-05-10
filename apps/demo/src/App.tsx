@@ -20,6 +20,9 @@ import { DataPage } from "./pages/DataPage";
 import { FormsPage } from "./pages/FormsPage";
 import { LayoutPage } from "./pages/LayoutPage";
 import { OverlaysPage } from "./pages/OverlaysPage";
+import { LoginTemplatesPage } from "./pages/LoginTemplatesPage";
+import { RegisterTemplatesPage } from "./pages/RegisterTemplatesPage";
+import { SettingsTemplatesPage } from "./pages/SettingsTemplatesPage";
 import { ThemingPage } from "./pages/ThemingPage";
 import { TokensPage } from "./pages/TokensPage";
 import { TocSlotContext } from "./PageLayout";
@@ -32,6 +35,9 @@ type PageId =
   | "data"
   | "layout"
   | "overlays"
+  | "templates-settings"
+  | "templates-login"
+  | "templates-register"
   | "theming"
   | "tokens";
 
@@ -60,6 +66,14 @@ const NAV_GROUPS: NavGroup[] = [
       { id: "data", label: "Data", icon: <DataIcon /> },
       { id: "layout", label: "Layout", icon: <LayoutIcon /> },
       { id: "overlays", label: "Overlays", icon: <OverlaysIcon /> },
+    ],
+  },
+  {
+    label: "Templates",
+    items: [
+      { id: "templates-settings", label: "Settings", icon: <TemplatesIcon /> },
+      { id: "templates-login", label: "Login", icon: <LoginIcon /> },
+      { id: "templates-register", label: "Register", icon: <RegisterIcon /> },
     ],
   },
   {
@@ -176,6 +190,9 @@ export function App() {
                 {page === "data" && <DataPage />}
                 {page === "layout" && <LayoutPage />}
                 {page === "overlays" && <OverlaysPage />}
+                {page === "templates-settings" && <SettingsTemplatesPage />}
+                {page === "templates-login" && <LoginTemplatesPage />}
+                {page === "templates-register" && <RegisterTemplatesPage />}
                 {page === "theming" && (
                   <ThemingPage
                     theme={theme}
@@ -284,6 +301,34 @@ function TokensIcon() {
     <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
       <circle cx="6" cy="6" r="3" />
       <circle cx="10" cy="10" r="3" />
+    </svg>
+  );
+}
+function TemplatesIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
+      <rect x="2" y="2" width="12" height="3" rx="1" />
+      <rect x="2" y="7" width="5" height="7" rx="1" />
+      <rect x="9" y="7" width="5" height="3" rx="1" />
+      <rect x="9" y="12" width="5" height="2" rx="1" />
+    </svg>
+  );
+}
+function LoginIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round">
+      <path d="M9 3h3a1 1 0 011 1v8a1 1 0 01-1 1H9" />
+      <path d="M3 8h7" />
+      <path d="M7 5l3 3-3 3" />
+    </svg>
+  );
+}
+function RegisterIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round">
+      <circle cx="6.5" cy="5" r="2.5" />
+      <path d="M2.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4" />
+      <path d="M12 5v4M14 7h-4" />
     </svg>
   );
 }
