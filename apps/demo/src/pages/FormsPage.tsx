@@ -20,6 +20,7 @@ import {
   Skeleton,
   Spinner,
   Stack,
+  TagInput,
   Text,
   Textarea,
   Toggle,
@@ -53,6 +54,7 @@ export function FormsPage() {
         <SkeletonSection />
         <SliderSection />
         <SpinnerSection />
+        <TagInputSection />
         <ToastSection />
         <ToggleSection />
         <FullFormExample />
@@ -1812,6 +1814,70 @@ function FullFormExample() {
             <Button variant="ghost">Cancel</Button>
             <Button disabled={!agreed}>Create workspace</Button>
           </HStack>
+        </Stack>
+      </DocExample>
+    </DocSection>
+  );
+}
+
+function TagInputSection() {
+  const [tags, setTags] = useState<string[]>(["react", "typescript"]);
+  return (
+    <DocSection
+      title="TagInput"
+      description="Comma-separated chip input. Enter, Tab, or comma commits the current text as a tag; Backspace on empty input removes the last tag; paste with commas or newlines bulk-adds. Duplicates blocked by default, opt in with `allowDuplicates`."
+      propsTable={[
+        { name: "value", type: "string[]", description: "Controlled list of tags." },
+        { name: "defaultValue", type: "string[]", description: "Initial tags for uncontrolled use." },
+        { name: "onChange", type: "(tags: string[]) => void", description: "Fires whenever the tag list changes." },
+        { name: "placeholder", type: "string", description: "Shown only when there are no tags." },
+        { name: "disabled", type: "boolean", default: "false" },
+        { name: "invalid", type: "boolean", default: "false" },
+        { name: "allowDuplicates", type: "boolean", default: "false", description: "Permit the same value twice." },
+        { name: "maxTags", type: "number", description: "Cap the count — input disables when reached." },
+        {
+          name: "delimiter",
+          type: "string[]",
+          default: '[",", "Enter", "Tab"]',
+          description: "KeyboardEvent.key values that commit the current text.",
+        },
+        { name: "size", type: '"sm" | "md" | "lg"', default: '"md"' },
+      ]}
+    >
+      <DocExample
+        label="Basic"
+        description="Type a tag and press Enter (or comma, or Tab). Backspace on an empty input removes the last tag. Try pasting a comma-separated list."
+        code={`const [tags, setTags] = useState<string[]>(["react", "typescript"]);
+
+<TagInput
+  value={tags}
+  onChange={setTags}
+  placeholder="Add a tag…"
+/>`}
+      >
+        <Field label="Topics" hint={`${tags.length} tag${tags.length === 1 ? "" : "s"}`}>
+          <TagInput value={tags} onChange={setTags} placeholder="Add a tag…" />
+        </Field>
+      </DocExample>
+
+      <DocExample
+        label="With maxTags"
+        description="Input disables once the cap is hit. Remove a tag to type again."
+        code={`<TagInput defaultValue={["one", "two"]} maxTags={3} placeholder="Up to 3" />`}
+      >
+        <TagInput defaultValue={["one", "two"]} maxTags={3} placeholder="Up to 3" />
+      </DocExample>
+
+      <DocExample
+        label="Sizes"
+        code={`<TagInput size="sm" defaultValue={["sm"]} placeholder="Small" />
+<TagInput size="md" defaultValue={["md"]} placeholder="Medium" />
+<TagInput size="lg" defaultValue={["lg"]} placeholder="Large" />`}
+      >
+        <Stack gap="3">
+          <TagInput size="sm" defaultValue={["sm"]} placeholder="Small" />
+          <TagInput size="md" defaultValue={["md"]} placeholder="Medium" />
+          <TagInput size="lg" defaultValue={["lg"]} placeholder="Large" />
         </Stack>
       </DocExample>
     </DocSection>

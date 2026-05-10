@@ -36,6 +36,7 @@ export * from "./components/DropdownMenu";
 export * from "./components/Pagination";
 export * from "./components/Slider";
 export * from "./components/Stepper";
+export * from "./components/TagInput";
 
 export * from "./theme";
 export { cx } from "./utils/cx";

@@ -1,0 +1,134 @@
+/* === TagInput =============================================================
+ * Looks like a single input field that wraps a row of small chips. The
+ * wrapper carries the border + focus ring (so the chips and the input
+ * read as one control); the inner <input> is borderless and grows to
+ * fill the remaining space.
+ */
+
+.bui-tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bui-space-1);
+  width: 100%;
+  min-height: var(--bui-control-height-md);
+  padding: 3px var(--bui-space-2);
+  background: var(--bui-color-surface);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  cursor: text;
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-tag-input:hover:not(:focus-within):not(.bui-tag-input--disabled) {
+  border-color: var(--bui-color-border-strong);
+}
+
+.bui-tag-input:focus-within {
+  border-color: var(--bui-color-accent);
+  box-shadow: 0 0 0 3px var(--bui-color-focus-ring);
+}
+
+.bui-tag-input--invalid {
+  border-color: var(--bui-color-danger);
+}
+.bui-tag-input--invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bui-color-danger) 30%, transparent);
+}
+
+.bui-tag-input--disabled {
+  opacity: 0.55;
+  background: var(--bui-color-bg-muted);
+  cursor: not-allowed;
+}
+
+.bui-tag-input--sm {
+  min-height: var(--bui-control-height-sm);
+  padding: 2px var(--bui-space-2);
+}
+.bui-tag-input--lg {
+  min-height: var(--bui-control-height-lg);
+  padding: 4px var(--bui-space-2);
+}
+
+/* --- Chip ---------------------------------------------------------- */
+.bui-tag-input__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 2px 2px var(--bui-space-2);
+  background: var(--bui-color-bg-subtle);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-sm);
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text);
+  line-height: 1.3;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.bui-tag-input__tag-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bui-tag-input__tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: var(--bui-color-text-muted);
+  cursor: pointer;
+  border-radius: var(--bui-radius-sm);
+  flex-shrink: 0;
+}
+.bui-tag-input__tag-remove:hover:not(:disabled) {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+.bui-tag-input__tag-remove:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 1px;
+}
+.bui-tag-input__tag-remove:disabled {
+  cursor: not-allowed;
+}
+
+/* --- Input --------------------------------------------------------- */
+.bui-tag-input__input {
+  flex: 1;
+  min-width: 80px;
+  padding: 0 var(--bui-space-1);
+  height: calc(var(--bui-control-height-md) - 8px);
+  font-family: inherit;
+  font-size: var(--bui-font-size-md);
+  color: var(--bui-color-text);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.bui-tag-input--sm .bui-tag-input__input {
+  font-size: var(--bui-font-size-sm);
+  height: calc(var(--bui-control-height-sm) - 6px);
+}
+.bui-tag-input--lg .bui-tag-input__input {
+  font-size: var(--bui-font-size-lg);
+  height: calc(var(--bui-control-height-lg) - 10px);
+}
+
+.bui-tag-input__input::placeholder {
+  color: var(--bui-color-text-muted);
+}
+
+.bui-tag-input__input:disabled {
+  cursor: not-allowed;
+}
