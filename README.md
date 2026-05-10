@@ -9,6 +9,8 @@ A small, longevity-focused React component library themed entirely with CSS cust
 [![React 18+](https://img.shields.io/badge/React-18%2B-61dafb?style=flat-square&logo=react&logoColor=white)](https://react.dev)
 [![Built with Claude](https://img.shields.io/badge/Built%20with-Claude-D97757?style=flat-square&logo=anthropic&logoColor=white)](https://claude.com)
 
+**Live demo →** [bakerheit.github.io/bakerui](https://bakerheit.github.io/bakerui/)
+
 ---
 
 ## Install
