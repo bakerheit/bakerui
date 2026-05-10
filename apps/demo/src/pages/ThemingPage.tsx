@@ -68,6 +68,11 @@ const PRESET_THEMES: Array<{
     label: "Toy Plastic",
     description: "Fisher-Price primaries, thick outlines, hard offset shadows",
   },
+  {
+    id: "newsprint",
+    label: "Newsprint",
+    description: "Broadsheet ivory, serif type, hairline rules, masthead red",
+  },
 ];
 
 export function ThemingPage({
@@ -219,7 +224,10 @@ export function ThemingPage({
             inks on dithered paper-grey, matte surfaces, no shadows, sharp corners), and{" "}
             <strong>toy-plastic</strong> (Fisher-Price / LeapFrog molded-plastic look — primary
             colors, thick black outlines, hard offset shadows, chunky rounded corners; dark mode
-            is a glow-in-the-dark night-light variant on deep navy).
+            is a glow-in-the-dark night-light variant on deep navy), and{" "}
+            <strong>newsprint</strong> (broadsheet editorial design — warm ivory paper, Georgia
+            serif type, hairline rules, sharp corners, masthead red for accents; dark mode is a
+            night-mode newspaper-app variant with warm charcoal and sepia-cream text).
           </Text>
 
           <Heading level={3}>Using a built-in preset</Heading>

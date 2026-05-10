@@ -1,0 +1,309 @@
+/*
+ * bakerui theme preset — "newsprint"
+ *
+ * Broadsheet editorial aesthetic — warm ivory newsprint paper, near-black
+ * ink for body type, classic newspaper red for accents (section labels,
+ * pull quotes, primary calls-to-action), strict hairline rules in place
+ * of rounded borders, and a Georgia/Times serif type stack. Sharp
+ * corners everywhere; no soft shadows. Opt in:
+ *
+ *   import "bakerui/themes/newsprint.css";
+ *   <ThemeProvider preset="newsprint"> ... </ThemeProvider>
+ *
+ * Dark mode is a "night-mode newspaper app" reinterpretation: warm
+ * charcoal canvas, sepia-cream text, the same editorial structure with
+ * hairline rules and serif type, and the accent red lifted just enough
+ * to read against the dark surface.
+ */
+
+/* ---- Light (warm newsprint sheet) ---- */
+[data-theme-preset="newsprint"] {
+  /* Warm ivory — actual newsprint sits in this register: not white,
+     not cream, with a faint yellow-brown bias from the wood pulp. */
+  --bui-color-bg: #f1ead0;
+  --bui-color-bg-subtle: #e8e0c0;
+  --bui-color-bg-muted: #dcd3b0;
+  --bui-color-surface: #f5eedc;
+  --bui-color-surface-raised: #faf3e0;
+
+  /* Hairline ink — warm near-black, never pure #000 (that's an LCD
+     artifact, not a printing-press color). */
+  --bui-color-border: #2a2620;
+  --bui-color-border-strong: #1a1612;
+
+  --bui-color-text: #1a1612;
+  --bui-color-text-muted: #5a5448;
+  --bui-color-text-inverse: #f5eedc;
+
+  /* Classic newspaper red — the banner / pull-quote / "EXTRA" red, sat
+     between USA Today's brand red and the NYT masthead red. */
+  --bui-color-accent: #b8232a;
+  --bui-color-accent-hover: #a01d23;
+  --bui-color-accent-active: #8a181d;
+  --bui-color-accent-fg: #faf3e0;
+  --bui-color-accent-soft: #f0d4d6;
+
+  /* Semantic colors stay editorial — muted print inks, not screen
+     primaries. */
+  --bui-color-success: #4a6b3a;
+  --bui-color-warning: #8a6420;
+  --bui-color-danger: #8a181d;
+  --bui-color-danger-fg: #faf3e0;
+
+  --bui-color-focus-ring: #b8232a;
+
+  /* Georgia ships everywhere; Charter and Cambria are the high-quality
+     fallbacks; Times is the last-resort universal. */
+  --bui-font-family:
+    Georgia, "Charter", "Cambria", "Times New Roman", "Liberation Serif",
+    serif;
+  --bui-line-height-normal: 1.55;
+
+  /* Sharp everywhere — broadsheet design has zero rounded corners. */
+  --bui-radius-sm: 0;
+  --bui-radius-md: 0;
+  --bui-radius-lg: 0;
+  --bui-radius-xl: 0;
+  --bui-radius-full: 0;
+
+  /* No drop shadows. Print has no depth. The hierarchy here comes from
+     hairline rules and type weight, not surface elevation. */
+  --bui-shadow-xs: none;
+  --bui-shadow-sm: none;
+  --bui-shadow-md: none;
+  --bui-shadow-lg: none;
+
+  --bui-color-overlay-backdrop: rgba(26, 22, 18, 0.5);
+}
+
+/* ---- Dark (night-mode newspaper app) ----
+   What the NYT or WaPo apps look like in dark mode: warm-charcoal canvas,
+   sepia-cream type, hairline rules still doing the structural work, the
+   masthead red lifted enough to pop against the dark surface. */
+[data-theme-preset="newsprint"][data-theme="dark"] {
+  --bui-color-bg: #1c1a16;
+  --bui-color-bg-subtle: #25221c;
+  --bui-color-bg-muted: #2f2b24;
+  --bui-color-surface: #232017;
+  --bui-color-surface-raised: #2c281f;
+
+  --bui-color-border: #5a5448;
+  --bui-color-border-strong: #8a8275;
+
+  --bui-color-text: #e8dfc8;
+  --bui-color-text-muted: #a89c80;
+  --bui-color-text-inverse: #1c1a16;
+
+  /* Red lifted from masthead crimson to a warmer ink-on-dark legible
+     register. */
+  --bui-color-accent: #d8484c;
+  --bui-color-accent-hover: #e8595d;
+  --bui-color-accent-active: #b83a3e;
+  --bui-color-accent-fg: #1c1a16;
+  --bui-color-accent-soft: rgba(216, 72, 76, 0.16);
+
+  --bui-color-success: #7a9c5a;
+  --bui-color-warning: #c8a052;
+  --bui-color-danger: #d8484c;
+  --bui-color-danger-fg: #1c1a16;
+
+  --bui-color-focus-ring: #d8484c;
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.78);
+}
+
+/* ---- Page backdrop ----
+   Very faint warm noise to suggest the coarse fiber of newsprint. The
+   light variant has a touch more bias toward the warm; dark uses a
+   slightly cooler tint so it doesn't muddy the charcoal. */
+[data-theme-preset="newsprint"].bui-root-page,
+[data-theme-preset="newsprint"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.30  0 0 0 0 0.22  0 0 0 0 0.12  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+}
+[data-theme-preset="newsprint"][data-theme="dark"].bui-root-page,
+[data-theme-preset="newsprint"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='9'/><feColorMatrix values='0 0 0 0 0.90  0 0 0 0 0.85  0 0 0 0 0.78  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+}
+
+/* ---- Headings: broadsheet display weights ----
+   h1 is masthead — heavier and tighter than the body. h2/h3 read as
+   section heads. A faint accent-color underline on h2 marks it like a
+   ruled section divider above a story. */
+[data-theme-preset="newsprint"] h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+[data-theme-preset="newsprint"] h2 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--bui-color-border);
+}
+[data-theme-preset="newsprint"] h3 {
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+/* ---- Links: underlined ink, no color shift ----
+   Editorial convention — links are body text with a 1px rule, not
+   blue. Hover bumps the rule weight, on focus the accent red comes in. */
+[data-theme-preset="newsprint"] a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+[data-theme-preset="newsprint"] a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---- Decorative <hr>: editorial section divider ----
+   A double rule with a faint gap — looks like a typeset story break. */
+[data-theme-preset="newsprint"] hr {
+  border: none;
+  height: 4px;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--bui-color-border) 0,
+      var(--bui-color-border) 1px,
+      transparent 1px,
+      transparent 3px,
+      var(--bui-color-border) 3px,
+      var(--bui-color-border) 4px
+    );
+  margin: 1.5rem 0;
+}
+
+/* ---- Cards: hairline frame, no fill differentiation, no shadow ----
+   Reads as a story block ruled off from the surrounding column. */
+[data-theme-preset="newsprint"] .bui-card {
+  background: var(--bui-color-surface);
+  border: 1px solid var(--bui-color-border);
+}
+
+/* ---- Buttons: rectangular, hairline rule, serif label ----
+   Primary takes the masthead red. Secondary is a flat outlined plate.
+   No press-in shadow — these are print-form-element buttons, not
+   physical keys. */
+[data-theme-preset="newsprint"] .bui-button:not(.bui-button--ghost) {
+  border: 1px solid var(--bui-color-border);
+  border-radius: 0;
+  font-weight: 600;
+}
+[data-theme-preset="newsprint"] .bui-button--primary {
+  background: var(--bui-color-accent);
+  border-color: var(--bui-color-accent-active);
+  color: var(--bui-color-accent-fg);
+}
+[data-theme-preset="newsprint"] .bui-button--primary:hover {
+  background: var(--bui-color-accent-hover);
+}
+[data-theme-preset="newsprint"] .bui-button--secondary {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+}
+[data-theme-preset="newsprint"] .bui-button--danger {
+  background: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+}
+
+/* ---- Badges: section labels ----
+   The classic "OPINION", "BREAKING", "POLITICS" mini-tag style —
+   uppercase small caps in the red accent, no fill, hairline rule. */
+[data-theme-preset="newsprint"] .bui-badge {
+  background: transparent;
+  border: 1px solid var(--bui-color-accent);
+  color: var(--bui-color-accent);
+  border-radius: 0;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 1px var(--bui-space-2);
+}
+[data-theme-preset="newsprint"] .bui-badge[data-tone="success"] {
+  border-color: var(--bui-color-success);
+  color: var(--bui-color-success);
+}
+[data-theme-preset="newsprint"] .bui-badge[data-tone="warning"] {
+  border-color: var(--bui-color-warning);
+  color: var(--bui-color-warning);
+}
+[data-theme-preset="newsprint"] .bui-badge[data-tone="neutral"] {
+  border-color: var(--bui-color-border);
+  color: var(--bui-color-text);
+}
+
+/* ---- Inputs: hairline bottom rule ----
+   Like the ruled blank line on a printed coupon: no box, no fill, a
+   single ink rule under the field. Focus thickens the rule and shifts
+   it to the accent red. */
+[data-theme-preset="newsprint"] .bui-input,
+[data-theme-preset="newsprint"] .bui-textarea,
+[data-theme-preset="newsprint"] .bui-select,
+[data-theme-preset="newsprint"] .bui-combobox-trigger,
+[data-theme-preset="newsprint"] .bui-datepicker__trigger,
+[data-theme-preset="newsprint"] .bui-timepicker__trigger,
+[data-theme-preset="newsprint"] .bui-input-wrapper {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--bui-color-border-strong);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+[data-theme-preset="newsprint"] .bui-input:focus-visible,
+[data-theme-preset="newsprint"] .bui-input:focus-within,
+[data-theme-preset="newsprint"] .bui-textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--bui-color-accent);
+  box-shadow: 0 1px 0 0 var(--bui-color-accent);
+}
+
+/* ---- Selection: faint highlighter ink stripe ----
+   Editorial highlight is a tinted band, not a screen-blue selection. */
+[data-theme-preset="newsprint"] ::selection {
+  background: var(--bui-color-accent-soft);
+  color: var(--bui-color-text);
+}
+
+/* ---- Tables: ruled lines top and bottom only ----
+   Typeset convention for tabular data in a newspaper — horizontal
+   rules separate rows, never vertical lines. */
+[data-theme-preset="newsprint"] .bui-table {
+  border-collapse: collapse;
+}
+[data-theme-preset="newsprint"] .bui-table th {
+  border-top: 1px solid var(--bui-color-border-strong);
+  border-bottom: 1px solid var(--bui-color-border-strong);
+  border-left: none;
+  border-right: none;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+}
+[data-theme-preset="newsprint"] .bui-table td {
+  border-top: 1px solid var(--bui-color-border);
+  border-bottom: 1px solid var(--bui-color-border);
+  border-left: none;
+  border-right: none;
+}
+
+/* ---- Tabs: read as kicker headers above a story ----
+   Sharp-cornered, no fill, the active tab gets a red ink rule under it
+   instead of a filled background. */
+[data-theme-preset="newsprint"] .bui-tabs-trigger {
+  border-radius: 0;
+  background: transparent;
+}
+[data-theme-preset="newsprint"] .bui-tabs-trigger[data-state="active"] {
+  border-bottom: 2px solid var(--bui-color-accent);
+  color: var(--bui-color-accent);
+  font-weight: 700;
+}
