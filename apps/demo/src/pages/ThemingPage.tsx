@@ -9,6 +9,7 @@ import {
   Heading,
   HStack,
   Input,
+  Select,
   Stack,
   Text,
   Toggle,
@@ -84,6 +85,10 @@ export function ThemingPage({
   setAccent,
 }: ThemingPageProps) {
   const swatch = useMemo(() => accent || "var(--bui-color-accent)", [accent]);
+  const activePresetDescription = useMemo(
+    () => PRESET_THEMES.find((entry) => entry.id === preset)?.description ?? "",
+    [preset],
+  );
 
   return (
     <PageLayout>
@@ -120,29 +125,23 @@ export function ThemingPage({
             selectors) via <code>[data-theme-preset="…"]</code>. Each ships with its own light
             and dark variant — switching mode keeps the preset.
           </Text>
-          <HStack gap="2" wrap>
-            {PRESET_THEMES.map((entry) => {
-              const active = preset === entry.id;
-              return (
-                <button
-                  key={entry.label}
-                  type="button"
-                  onClick={() => setPreset(entry.id)}
-                  className={`bui-button bui-button--${active ? "primary" : "secondary"} bui-button--sm`}
-                  style={{
-                    flexDirection: "column",
-                    height: "auto",
-                    padding: "8px 14px",
-                    alignItems: "flex-start",
-                    gap: 2,
-                  }}
-                >
-                  <span style={{ fontWeight: 600 }}>{entry.label}</span>
-                  <span style={{ fontSize: 11, opacity: 0.8 }}>{entry.description}</span>
-                </button>
-              );
-            })}
-          </HStack>
+          <Select
+            aria-label="Preset"
+            value={preset ?? ""}
+            onChange={(e) => setPreset(e.target.value || undefined)}
+            style={{ maxWidth: 320 }}
+          >
+            {PRESET_THEMES.map((entry) => (
+              <option key={entry.label} value={entry.id ?? ""}>
+                {entry.label}
+              </option>
+            ))}
+          </Select>
+          {activePresetDescription && (
+            <Text tone="muted" size="sm">
+              {activePresetDescription}
+            </Text>
+          )}
 
           <Heading level={3}>Accent color</Heading>
           <HStack gap="2" wrap>
