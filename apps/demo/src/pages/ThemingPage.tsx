@@ -8,8 +8,8 @@ import {
   Field,
   Heading,
   HStack,
+  Combobox,
   Input,
-  Select,
   Stack,
   Text,
   Toggle,
@@ -90,10 +90,12 @@ export function ThemingPage({
   setAccent,
 }: ThemingPageProps) {
   const swatch = useMemo(() => accent || "var(--bui-color-accent)", [accent]);
-  const activePresetDescription = useMemo(
-    () => PRESET_THEMES.find((entry) => entry.id === preset)?.description ?? "",
+  const activePreset = useMemo(
+    () => PRESET_THEMES.find((entry) => entry.id === preset),
     [preset],
   );
+  const activePresetDescription = activePreset?.description ?? "";
+  const activePresetLabel = activePreset?.label ?? "Default";
 
   return (
     <PageLayout>
@@ -130,18 +132,33 @@ export function ThemingPage({
             selectors) via <code>[data-theme-preset="…"]</code>. Each ships with its own light
             and dark variant — switching mode keeps the preset.
           </Text>
-          <Select
-            aria-label="Preset"
+          <Combobox
             value={preset ?? ""}
-            onChange={(e) => setPreset(e.target.value || undefined)}
-            style={{ maxWidth: 320 }}
+            onValueChange={(v) => setPreset(v || undefined)}
           >
-            {PRESET_THEMES.map((entry) => (
-              <option key={entry.label} value={entry.id ?? ""}>
-                {entry.label}
-              </option>
-            ))}
-          </Select>
+            <Combobox.Trigger
+              aria-label="Preset"
+              placeholder="Choose a theme…"
+              style={{ maxWidth: 320 }}
+            >
+              {activePresetLabel}
+            </Combobox.Trigger>
+            <Combobox.Content>
+              <Combobox.Input placeholder="Search themes…" />
+              <Combobox.List>
+                <Combobox.Empty>No themes match.</Combobox.Empty>
+                {PRESET_THEMES.map((entry) => (
+                  <Combobox.Item
+                    key={entry.label}
+                    value={entry.id ?? ""}
+                    keywords={[entry.description]}
+                  >
+                    {entry.label}
+                  </Combobox.Item>
+                ))}
+              </Combobox.List>
+            </Combobox.Content>
+          </Combobox>
           {activePresetDescription && (
             <Text tone="muted" size="sm">
               {activePresetDescription}
