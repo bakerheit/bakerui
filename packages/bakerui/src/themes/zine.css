@@ -376,6 +376,72 @@
   color: var(--bui-color-accent-fg);
 }
 
+/* ---- Floating panels: slapped-down paste-up tilt ----
+   Every floating panel (popovers, combobox dropdown, calendar / time
+   picker popouts, menus, tooltips, toasts) carries a slight rotation
+   so it reads as a sheet of paper glued onto the page rather than a
+   flat UI surface. Each panel type rotates a different direction so a
+   page with multiple open panels feels properly chaotic.
+
+   Three of these panels (popover, combobox-content, dialog) already
+   own a transform for their open/close scale animation, so we have to
+   redefine BOTH the closed and open transforms to compose scale with
+   our rotate — otherwise overriding `transform` here would drop the
+   appear animation. The four standalone panels (datepicker /
+   timepicker popovers, menu, tooltip already-positioned via
+   translate3d) just need a single override. */
+
+/* Popover — compose with the existing scale-in animation */
+[data-theme-preset="zine"] .bui-popover {
+  transform: scale(0.98) rotate(1deg);
+}
+[data-theme-preset="zine"] .bui-popover[data-state="open"] {
+  transform: scale(1) rotate(1deg);
+}
+
+/* Combobox dropdown — same compose pattern */
+[data-theme-preset="zine"] .bui-combobox-content {
+  transform: scale(0.98) rotate(-1.2deg);
+}
+[data-theme-preset="zine"] .bui-combobox-content[data-state="open"] {
+  transform: scale(1) rotate(-1.2deg);
+}
+
+/* Calendar / time picker popouts — no existing transform, direct rotate */
+[data-theme-preset="zine"] .bui-datepicker__popover {
+  transform: rotate(-0.9deg);
+}
+[data-theme-preset="zine"] .bui-timepicker__popover {
+  transform: rotate(1.3deg);
+}
+
+/* Menu (dropdown menus) — direct rotate */
+[data-theme-preset="zine"] .bui-menu {
+  transform: rotate(-1.1deg);
+}
+
+/* Tooltip — compose with the translate3d that positions it next to
+   the trigger. Tooltips are tiny so the tilt is more pronounced. */
+[data-theme-preset="zine"] .bui-tooltip {
+  transform: translate3d(var(--bui-anchor-x), var(--bui-anchor-y), 0) rotate(1.4deg);
+}
+
+/* Toasts — compose with the translate3d enter/exit animation. Stack
+   alternates direction by nth so a column of toasts feels properly
+   pasted up rather than uniformly rotated. */
+[data-theme-preset="zine"] .bui-toast {
+  transform: translate3d(var(--bui-toast-enter-x), var(--bui-toast-enter-y), 0) rotate(-0.9deg);
+}
+[data-theme-preset="zine"] .bui-toast[data-state="open"] {
+  transform: translate3d(0, 0, 0) rotate(-0.9deg);
+}
+[data-theme-preset="zine"] .bui-toast:nth-of-type(even) {
+  transform: translate3d(var(--bui-toast-enter-x), var(--bui-toast-enter-y), 0) rotate(1.1deg);
+}
+[data-theme-preset="zine"] .bui-toast:nth-of-type(even)[data-state="open"] {
+  transform: translate3d(0, 0, 0) rotate(1.1deg);
+}
+
 /* ---- Tabs: stamped section labels with red kicker ---- */
 [data-theme-preset="zine"] .bui-tabs-trigger {
   border-radius: 0;
