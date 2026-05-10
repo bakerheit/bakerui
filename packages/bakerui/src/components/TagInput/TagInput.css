@@ -53,19 +53,15 @@
   padding: 4px var(--bui-space-2);
 }
 
-/* --- Chip ---------------------------------------------------------- */
+/* --- Chip ----------------------------------------------------------
+ * The chip is a bakerui Badge — visual style (background, border,
+ * radius, type) inherits from .bui-badge so any theme preset that
+ * customizes badges (e.g. zine's stamped paste-up, 94-doors' beveled
+ * chip) reskins TagInput tags too. Only the things specific to being
+ * a removable chip live here: the trailing right-padding gets pulled
+ * in so the × button hugs the edge, and the long-label truncation. */
 .bui-tag-input__tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 2px 2px 2px var(--bui-space-2);
-  background: var(--bui-color-bg-subtle);
-  border: 1px solid var(--bui-color-border);
-  border-radius: var(--bui-radius-sm);
-  font-size: var(--bui-font-size-sm);
-  color: var(--bui-color-text);
-  line-height: 1.3;
-  white-space: nowrap;
+  padding-right: var(--bui-space-1);
   max-width: 100%;
 }
 
@@ -85,18 +81,19 @@
   margin: 0;
   background: transparent;
   border: none;
-  color: var(--bui-color-text-muted);
+  color: currentColor;
+  opacity: 0.7;
   cursor: pointer;
   border-radius: var(--bui-radius-sm);
   flex-shrink: 0;
 }
 .bui-tag-input__tag-remove:hover:not(:disabled) {
-  background: var(--bui-color-bg-muted);
-  color: var(--bui-color-text);
+  opacity: 1;
 }
 .bui-tag-input__tag-remove:focus-visible {
   outline: 2px solid var(--bui-color-focus-ring);
   outline-offset: 1px;
+  opacity: 1;
 }
 .bui-tag-input__tag-remove:disabled {
   cursor: not-allowed;

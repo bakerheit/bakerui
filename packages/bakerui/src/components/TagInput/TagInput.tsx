@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from "react";
+import { Badge } from "../Badge";
 import { cx } from "../../utils/cx";
 import "./TagInput.css";
 
@@ -164,7 +165,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
       aria-disabled={disabled || undefined}
     >
       {tags.map((tag, i) => (
-        <span key={`${tag}-${i}`} className="bui-tag-input__tag">
+        <Badge key={`${tag}-${i}`} className="bui-tag-input__tag">
           <span className="bui-tag-input__tag-label">{tag}</span>
           <button
             type="button"
@@ -175,7 +176,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
           >
             <XIcon />
           </button>
-        </span>
+        </Badge>
       ))}
       <input
         ref={inputRef}
