@@ -6,8 +6,15 @@
   align-items: center;
   gap: var(--bui-space-3);
   width: 100%;
-  height: var(--bui-topbar-height);
-  padding: 0 var(--bui-space-5);
+  /* Grow by safe-area-inset-top so the topbar's background paints behind
+     the iOS status bar / notch (when viewport-fit=cover is set), while
+     content stays below the safe area via padding-top. */
+  height: calc(var(--bui-topbar-height) + env(safe-area-inset-top));
+  padding:
+    env(safe-area-inset-top)
+    calc(var(--bui-space-5) + env(safe-area-inset-right))
+    0
+    calc(var(--bui-space-5) + env(safe-area-inset-left));
   background: var(--bui-color-bg);
   color: var(--bui-color-text);
   border-bottom: 1px solid var(--bui-color-border);

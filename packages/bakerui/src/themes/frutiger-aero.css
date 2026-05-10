@@ -184,13 +184,21 @@
 [data-theme-preset="frutiger-aero"] .bui-button--secondary,
 [data-theme-preset="frutiger-aero"] .bui-topbar,
 [data-theme-preset="frutiger-aero"] .bui-sidebar,
-[data-theme-preset="frutiger-aero"] .bui-dropdown-menu,
+[data-theme-preset="frutiger-aero"] .bui-menu,
 [data-theme-preset="frutiger-aero"] .bui-datepicker__popover {
   backdrop-filter: blur(10px) saturate(170%);
   -webkit-backdrop-filter: blur(10px) saturate(170%);
   background-image: var(--bui-aero-panel-gloss);
   box-shadow: var(--bui-aero-rim), var(--bui-shadow-md);
   border-color: var(--bui-color-border);
+}
+
+/* Mobile Safari refuses to start a touch-scroll on a child with
+   overflow:auto when its ancestor has both backdrop-filter and
+   overflow:hidden. Drop the parent clip on the combobox popup; the
+   rounded border still trims the parent's own background. */
+[data-theme-preset="frutiger-aero"] .bui-combobox-content {
+  overflow: visible;
 }
 
 /* Multi-line containers shouldn't use the pill radius. */

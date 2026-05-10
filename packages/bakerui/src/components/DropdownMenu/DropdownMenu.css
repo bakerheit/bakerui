@@ -11,6 +11,13 @@
 
 .bui-menu {
   min-width: 200px;
+  /* Cap height so tall menus scroll internally instead of overflowing the
+     viewport. dvh accounts for mobile URL bar shrinkage; vh would let the
+     menu stay too tall when the address bar reappears. */
+  max-height: min(360px, calc(100dvh - 32px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: var(--bui-space-1);
   background: var(--bui-color-surface-raised);
   color: var(--bui-color-text);

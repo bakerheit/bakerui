@@ -5,10 +5,13 @@ body,
   padding: 0;
   height: 100%;
   overflow: hidden;
+  /* Belt-and-braces: also paint html and #root with the bg token. iOS
+     Safari occasionally reveals these during overscroll bounces, and they
+     also factor into theme-color sampling fallbacks. */
+  background: var(--bui-color-bg);
 }
 
 body {
-  background: var(--bui-color-bg);
   color: var(--bui-color-text);
   font-family: var(--bui-font-family);
 }
@@ -40,7 +43,13 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-gutter: stable;
-  padding: var(--bui-space-10) var(--bui-space-12);
+  /* Bottom padding accounts for safe-area-inset-bottom (iOS home indicator
+     / bottom URL bar) since viewport-fit=cover lets content extend behind. */
+  padding:
+    var(--bui-space-10)
+    calc(var(--bui-space-12) + env(safe-area-inset-right))
+    calc(var(--bui-space-10) + env(safe-area-inset-bottom))
+    calc(var(--bui-space-12) + env(safe-area-inset-left));
 }
 
 /* Right-rail "On this page" sidebar — sibling of .demo-main, full body

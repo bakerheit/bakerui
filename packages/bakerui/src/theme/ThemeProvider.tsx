@@ -111,14 +111,67 @@ export function ThemeProvider({
     const root = document.documentElement;
     const prevTheme = root.getAttribute("data-theme");
     const prevPreset = root.getAttribute("data-theme-preset");
+    const prevColorScheme = root.style.colorScheme;
+    const prevBgColor = root.style.backgroundColor;
     root.setAttribute("data-theme", theme);
     if (preset) root.setAttribute("data-theme-preset", preset);
     else root.removeAttribute("data-theme-preset");
+
+    // Declare the current color-scheme to the browser. Without this iOS
+    // Safari's status bar tinting ignores theme-color in some edge cases
+    // (notably when the OS-level color scheme conflicts with what we're
+    // actively rendering). It also makes scrollbars and form-control
+    // defaults pick the right palette.
+    root.style.colorScheme = theme === "dark" ? "dark" : "light";
+
+    // Sync <meta name="theme-color"> with the resolved page bg so mobile
+    // browser chrome (iOS Safari URL bar + status bar, Android status
+    // bar) tints to match. Without this, themes that paint a fancy
+    // background on .bui-root-page (gradients, etc.) leave iOS unable to
+    // sample a representative color and it falls back to white.
+    //
+    // iOS Safari is finicky about how it picks up theme-color updates:
+    // mutating an existing meta's `content` attribute is sometimes
+    // ignored. The reliable pattern is to remove ALL existing
+    // theme-color metas and append a new one each time the theme changes
+    // — Safari treats the new element as a fresh parse.
+    const bg = getComputedStyle(root).getPropertyValue("--bui-color-bg").trim();
+
+    // Paint the bg color onto <html> directly so iOS Safari's status-bar
+    // sampler sees a solid color at the top of the document. Theme CSS
+    // can paint fancier backgrounds on .bui-root-page (gradients, etc.)
+    // but iOS often samples the underlying html element when deciding
+    // status bar tint, especially when the page uses
+    // background-attachment:fixed on a descendant.
+    if (bg) root.style.backgroundColor = bg;
+
+    const prevMetas = Array.from(
+      document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]'),
+    );
+    const prevContents = prevMetas.map((m) => m.getAttribute("content"));
+    prevMetas.forEach((m) => m.remove());
+    let addedMeta: HTMLMetaElement | null = null;
+    if (bg) {
+      addedMeta = document.createElement("meta");
+      addedMeta.setAttribute("name", "theme-color");
+      addedMeta.setAttribute("content", bg);
+      document.head.appendChild(addedMeta);
+    }
+
     return () => {
       if (prevTheme === null) root.removeAttribute("data-theme");
       else root.setAttribute("data-theme", prevTheme);
       if (prevPreset === null) root.removeAttribute("data-theme-preset");
       else root.setAttribute("data-theme-preset", prevPreset);
+      root.style.colorScheme = prevColorScheme;
+      root.style.backgroundColor = prevBgColor;
+      addedMeta?.remove();
+      // Restore any pre-existing theme-color metas that were removed.
+      prevMetas.forEach((m, i) => {
+        const content = prevContents[i];
+        if (content !== null) m.setAttribute("content", content);
+        document.head.appendChild(m);
+      });
     };
   }, [theme, preset]);
 

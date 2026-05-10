@@ -182,8 +182,7 @@
    sharp shapes underneath without fogging the backdrop. */
 [data-theme-preset="glassx"] .bui-popover,
 [data-theme-preset="glassx"] .bui-tooltip,
-[data-theme-preset="glassx"] .bui-dropdown-menu,
-[data-theme-preset="glassx"] .bui-combobox-content,
+[data-theme-preset="glassx"] .bui-menu,
 [data-theme-preset="glassx"] .bui-datepicker__popover {
   background-color: var(--bui-glassx-floaty-bg);
   backdrop-filter: blur(6px) saturate(140%);
@@ -191,6 +190,27 @@
   background-image: var(--bui-glassx-floaty-tint);
   box-shadow: var(--bui-glassx-rim), var(--bui-shadow-lg);
   border-color: var(--bui-color-border);
+}
+
+/* Combobox content is a SPECIAL CASE: it has a scrollable child
+   (.bui-combobox-list with overflow:auto). If we put backdrop-filter on
+   the parent, mobile Safari refuses to start a touch-scroll on the child
+   — the filter establishes a containing block that captures the gesture
+   before it reaches the scroll target. Solution: move backdrop-filter
+   from the parent to the children that need it (search input wrapper +
+   list). Then the scrollable element is also the filter element, which
+   browsers handle correctly. The parent keeps the rim/tint/shadow so the
+   surface still reads as a glassy sheet. */
+[data-theme-preset="glassx"] .bui-combobox-content {
+  background-color: var(--bui-glassx-floaty-bg);
+  background-image: var(--bui-glassx-floaty-tint);
+  box-shadow: var(--bui-glassx-rim), var(--bui-shadow-lg);
+  border-color: var(--bui-color-border);
+}
+[data-theme-preset="glassx"] .bui-combobox-input-wrapper,
+[data-theme-preset="glassx"] .bui-combobox-list {
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
 }
 
 /* Multi-line containers shouldn't pill. */
@@ -201,9 +221,22 @@
 }
 
 /* Topbar/sidebar stay flush. */
-[data-theme-preset="glassx"] .bui-topbar,
 [data-theme-preset="glassx"] .bui-sidebar {
   box-shadow: var(--bui-glassx-rim);
+}
+
+/* Topbar special-cases the rim: with viewport-fit=cover the topbar's top
+   edge sits under the iOS status bar, and iOS samples that 1px band to
+   decide the status-bar tint. The default glass rim has a bright white
+   top-inset that fools iOS into rendering a light status bar over a dark
+   page. Drop backdrop-filter and the bright rim here so the topbar paints
+   a solid bg in that band; we keep just a subtle bottom edge. */
+[data-theme-preset="glassx"] .bui-topbar {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background-image: none;
+  background-color: var(--bui-color-bg);
+  box-shadow: inset 0 -1px 0 0 var(--bui-color-border);
 }
 
 /* Soften accordion separators against the colorful backdrop. */

@@ -127,8 +127,17 @@
 
 /* List + items */
 .bui-combobox-list {
-  max-height: 280px;
+  /* dvh-aware cap shrinks the list on short viewports (e.g. mobile
+     landscape with keyboard open) instead of staying at a fixed 280px
+     and getting clipped by the popover. */
+  max-height: min(280px, calc(100dvh - 120px));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  /* iOS Safari fails to scroll an element with overflow:auto when an
+     ancestor has backdrop-filter (used by glassy themes). The legacy
+     `-webkit-overflow-scrolling` flag forces an iOS-native scroll
+     container, restoring touch-scroll. Harmless on other browsers. */
+  -webkit-overflow-scrolling: touch;
   padding: var(--bui-space-1);
 }
 

@@ -23,6 +23,7 @@ import { OverlaysPage } from "./pages/OverlaysPage";
 import { ThemingPage } from "./pages/ThemingPage";
 import { TokensPage } from "./pages/TokensPage";
 import { TocSlotContext } from "./PageLayout";
+import { VERSION_LABEL } from "./version";
 
 type PageId =
   | "home"
@@ -106,7 +107,7 @@ export function App() {
           <Topbar>
             <Sidebar.Trigger />
             <Brand />
-            <Badge tone="accent">v0.3.0</Badge>
+            <Badge tone="accent">{VERSION_LABEL}</Badge>
             <Topbar.Spacer />
             <Tooltip>
               <Tooltip.Trigger asChild>
