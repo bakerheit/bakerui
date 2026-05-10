@@ -1,0 +1,323 @@
+/*
+ * bakerui theme preset — "neon-sprawl"
+ *
+ * Cyberpunk retro-futurism: deep violet-black surfaces lit by hot
+ * magenta and electric cyan, a perspective grid backdrop, neon-tube
+ * border glows on every panel, and a chromatic-aberration RGB-shift on
+ * headings. Differentiates from `terminal` (flat single-color CRT) and
+ * `cassette-futurism` (warm amber industrial) by leaning into dual-color
+ * saturated glow and angular geometry. Opt in:
+ *
+ *   import "bakerui/themes/neon-sprawl.css";
+ *   <ThemeProvider preset="neon-sprawl"> ... </ThemeProvider>
+ *
+ * Dark mode is the canonical look — cyberpunk lives at night. Light
+ * mode is "Daylight Sprawl": pale lavender surfaces with darker neon
+ * accents, kept legible for daytime use.
+ */
+
+/* ---- Light (Daylight Sprawl) ---- */
+[data-theme-preset="neon-sprawl"] {
+  /* Pale lavender / icy pink surfaces */
+  --bui-color-bg: #f6f0ff;
+  --bui-color-bg-subtle: #ede2ff;
+  --bui-color-bg-muted: #ddccfa;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-raised: #ffffff;
+
+  /* Deep violet ink — almost black with a purple bias */
+  --bui-color-border: #d6177a;
+  --bui-color-border-strong: #b00f63;
+  --bui-color-text: #1a0830;
+  --bui-color-text-muted: #5a4070;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Magenta primary, cyan secondary glow used in shadows + focus */
+  --bui-color-accent: #d6177a;
+  --bui-color-accent-hover: #b00f63;
+  --bui-color-accent-active: #8a0a4d;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #ffd9eb;
+
+  --bui-color-success: #00a86b;
+  --bui-color-warning: #d97706;
+  --bui-color-danger: #dc2658;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: #00b8c8;
+
+  /* Neon palette tokens — used directly in glow stacks */
+  --bui-ns-magenta: #d6177a;
+  --bui-ns-cyan: #00b8c8;
+  --bui-ns-grid: rgba(214, 23, 122, 0.08);
+
+  /* Sharp angular corners — chamfers, not pills */
+  --bui-radius-sm: 2px;
+  --bui-radius-md: 4px;
+  --bui-radius-lg: 6px;
+  --bui-radius-xl: 8px;
+
+  /* Hairline rim + cyan halo */
+  --bui-shadow-xs: 0 0 0 1px rgba(0, 184, 200, 0.3);
+  --bui-shadow-sm:
+    0 0 0 1px rgba(0, 184, 200, 0.4),
+    0 0 8px rgba(0, 184, 200, 0.12);
+  --bui-shadow-md:
+    0 0 0 1px rgba(0, 184, 200, 0.5),
+    0 0 14px rgba(0, 184, 200, 0.18),
+    0 0 24px rgba(214, 23, 122, 0.08);
+  --bui-shadow-lg:
+    0 0 0 1px rgba(0, 184, 200, 0.55),
+    0 0 24px rgba(0, 184, 200, 0.22),
+    0 0 48px rgba(214, 23, 122, 0.12);
+
+  --bui-color-overlay-backdrop: rgba(26, 8, 48, 0.5);
+}
+
+/* ---- Dark (Neon Sprawl, canonical) ----
+   Deep violet-black surfaces lit by saturated magenta + cyan. The
+   border tokens point at cyan because the rim glow on every panel is
+   the theme's signature — it reads against any backdrop. */
+[data-theme-preset="neon-sprawl"][data-theme="dark"] {
+  /* Violet-black bg — never pure #000, the purple bias is what makes
+     the cyan and magenta read as neon rather than RGB primaries. */
+  --bui-color-bg: #0a0418;
+  --bui-color-bg-subtle: #140828;
+  --bui-color-bg-muted: #1c0e3a;
+  --bui-color-surface: #150828;
+  --bui-color-surface-raised: #1d1038;
+
+  --bui-color-border: #00d8e8;
+  --bui-color-border-strong: #00f0ff;
+  --bui-color-text: #f0e8ff;
+  --bui-color-text-muted: #a797d4;
+  --bui-color-text-inverse: #0a0418;
+
+  --bui-color-accent: #ff2a8a;
+  --bui-color-accent-hover: #ff4d9c;
+  --bui-color-accent-active: #e6166f;
+  --bui-color-accent-fg: #0a0418;
+  --bui-color-accent-soft: rgba(255, 42, 138, 0.18);
+
+  --bui-color-success: #00ff9c;
+  --bui-color-warning: #ffb000;
+  --bui-color-danger: #ff3060;
+  --bui-color-danger-fg: #0a0418;
+
+  --bui-color-focus-ring: #00f0ff;
+
+  --bui-ns-magenta: #ff2a8a;
+  --bui-ns-cyan: #00f0ff;
+  --bui-ns-grid: rgba(0, 240, 255, 0.06);
+
+  /* Bigger, brighter glow stacks for the dark canvas. Each shadow
+     layers a cyan rim, an outer cyan bloom, and a magenta secondary
+     bloom — that's the "two neon tubes lighting the surface" effect. */
+  --bui-shadow-xs: 0 0 0 1px rgba(0, 240, 255, 0.4);
+  --bui-shadow-sm:
+    0 0 0 1px rgba(0, 240, 255, 0.55),
+    0 0 12px rgba(0, 240, 255, 0.18);
+  --bui-shadow-md:
+    0 0 0 1px rgba(0, 240, 255, 0.65),
+    0 0 22px rgba(0, 240, 255, 0.25),
+    0 0 36px rgba(255, 42, 138, 0.12);
+  --bui-shadow-lg:
+    0 0 0 1px rgba(0, 240, 255, 0.75),
+    0 0 36px rgba(0, 240, 255, 0.3),
+    0 0 64px rgba(255, 42, 138, 0.18);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.78);
+}
+
+/* ---- Page backdrop ----
+   Two-axis grid + center vignette. The grid uses the cyan accent at low
+   alpha so it reads as a perspective floor without overwhelming dense UI.
+   The vignette pulls bright cyan toward the bottom and magenta toward
+   the top — the night-skyline effect. */
+[data-theme-preset="neon-sprawl"].bui-root-page,
+[data-theme-preset="neon-sprawl"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(214, 23, 122, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 184, 200, 0.1) 0%, transparent 55%),
+    linear-gradient(var(--bui-ns-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bui-ns-grid) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: fixed;
+}
+
+[data-theme-preset="neon-sprawl"][data-theme="dark"].bui-root-page,
+[data-theme-preset="neon-sprawl"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 42, 138, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 240, 255, 0.14) 0%, transparent 60%),
+    linear-gradient(var(--bui-ns-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bui-ns-grid) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: fixed;
+}
+
+/* ---- Neon-tube panels ----
+   Cards, popovers, alerts, etc. get the cyan rim + bloom. The 1px rim
+   is what makes it read as a neon edge; the bloom does the lighting. */
+[data-theme-preset="neon-sprawl"] .bui-card,
+[data-theme-preset="neon-sprawl"] .bui-dialog,
+[data-theme-preset="neon-sprawl"] .bui-popover,
+[data-theme-preset="neon-sprawl"] .bui-tooltip,
+[data-theme-preset="neon-sprawl"] .bui-toast,
+[data-theme-preset="neon-sprawl"] .bui-alert,
+[data-theme-preset="neon-sprawl"] .bui-accordion,
+[data-theme-preset="neon-sprawl"] .bui-table-wrapper,
+[data-theme-preset="neon-sprawl"] .bui-menu,
+[data-theme-preset="neon-sprawl"] .bui-combobox-content,
+[data-theme-preset="neon-sprawl"] .bui-datepicker__popover,
+[data-theme-preset="neon-sprawl"] .bui-timepicker__popover {
+  border: 1px solid var(--bui-ns-cyan);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-cyan),
+    0 0 18px rgba(0, 240, 255, 0.22),
+    0 0 36px rgba(255, 42, 138, 0.1);
+}
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-card,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-dialog,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-popover,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-tooltip,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-toast,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-alert,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-accordion,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-table-wrapper,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-menu,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-combobox-content,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-datepicker__popover,
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-timepicker__popover {
+  box-shadow:
+    0 0 0 1px var(--bui-ns-cyan),
+    0 0 12px rgba(0, 184, 200, 0.18),
+    0 0 28px rgba(214, 23, 122, 0.08);
+}
+
+/* ---- Inputs ----
+   Dark transparent bg, cyan rim, full magenta bloom on focus — the
+   "pay attention to me" effect every cyberpunk console has. */
+[data-theme-preset="neon-sprawl"] .bui-input,
+[data-theme-preset="neon-sprawl"] .bui-textarea,
+[data-theme-preset="neon-sprawl"] .bui-select,
+[data-theme-preset="neon-sprawl"] .bui-combobox-trigger,
+[data-theme-preset="neon-sprawl"] .bui-datepicker__trigger,
+[data-theme-preset="neon-sprawl"] .bui-timepicker__trigger {
+  border: 1px solid var(--bui-ns-cyan);
+  background: var(--bui-color-surface);
+}
+[data-theme-preset="neon-sprawl"] .bui-input:focus-visible,
+[data-theme-preset="neon-sprawl"] .bui-input:focus-within,
+[data-theme-preset="neon-sprawl"] .bui-textarea:focus-visible,
+[data-theme-preset="neon-sprawl"] .bui-select:focus-visible,
+[data-theme-preset="neon-sprawl"] .bui-combobox-trigger:focus-visible,
+[data-theme-preset="neon-sprawl"] .bui-datepicker__trigger:focus-visible,
+[data-theme-preset="neon-sprawl"] .bui-timepicker__trigger:focus-visible {
+  outline: none;
+  border-color: var(--bui-ns-magenta);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-magenta),
+    0 0 16px rgba(255, 42, 138, 0.45);
+}
+
+/* ---- Buttons read as outlined neon signs ----
+   Primary: magenta rim + magenta bloom; the label glows. Secondary:
+   cyan rim + cyan bloom. Hovering ramps the glow. */
+[data-theme-preset="neon-sprawl"] .bui-button--primary {
+  background: transparent;
+  color: var(--bui-ns-magenta);
+  border: 1px solid var(--bui-ns-magenta);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-magenta),
+    0 0 14px rgba(255, 42, 138, 0.3);
+  text-shadow: 0 0 6px rgba(255, 42, 138, 0.55);
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="neon-sprawl"] .bui-button--primary:hover:not(:disabled) {
+  background: var(--bui-ns-magenta);
+  color: var(--bui-color-accent-fg);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-magenta),
+    0 0 22px rgba(255, 42, 138, 0.55);
+  text-shadow: none;
+}
+[data-theme-preset="neon-sprawl"]:not([data-theme="dark"]) .bui-button--primary {
+  text-shadow: 0 0 4px rgba(214, 23, 122, 0.4);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-magenta),
+    0 0 10px rgba(214, 23, 122, 0.22);
+}
+
+[data-theme-preset="neon-sprawl"] .bui-button--secondary {
+  background: transparent;
+  color: var(--bui-ns-cyan);
+  border: 1px solid var(--bui-ns-cyan);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-cyan),
+    0 0 12px rgba(0, 240, 255, 0.25);
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+}
+[data-theme-preset="neon-sprawl"] .bui-button--secondary:hover:not(:disabled) {
+  background: rgba(0, 240, 255, 0.12);
+  box-shadow:
+    0 0 0 1px var(--bui-ns-cyan),
+    0 0 20px rgba(0, 240, 255, 0.45);
+}
+
+/* ---- Headings get a chromatic-aberration RGB shift ----
+   A 1px magenta to the left and 1px cyan to the right reads as VHS /
+   broken-monitor RGB misregistration. Subtle on light mode (the
+   contrast against pale bg makes it bloom), full strength on dark. */
+[data-theme-preset="neon-sprawl"] h1,
+[data-theme-preset="neon-sprawl"] h2 {
+  text-shadow:
+    -1px 0 0 var(--bui-ns-magenta),
+    1px 0 0 var(--bui-ns-cyan);
+  letter-spacing: 0.01em;
+}
+[data-theme-preset="neon-sprawl"][data-theme="dark"] h1,
+[data-theme-preset="neon-sprawl"][data-theme="dark"] h2,
+[data-theme-preset="neon-sprawl"][data-theme="dark"] h3 {
+  text-shadow:
+    -1px 0 0 var(--bui-ns-magenta),
+    1px 0 0 var(--bui-ns-cyan),
+    0 0 12px rgba(0, 240, 255, 0.25);
+}
+
+/* ---- Topbar reads as a neon HUD strip ---- */
+[data-theme-preset="neon-sprawl"] .bui-topbar {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  border-bottom: 1px solid var(--bui-ns-cyan);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.18);
+}
+
+/* ---- Badges read as neon ID tags ---- */
+[data-theme-preset="neon-sprawl"] .bui-badge {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--bui-font-weight-semibold);
+  font-size: 0.7rem;
+  border: 1px solid var(--bui-ns-cyan);
+  background: transparent;
+  color: var(--bui-ns-cyan);
+  text-shadow: 0 0 4px rgba(0, 240, 255, 0.4);
+}
+
+/* ---- Selection / highlighted menu rows pop magenta ---- */
+[data-theme-preset="neon-sprawl"] ::selection {
+  background: var(--bui-ns-magenta);
+  color: var(--bui-color-accent-fg);
+}
+[data-theme-preset="neon-sprawl"] .bui-menu-item[data-highlighted="true"],
+[data-theme-preset="neon-sprawl"] .bui-combobox-item[data-highlighted="true"] {
+  background: rgba(255, 42, 138, 0.16);
+  color: var(--bui-color-text);
+  box-shadow: inset 2px 0 0 0 var(--bui-ns-magenta);
+}

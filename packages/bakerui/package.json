@@ -29,7 +29,12 @@
     "./themes/soft.css": "./src/themes/soft.css",
     "./themes/terminal.css": "./src/themes/terminal.css",
     "./themes/glassx.css": "./src/themes/glassx.css",
-    "./themes/frutiger-aero.css": "./src/themes/frutiger-aero.css"
+    "./themes/frutiger-aero.css": "./src/themes/frutiger-aero.css",
+    "./themes/memphis.css": "./src/themes/memphis.css",
+    "./themes/cassette-futurism.css": "./src/themes/cassette-futurism.css",
+    "./themes/94-doors.css": "./src/themes/94-doors.css",
+    "./themes/neon-sprawl.css": "./src/themes/neon-sprawl.css",
+    "./themes/colored-ebook.css": "./src/themes/colored-ebook.css"
   },
   "files": [
     "dist",

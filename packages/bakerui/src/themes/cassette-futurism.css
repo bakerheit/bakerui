@@ -1,0 +1,302 @@
+/*
+ * bakerui theme preset — "cassette-futurism"
+ *
+ * 70s/80s sci-fi control-panel aesthetic: industrial beige and sodium-amber
+ * in light mode, charcoal cockpit with phosphor-amber readouts in dark mode.
+ * Surfaces are *beveled* — every panel and input carries inset highlight +
+ * shadow to simulate a milled plastic or anodized-metal control. A faint
+ * scanline overlay sits over the page so the whole UI reads like a console
+ * captured on CRT.
+ *
+ * Differentiates from `terminal` (which is flat mono on paper or green CRT)
+ * by leaning into chunky 3D bevels, brushed gradients, and warm amber
+ * everywhere. Opt in:
+ *
+ *   import "bakerui/themes/cassette-futurism.css";
+ *   <ThemeProvider preset="cassette-futurism"> ... </ThemeProvider>
+ */
+
+/* ---- Light (beige-box / 80s PC plastic) ---- */
+[data-theme-preset="cassette-futurism"] {
+  /* Warm putty / industrial beige — the color of aged-plastic enclosures */
+  --bui-color-bg: #cdc4ad;
+  --bui-color-bg-subtle: #d8d0b9;
+  --bui-color-bg-muted: #c2b8a0;
+  --bui-color-surface: #e2dac3;
+  --bui-color-surface-raised: #ece5cf;
+
+  --bui-color-border: #5a4f3d;
+  --bui-color-border-strong: #3d3325;
+
+  --bui-color-text: #1f1810;
+  --bui-color-text-muted: #5a4e3a;
+  --bui-color-text-inverse: #ece5cf;
+
+  /* Sodium-amber primary — distinct from terminal's burnt-umber */
+  --bui-color-accent: #d97706;
+  --bui-color-accent-hover: #b45309;
+  --bui-color-accent-active: #92400e;
+  --bui-color-accent-fg: #fdf6e3;
+  --bui-color-accent-soft: #fde6b8;
+
+  --bui-color-success: #4d7c0f;
+  --bui-color-warning: #d97706;
+  --bui-color-danger: #9f1239;
+  --bui-color-danger-fg: #fdf6e3;
+
+  --bui-color-focus-ring: #f59e0b;
+
+  /* Bevel tokens — used by component selectors below. Light mode has a
+     bright top-left highlight and a dim bottom-right shadow, simulating
+     a panel lit from above. */
+  --bui-cf-bevel-light: rgba(255, 250, 235, 0.75);
+  --bui-cf-bevel-dark: rgba(40, 30, 15, 0.22);
+  --bui-cf-panel-grad: linear-gradient(
+    180deg,
+    #ede5cf 0%,
+    #e2dac3 50%,
+    #d4cbb4 100%
+  );
+
+  /* Mostly-sharp corners — tiny chamfers, no soft pill radii */
+  --bui-radius-sm: 2px;
+  --bui-radius-md: 3px;
+  --bui-radius-lg: 4px;
+  --bui-radius-xl: 6px;
+
+  /* Hardware shadows — short, with an inset bevel layered on top */
+  --bui-shadow-xs:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark);
+  --bui-shadow-sm:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 2px 0 0 rgba(40, 30, 15, 0.12);
+  --bui-shadow-md:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 3px 0 0 rgba(40, 30, 15, 0.18);
+  --bui-shadow-lg:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 6px 14px rgba(40, 30, 15, 0.25);
+
+  --bui-color-overlay-backdrop: rgba(40, 30, 15, 0.55);
+}
+
+/* ---- Dark (cockpit / phosphor) ---- */
+[data-theme-preset="cassette-futurism"][data-theme="dark"] {
+  /* Warm-tinted near-black — never pure #000, it would lose the analog feel */
+  --bui-color-bg: #0c0a08;
+  --bui-color-bg-subtle: #15110d;
+  --bui-color-bg-muted: #1d1812;
+  --bui-color-surface: #1a1611;
+  --bui-color-surface-raised: #221c14;
+
+  --bui-color-border: #4a3a1f;
+  --bui-color-border-strong: #6b521f;
+
+  /* Phosphor amber — the classic 1980s monochrome monitor color */
+  --bui-color-text: #ffb74d;
+  --bui-color-text-muted: #b87f3d;
+  --bui-color-text-inverse: #1a1611;
+
+  --bui-color-accent: #ffa726;
+  --bui-color-accent-hover: #ff8f00;
+  --bui-color-accent-active: #e67e00;
+  --bui-color-accent-fg: #1a1611;
+  --bui-color-accent-soft: #4a2f12;
+
+  --bui-color-success: #84cc16;
+  --bui-color-warning: #ffa726;
+  --bui-color-danger: #ff6b6b;
+  --bui-color-danger-fg: #1a1611;
+
+  --bui-color-focus-ring: #ffa726;
+
+  /* Inverted bevels — highlight is a faint amber rim, shadow is deep black */
+  --bui-cf-bevel-light: rgba(255, 183, 77, 0.18);
+  --bui-cf-bevel-dark: rgba(0, 0, 0, 0.65);
+  --bui-cf-panel-grad: linear-gradient(
+    180deg,
+    #221c14 0%,
+    #1a1611 50%,
+    #120e0a 100%
+  );
+
+  --bui-shadow-xs:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark);
+  --bui-shadow-sm:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 2px 0 0 rgba(0, 0, 0, 0.5);
+  --bui-shadow-md:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 3px 0 0 rgba(0, 0, 0, 0.6);
+  --bui-shadow-lg:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 6px 14px rgba(0, 0, 0, 0.7);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.78);
+}
+
+/* ---- Page backdrop ----
+   The page gets a faint horizontal scanline overlay over the bg color so
+   the whole layout reads as a CRT capture. Scanlines are 1px every 3px,
+   barely visible up close but very recognizable at room distance. */
+[data-theme-preset="cassette-futurism"].bui-root-page,
+[data-theme-preset="cassette-futurism"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(40, 30, 15, 0.06) 0,
+    rgba(40, 30, 15, 0.06) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  background-attachment: fixed;
+}
+
+[data-theme-preset="cassette-futurism"][data-theme="dark"].bui-root-page,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 183, 77, 0.04) 0,
+    rgba(255, 183, 77, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  background-attachment: fixed;
+}
+
+/* ---- Beveled panels ----
+   Cards, popovers, and similar raised surfaces get the milled-plastic /
+   anodized-metal panel look: a vertical brushed gradient + inset bevels. */
+[data-theme-preset="cassette-futurism"] .bui-card,
+[data-theme-preset="cassette-futurism"] .bui-dialog,
+[data-theme-preset="cassette-futurism"] .bui-popover,
+[data-theme-preset="cassette-futurism"] .bui-tooltip,
+[data-theme-preset="cassette-futurism"] .bui-toast,
+[data-theme-preset="cassette-futurism"] .bui-alert,
+[data-theme-preset="cassette-futurism"] .bui-accordion,
+[data-theme-preset="cassette-futurism"] .bui-table-wrapper,
+[data-theme-preset="cassette-futurism"] .bui-menu,
+[data-theme-preset="cassette-futurism"] .bui-combobox-content,
+[data-theme-preset="cassette-futurism"] .bui-datepicker__popover,
+[data-theme-preset="cassette-futurism"] .bui-timepicker__popover {
+  background: var(--bui-cf-panel-grad);
+  border: 1px solid var(--bui-color-border);
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 3px 0 0 rgba(40, 30, 15, 0.18);
+}
+
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-card,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-dialog,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-popover,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-tooltip,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-toast,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-alert,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-accordion,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-table-wrapper,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-menu,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-combobox-content,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-datepicker__popover,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-timepicker__popover {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 3px 0 0 rgba(0, 0, 0, 0.55);
+}
+
+/* ---- Inputs read as recessed slots ----
+   Inputs invert the bevel: shadow on top-left, highlight on bottom-right,
+   so the field looks set *into* the panel rather than raised. */
+[data-theme-preset="cassette-futurism"] .bui-input,
+[data-theme-preset="cassette-futurism"] .bui-textarea,
+[data-theme-preset="cassette-futurism"] .bui-select,
+[data-theme-preset="cassette-futurism"] .bui-combobox-trigger,
+[data-theme-preset="cassette-futurism"] .bui-datepicker__trigger,
+[data-theme-preset="cassette-futurism"] .bui-timepicker__trigger,
+[data-theme-preset="cassette-futurism"] .bui-input-wrapper {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-dark),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-light);
+}
+
+/* ---- Buttons read as physical LED-lit toggle keys ----
+   Bevels + a short drop "stem" make the button feel raised off the panel.
+   Active state collapses the stem and inverts the bevel so the button
+   physically presses in. */
+[data-theme-preset="cassette-futurism"] .bui-button:not(.bui-button--ghost) {
+  background: var(--bui-cf-panel-grad);
+  border: 1px solid var(--bui-color-border);
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 2px 0 0 rgba(40, 30, 15, 0.25);
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-button:not(.bui-button--ghost) {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-light),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-dark),
+    0 2px 0 0 rgba(0, 0, 0, 0.55);
+}
+[data-theme-preset="cassette-futurism"] .bui-button:not(.bui-button--ghost):not(:disabled):active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-dark),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-light),
+    0 0 0 0 rgba(40, 30, 15, 0.25);
+}
+
+/* Primary button gets the amber-LED gradient and a phosphor glow on the label */
+[data-theme-preset="cassette-futurism"] .bui-button--primary {
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+  border-color: #92400e;
+  color: var(--bui-color-accent-fg);
+  text-shadow: 0 1px 0 rgba(60, 30, 0, 0.35);
+}
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-button--primary {
+  background: linear-gradient(180deg, #ffa726 0%, #e67e00 100%);
+  border-color: #b45309;
+  text-shadow: 0 0 6px rgba(255, 167, 38, 0.55);
+}
+
+/* ---- CRT phosphor glow on headings (dark only) ----
+   Subtle text-shadow halo on h1/h2/h3 so titles bloom slightly the way a
+   real amber CRT does. Skipped in light mode to keep printed-panel
+   readability intact. */
+[data-theme-preset="cassette-futurism"][data-theme="dark"] h1,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] h2,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] h3 {
+  text-shadow: 0 0 8px rgba(255, 167, 38, 0.4);
+}
+
+/* ---- Focus / status indicators glow like LEDs ---- */
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-button:focus-visible,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-input:focus-visible,
+[data-theme-preset="cassette-futurism"][data-theme="dark"] .bui-input:focus-within {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-cf-bevel-dark),
+    inset -1px -1px 0 0 var(--bui-cf-bevel-light),
+    0 0 0 2px var(--bui-color-focus-ring),
+    0 0 12px rgba(255, 167, 38, 0.4);
+  outline: none;
+}
+
+/* ---- Badges read as printed labels on the panel ---- */
+[data-theme-preset="cassette-futurism"] .bui-badge {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--bui-font-weight-semibold);
+  font-size: 0.7rem;
+}

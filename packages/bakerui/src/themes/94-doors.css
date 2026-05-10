@@ -1,0 +1,357 @@
+/*
+ * bakerui theme preset — "94-doors"
+ *
+ * A loving Windows 95 tribute: teal desktop, silver-gray chrome, navy
+ * title bars, and the iconic 2px four-color beveled outline on every
+ * raised surface. Inputs are recessed (inverted bevel), buttons press
+ * in on click, focus shows a 1px dotted rect, and the body type is the
+ * Tahoma/Verdana sans stack that maps to Microsoft Sans Serif on
+ * Windows. Opt in:
+ *
+ *   import "bakerui/themes/94-doors.css";
+ *   <ThemeProvider preset="94-doors"> ... </ThemeProvider>
+ *
+ * Includes both light and dark variants. Dark mode is a "Hi-Contrast
+ * Black" homage — the actual accessibility scheme shipped in Win95 — so
+ * the bevels invert (light gray + white outline on black surfaces) and
+ * the desktop goes flat black.
+ */
+
+/* ---- Light (classic Windows 95) ---- */
+[data-theme-preset="94-doors"] {
+  /* Desktop teal — the bg you see behind the windows. Surfaces sit on
+     top in chrome gray. */
+  --bui-color-bg: #008080;
+  --bui-color-bg-subtle: #d4d0c8;
+  --bui-color-bg-muted: #a0a0a4;
+  --bui-color-surface: #c0c0c0;
+  --bui-color-surface-raised: #c0c0c0;
+
+  /* Black ink, dark-gray secondary text */
+  --bui-color-border: #000000;
+  --bui-color-border-strong: #000000;
+  --bui-color-text: #000000;
+  --bui-color-text-muted: #4d4d4d;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Navy selection blue is THE Windows accent */
+  --bui-color-accent: #000080;
+  --bui-color-accent-hover: #0000aa;
+  --bui-color-accent-active: #00005c;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #d0d0e0;
+
+  --bui-color-success: #008000;
+  --bui-color-warning: #808000;
+  --bui-color-danger: #800000;
+  --bui-color-danger-fg: #ffffff;
+
+  /* Focus uses a dotted rect — the focus ring color is for fallback */
+  --bui-color-focus-ring: #000000;
+
+  /* Bevel ink — used directly inside box-shadow stacks below. The
+     four-color bevel needs an outer ring (white / black) and an inner
+     ring (light gray / dark gray) to read as a milled chrome edge. */
+  --bui-94d-bevel-outer-light: #ffffff;
+  --bui-94d-bevel-outer-dark: #000000;
+  --bui-94d-bevel-inner-light: #dfdfdf;
+  --bui-94d-bevel-inner-dark: #808080;
+  --bui-94d-title-grad: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+
+  /* Sharp corners everywhere — no chamfers, no pills */
+  --bui-radius-sm: 0;
+  --bui-radius-md: 0;
+  --bui-radius-lg: 0;
+  --bui-radius-xl: 0;
+  --bui-radius-full: 0;
+
+  /* All raised shadows are the four-shadow Win95 bevel. There's no
+     soft drop shadow in this look — depth is purely from the bevel.
+     `lg` adds a single offset for popovers/menus so they float a tick. */
+  --bui-shadow-xs:
+    inset 1px 1px 0 0 #ffffff,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #dfdfdf,
+    inset -2px -2px 0 0 #808080;
+  --bui-shadow-sm:
+    inset 1px 1px 0 0 #ffffff,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #dfdfdf,
+    inset -2px -2px 0 0 #808080;
+  --bui-shadow-md:
+    inset 1px 1px 0 0 #ffffff,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #dfdfdf,
+    inset -2px -2px 0 0 #808080;
+  --bui-shadow-lg:
+    inset 1px 1px 0 0 #ffffff,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #dfdfdf,
+    inset -2px -2px 0 0 #808080,
+    2px 2px 0 0 rgba(0, 0, 0, 0.35);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.5);
+
+  /* MS Sans Serif's closest modern shipping stand-in. Tahoma is the
+     direct successor and ships on Windows; Geneva is the macOS-side
+     cousin; sans-serif is the last-resort fallback. */
+  --bui-font-family:
+    Tahoma, "MS Sans Serif", Geneva, Verdana, sans-serif;
+  --bui-font-size-sm: 0.75rem;
+  --bui-font-size-md: 0.8125rem;
+  --bui-font-size-lg: 0.875rem;
+}
+
+/* ---- Dark (Hi-Contrast Black) ----
+   The Windows 95 "Hi-Contrast Black" accessibility scheme: pure black
+   desktop, near-black surfaces, sharp white text, cyan as the selection
+   accent. The bevels invert — light edges (now mid-gray and white)
+   define raised surfaces against the black. */
+[data-theme-preset="94-doors"][data-theme="dark"] {
+  --bui-color-bg: #000000;
+  --bui-color-bg-subtle: #1a1a1a;
+  --bui-color-bg-muted: #2a2a2a;
+  --bui-color-surface: #000000;
+  --bui-color-surface-raised: #1a1a1a;
+
+  --bui-color-border: #ffffff;
+  --bui-color-border-strong: #ffffff;
+  --bui-color-text: #ffffff;
+  --bui-color-text-muted: #c0c0c0;
+  --bui-color-text-inverse: #000000;
+
+  /* Cyan replaces navy — it pops on pure black */
+  --bui-color-accent: #00ffff;
+  --bui-color-accent-hover: #00d4d4;
+  --bui-color-accent-active: #00a8a8;
+  --bui-color-accent-fg: #000000;
+  --bui-color-accent-soft: #003a3a;
+
+  --bui-color-success: #00ff00;
+  --bui-color-warning: #ffff00;
+  --bui-color-danger: #ff5555;
+  --bui-color-danger-fg: #000000;
+
+  --bui-color-focus-ring: #ffffff;
+
+  /* Bevels invert: outer light becomes mid-gray, inner light becomes
+     dark gray, so the raised edge still reads against the black panel. */
+  --bui-94d-bevel-outer-light: #808080;
+  --bui-94d-bevel-outer-dark: #000000;
+  --bui-94d-bevel-inner-light: #404040;
+  --bui-94d-bevel-inner-dark: #000000;
+  --bui-94d-title-grad: linear-gradient(90deg, #000000 0%, #008080 100%);
+
+  --bui-shadow-xs:
+    inset 1px 1px 0 0 #808080,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #404040,
+    inset -2px -2px 0 0 #000000;
+  --bui-shadow-sm:
+    inset 1px 1px 0 0 #808080,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #404040,
+    inset -2px -2px 0 0 #000000;
+  --bui-shadow-md:
+    inset 1px 1px 0 0 #808080,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #404040,
+    inset -2px -2px 0 0 #000000;
+  --bui-shadow-lg:
+    inset 1px 1px 0 0 #808080,
+    inset -1px -1px 0 0 #000000,
+    inset 2px 2px 0 0 #404040,
+    inset -2px -2px 0 0 #000000,
+    2px 2px 0 0 rgba(0, 0, 0, 0.6);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.85);
+}
+
+/* ---- Raised panels ----
+   Cards, popovers, menus, dialogs and friends carry the four-color
+   bevel. We strip the existing border (it would compete with the white
+   outer-light bevel) and use box-shadow exclusively for the edge. */
+[data-theme-preset="94-doors"] .bui-card,
+[data-theme-preset="94-doors"] .bui-dialog,
+[data-theme-preset="94-doors"] .bui-popover,
+[data-theme-preset="94-doors"] .bui-tooltip,
+[data-theme-preset="94-doors"] .bui-toast,
+[data-theme-preset="94-doors"] .bui-alert,
+[data-theme-preset="94-doors"] .bui-accordion,
+[data-theme-preset="94-doors"] .bui-table-wrapper,
+[data-theme-preset="94-doors"] .bui-tabs-list,
+[data-theme-preset="94-doors"] .bui-menu,
+[data-theme-preset="94-doors"] .bui-combobox-content,
+[data-theme-preset="94-doors"] .bui-datepicker__popover,
+[data-theme-preset="94-doors"] .bui-timepicker__popover,
+[data-theme-preset="94-doors"] .bui-badge {
+  border: none;
+  background: var(--bui-color-surface);
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset -1px -1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset 2px 2px 0 0 var(--bui-94d-bevel-inner-light),
+    inset -2px -2px 0 0 var(--bui-94d-bevel-inner-dark);
+}
+
+/* Popovers/menus float with a tiny offset drop so they visibly sit
+   above the panel they came from. */
+[data-theme-preset="94-doors"] .bui-popover,
+[data-theme-preset="94-doors"] .bui-tooltip,
+[data-theme-preset="94-doors"] .bui-menu,
+[data-theme-preset="94-doors"] .bui-combobox-content,
+[data-theme-preset="94-doors"] .bui-datepicker__popover,
+[data-theme-preset="94-doors"] .bui-timepicker__popover,
+[data-theme-preset="94-doors"] .bui-dialog {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset -1px -1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset 2px 2px 0 0 var(--bui-94d-bevel-inner-light),
+    inset -2px -2px 0 0 var(--bui-94d-bevel-inner-dark),
+    2px 2px 0 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ---- Recessed inputs (sunken bevel) ----
+   Inputs invert the bevel — the panel looks set *into* the form. The
+   outer ring is dark-on-top, light-on-bottom; the inner ring follows
+   suit. */
+[data-theme-preset="94-doors"] .bui-input,
+[data-theme-preset="94-doors"] .bui-textarea,
+[data-theme-preset="94-doors"] .bui-select,
+[data-theme-preset="94-doors"] .bui-combobox-trigger,
+[data-theme-preset="94-doors"] .bui-datepicker__trigger,
+[data-theme-preset="94-doors"] .bui-timepicker__trigger,
+[data-theme-preset="94-doors"] .bui-input-wrapper {
+  border: none;
+  background: #ffffff;
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset -1px -1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset 2px 2px 0 0 var(--bui-94d-bevel-inner-dark),
+    inset -2px -2px 0 0 var(--bui-94d-bevel-inner-light);
+}
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-input,
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-textarea,
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-select,
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-combobox-trigger,
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-datepicker__trigger,
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-timepicker__trigger,
+[data-theme-preset="94-doors"][data-theme="dark"] .bui-input-wrapper {
+  background: #000000;
+  color: var(--bui-color-text);
+}
+
+/* ---- Buttons read as physical chrome keys ----
+   Same raised bevel as panels, plus a press-in active state that
+   inverts the bevel and nudges the label down 1px (classic Win95 button
+   click). */
+[data-theme-preset="94-doors"] .bui-button:not(.bui-button--ghost) {
+  border: none;
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  font-weight: var(--bui-font-weight-regular);
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset -1px -1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset 2px 2px 0 0 var(--bui-94d-bevel-inner-light),
+    inset -2px -2px 0 0 var(--bui-94d-bevel-inner-dark);
+  transition: none;
+}
+[data-theme-preset="94-doors"] .bui-button:not(.bui-button--ghost):not(:disabled):active {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset -1px -1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset 2px 2px 0 0 var(--bui-94d-bevel-inner-dark),
+    inset -2px -2px 0 0 var(--bui-94d-bevel-inner-light);
+}
+[data-theme-preset="94-doors"] .bui-button:not(.bui-button--ghost):not(:disabled):active > * {
+  transform: translate(1px, 1px);
+}
+
+/* Primary button keeps the same chrome shape — Win95 didn't have a
+   "primary" style per se, just a default focus rect on the active
+   button. So tint the primary slightly toward navy chrome and lean on
+   the focus rect to mark it. */
+[data-theme-preset="94-doors"] .bui-button--primary {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+}
+
+/* ---- Focus rect (the iconic dotted 1px) ----
+   Replaces the outline/box-shadow focus styling on buttons and on
+   text inputs (where it doesn't disturb the recessed bevel). */
+[data-theme-preset="94-doors"] .bui-button:focus-visible {
+  outline: 1px dotted var(--bui-color-text);
+  outline-offset: -4px;
+}
+
+/* ---- Selection / highlighted items ----
+   Native ::selection plus the menu-item active state both use the
+   navy-on-white pairing (cyan-on-black in dark). */
+[data-theme-preset="94-doors"] ::selection {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+
+/* Combobox / menu highlighted rows pick up the same look so a hovered
+   option reads as a real Win95 menu selection. */
+[data-theme-preset="94-doors"] .bui-menu-item[data-highlighted="true"],
+[data-theme-preset="94-doors"] .bui-combobox-item[data-highlighted="true"] {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+
+/* ---- Dialog title bar ----
+   The classic blue gradient title bar on dialogs. We can't easily inject
+   a header element via theme CSS, so style the existing dialog title
+   wrapper if present. */
+[data-theme-preset="94-doors"] .bui-dialog__title,
+[data-theme-preset="94-doors"] .bui-dialog__header {
+  background: var(--bui-94d-title-grad);
+  color: #ffffff;
+  padding: 4px 6px;
+  margin: 0 0 var(--bui-space-3) 0;
+  font-weight: var(--bui-font-weight-semibold);
+}
+
+/* ---- Badges read as Win95 status bar chips ---- */
+[data-theme-preset="94-doors"] .bui-badge {
+  padding: 0 var(--bui-space-2);
+  font-size: 0.7rem;
+}
+
+/* ---- Topbar reads as a Win95 menu/title strip ----
+   The shared Topbar paints `--bui-color-bg`, which in this preset is the
+   teal desktop. We override it to chrome gray with a bottom bevel so it
+   sits over the desktop the way a window title strip would, and gets a
+   matching white-on-top, dark-on-bottom edge for the inset highlight. */
+[data-theme-preset="94-doors"] .bui-topbar {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  border-bottom: none;
+  box-shadow:
+    inset 0 1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset 0 2px 0 0 var(--bui-94d-bevel-inner-light),
+    inset 0 -1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset 0 -2px 0 0 var(--bui-94d-bevel-inner-dark);
+}
+[data-theme-preset="94-doors"] .bui-topbar--elevated {
+  box-shadow:
+    inset 0 1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset 0 2px 0 0 var(--bui-94d-bevel-inner-light),
+    inset 0 -1px 0 0 var(--bui-94d-bevel-outer-dark),
+    inset 0 -2px 0 0 var(--bui-94d-bevel-inner-dark);
+}
+
+/* ---- Tabs sit on their own row, raised like file-folder tabs ---- */
+[data-theme-preset="94-doors"] .bui-tabs-trigger {
+  border-radius: 0;
+  background: var(--bui-color-surface);
+}
+[data-theme-preset="94-doors"] .bui-tabs-trigger[data-state="active"] {
+  box-shadow:
+    inset 1px 1px 0 0 var(--bui-94d-bevel-outer-light),
+    inset 2px 2px 0 0 var(--bui-94d-bevel-inner-light),
+    inset -1px 0 0 0 var(--bui-94d-bevel-outer-dark),
+    inset -2px 0 0 0 var(--bui-94d-bevel-inner-dark);
+}

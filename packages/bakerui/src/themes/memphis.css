@@ -1,0 +1,195 @@
+/*
+ * bakerui theme preset — "memphis"
+ *
+ * Neo-Memphis design language: chunky rounded shapes, bold black outlines,
+ * a hot-pink primary with a supporting palette of mint, cyan, yellow and
+ * coral, and offset hard shadows in a contrasting color. The page itself
+ * carries a scattered terrazzo-dot pattern so the whole layout reads as a
+ * single Memphis composition. Opt in:
+ *
+ *   import "bakerui/themes/memphis.css";
+ *   <ThemeProvider preset="memphis"> ... </ThemeProvider>
+ *
+ * Includes both light and dark variants — `[data-theme="dark"]` swaps the
+ * surfaces and shadow color but keeps the chunky-outlined identity.
+ */
+
+/* ---- Light (default) ---- */
+[data-theme-preset="memphis"] {
+  /* Warm cream surfaces with a hint of off-white */
+  --bui-color-bg: #fff8ec;
+  --bui-color-bg-subtle: #fdeed6;
+  --bui-color-bg-muted: #fbe2b6;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-raised: #ffffff;
+
+  /* Borders & text — bold black is the Memphis signature outline */
+  --bui-color-border: #0a0a0a;
+  --bui-color-border-strong: #0a0a0a;
+  --bui-color-text: #0a0a0a;
+  --bui-color-text-muted: #525258;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Hot magenta primary */
+  --bui-color-accent: #ff3a8c;
+  --bui-color-accent-hover: #e6276f;
+  --bui-color-accent-active: #c61963;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #ffd9e8;
+
+  /* Supporting Memphis palette mapped onto status colors */
+  --bui-color-success: #2ec4a5;
+  --bui-color-warning: #ffd83a;
+  --bui-color-danger: #ff6b54;
+  --bui-color-danger-fg: #0a0a0a;
+
+  /* Focus ring in electric cyan — pops against pink + black */
+  --bui-color-focus-ring: #19c8e0;
+
+  /* Memphis palette tokens (used by the page pattern and component
+     accents). These aren't part of the core token set, but theme files
+     can introduce extras for their own selectors. */
+  --bui-memphis-pink: #ff3a8c;
+  --bui-memphis-cyan: #19c8e0;
+  --bui-memphis-mint: #2ec4a5;
+  --bui-memphis-yellow: #ffd83a;
+  --bui-memphis-coral: #ff6b54;
+  --bui-memphis-lilac: #a78bfa;
+
+  /* Chunky-but-rounded — Memphis lives between brutalist and soft */
+  --bui-radius-sm: 6px;
+  --bui-radius-md: 12px;
+  --bui-radius-lg: 18px;
+  --bui-radius-xl: 24px;
+
+  /* Hard offset shadows in cyan — second-outline / stacked-card vibe */
+  --bui-shadow-color: #19c8e0;
+  --bui-shadow-xs: 2px 2px 0 0 #19c8e0;
+  --bui-shadow-sm: 3px 3px 0 0 #19c8e0;
+  --bui-shadow-md: 4px 4px 0 0 #19c8e0;
+  --bui-shadow-lg: 6px 6px 0 0 #19c8e0;
+
+  --bui-color-overlay-backdrop: rgba(10, 10, 10, 0.55);
+}
+
+/* ---- Dark variant ---- */
+[data-theme-preset="memphis"][data-theme="dark"] {
+  /* Deep ink-navy surfaces — keeps the saturated party vibe */
+  --bui-color-bg: #14121f;
+  --bui-color-bg-subtle: #1d1a2c;
+  --bui-color-bg-muted: #272239;
+  --bui-color-surface: #1a1726;
+  --bui-color-surface-raised: #221e31;
+
+  /* Cream outlines so the chunky-border identity survives the dark mode */
+  --bui-color-border: #f8eed6;
+  --bui-color-border-strong: #f8eed6;
+  --bui-color-text: #f8eed6;
+  --bui-color-text-muted: #b6b0c8;
+  --bui-color-text-inverse: #0a0a0a;
+
+  /* Pink stays the star, brightened slightly for dark contrast */
+  --bui-color-accent: #ff5fa3;
+  --bui-color-accent-hover: #ff3a8c;
+  --bui-color-accent-active: #e6276f;
+  --bui-color-accent-fg: #0a0a0a;
+  --bui-color-accent-soft: #4a1531;
+
+  --bui-color-success: #3edcb9;
+  --bui-color-warning: #ffe05a;
+  --bui-color-danger: #ff8b78;
+  --bui-color-danger-fg: #0a0a0a;
+
+  --bui-color-focus-ring: #ffd83a;
+
+  --bui-memphis-pink: #ff5fa3;
+  --bui-memphis-cyan: #44d6ec;
+  --bui-memphis-mint: #3edcb9;
+  --bui-memphis-yellow: #ffe05a;
+  --bui-memphis-coral: #ff8b78;
+  --bui-memphis-lilac: #c4b5fd;
+
+  /* In dark mode the offset shadow flips to yellow — the same trick as
+     light mode but with a color that reads on the ink-navy backdrop. */
+  --bui-shadow-color: #ffd83a;
+  --bui-shadow-xs: 2px 2px 0 0 #ffd83a;
+  --bui-shadow-sm: 3px 3px 0 0 #ffd83a;
+  --bui-shadow-md: 4px 4px 0 0 #ffd83a;
+  --bui-shadow-lg: 6px 6px 0 0 #ffd83a;
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.7);
+}
+
+/* ---- Scattered terrazzo-dot page pattern ----
+   An inline SVG repeats across the page bg. Six dots per tile in the
+   Memphis palette — kept small and sparse so dense UI stays readable. */
+[data-theme-preset="memphis"].bui-root-page,
+[data-theme-preset="memphis"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><circle cx='15' cy='18' r='3' fill='%23ff3a8c'/><circle cx='62' cy='42' r='2.5' fill='%2319c8e0'/><circle cx='98' cy='22' r='2' fill='%23ffd83a'/><circle cx='30' cy='80' r='2.5' fill='%232ec4a5'/><circle cx='82' cy='92' r='3' fill='%23ff6b54'/><circle cx='108' cy='70' r='1.8' fill='%23a78bfa'/></svg>");
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+[data-theme-preset="memphis"][data-theme="dark"].bui-root-page,
+[data-theme-preset="memphis"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><circle cx='15' cy='18' r='3' fill='%23ff5fa3'/><circle cx='62' cy='42' r='2.5' fill='%2344d6ec'/><circle cx='98' cy='22' r='2' fill='%23ffe05a'/><circle cx='30' cy='80' r='2.5' fill='%233edcb9'/><circle cx='82' cy='92' r='3' fill='%23ff8b78'/><circle cx='108' cy='70' r='1.8' fill='%23c4b5fd'/></svg>");
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+/* ---- Chunky 2px black/cream outlines on key components ----
+   No border-width token, so widen at the component layer just like
+   brutalist does. */
+[data-theme-preset="memphis"] .bui-button,
+[data-theme-preset="memphis"] .bui-input,
+[data-theme-preset="memphis"] .bui-textarea,
+[data-theme-preset="memphis"] .bui-card,
+[data-theme-preset="memphis"] .bui-table-wrapper,
+[data-theme-preset="memphis"] .bui-badge,
+[data-theme-preset="memphis"] .bui-alert,
+[data-theme-preset="memphis"] .bui-tabs-list,
+[data-theme-preset="memphis"] .bui-select,
+[data-theme-preset="memphis"] .bui-combobox-trigger,
+[data-theme-preset="memphis"] .bui-datepicker__trigger,
+[data-theme-preset="memphis"] .bui-timepicker__trigger,
+[data-theme-preset="memphis"] .bui-dialog,
+[data-theme-preset="memphis"] .bui-popover,
+[data-theme-preset="memphis"] .bui-tooltip,
+[data-theme-preset="memphis"] .bui-toast,
+[data-theme-preset="memphis"] .bui-menu,
+[data-theme-preset="memphis"] .bui-combobox-content,
+[data-theme-preset="memphis"] .bui-datepicker__popover,
+[data-theme-preset="memphis"] .bui-timepicker__popover {
+  border-width: 2px;
+  border-color: var(--bui-color-border);
+}
+
+/* ---- Button press-down — the colored shadow "absorbs" on active ---- */
+[data-theme-preset="memphis"] .bui-button:not(:disabled):not(.bui-button--ghost) {
+  box-shadow: 3px 3px 0 0 var(--bui-shadow-color);
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="memphis"] .bui-button:not(:disabled):not(.bui-button--ghost):active {
+  box-shadow: 0 0 0 0 var(--bui-shadow-color);
+  transform: translate(3px, 3px);
+}
+
+[data-theme-preset="memphis"] .bui-button--secondary {
+  background: var(--bui-color-surface);
+}
+[data-theme-preset="memphis"] .bui-button--ghost {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* ---- Badges get the multi-color Memphis treatment by variant ----
+   Different badge tones cycle through the supporting palette so a row
+   of badges reads as one Memphis composition rather than a stripe of
+   pink. The status variants keep their semantic mapping. */
+[data-theme-preset="memphis"] .bui-badge {
+  font-weight: var(--bui-font-weight-semibold);
+}

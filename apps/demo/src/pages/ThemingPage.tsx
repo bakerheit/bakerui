@@ -46,6 +46,23 @@ const PRESET_THEMES: Array<{
   { id: "terminal", label: "Terminal", description: "Mono, paper or CRT" },
   { id: "glassx", label: "GlassX", description: "Thinner glass, see-through popovers" },
   { id: "frutiger-aero", label: "Frutiger Aero", description: "Y2K Aqua gloss, sky bokeh" },
+  { id: "memphis", label: "Memphis", description: "Chunky outlines, terrazzo dots" },
+  {
+    id: "cassette-futurism",
+    label: "Cassette Futurism",
+    description: "Beveled control panels, amber phosphor",
+  },
+  { id: "94-doors", label: "94 Doors", description: "Windows 95 chrome on teal desktop" },
+  {
+    id: "neon-sprawl",
+    label: "Neon Sprawl",
+    description: "Cyberpunk magenta + cyan glow, grid backdrop",
+  },
+  {
+    id: "colored-ebook",
+    label: "Colored Ebook",
+    description: "Serif paper, deep teal cover, highlighter accents",
+  },
 ];
 
 export function ThemingPage({
@@ -184,8 +201,17 @@ export function ThemingPage({
             Five built-in presets ship in <code>bakerui/themes/*.css</code>:{" "}
             <strong>brutalist</strong> (high-contrast, hard-shadow), <strong>soft</strong>{" "}
             (pastel, generous radii), <strong>terminal</strong> (mono, paper or CRT),{" "}
-            <strong>glassx</strong> (Liquid-Glass surfaces with see-through popovers), and{" "}
-            <strong>frutiger-aero</strong> (Y2K Aqua gloss with sky-bokeh backdrop).
+            <strong>glassx</strong> (Liquid-Glass surfaces with see-through popovers),{" "}
+            <strong>frutiger-aero</strong> (Y2K Aqua gloss with sky-bokeh backdrop), and{" "}
+            <strong>memphis</strong> (chunky outlines, hot pink + cyan offset shadows, terrazzo-dot
+            backdrop), <strong>cassette-futurism</strong> (industrial beveled control panels with
+            sodium-amber accents and a faint scanline backdrop), and{" "}
+            <strong>94-doors</strong> (a Windows 95 tribute — silver chrome with four-color bevels,
+            navy title bars, Tahoma type, on a teal desktop), and{" "}
+            <strong>neon-sprawl</strong> (cyberpunk retro-futurism — magenta + cyan neon glow,
+            chromatic-aberration headings, perspective grid backdrop), and{" "}
+            <strong>colored-ebook</strong> (serif reading face on warm tinted paper, deep-teal
+            cover accent, highlighter-yellow link underlines).
           </Text>
 
           <Heading level={3}>Using a built-in preset</Heading>
