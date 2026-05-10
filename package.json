@@ -10,6 +10,10 @@
     "build": "npm run build --workspace=bakerui",
     "dev": "npm run dev --workspace=demo",
     "demo": "npm run dev --workspace=demo",
+    "screenshots": "node scripts/capture-screenshots.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
   }
 }
