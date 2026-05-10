@@ -19,6 +19,7 @@ import "bakerui/themes/cassette-futurism.css";
 import "bakerui/themes/94-doors.css";
 import "bakerui/themes/neon-sprawl.css";
 import "bakerui/themes/colored-eink.css";
+import "bakerui/themes/toy-plastic.css";
 import { HomePage } from "./pages/HomePage";
 import { ComponentsPage } from "./pages/ComponentsPage";
 import { DataPage } from "./pages/DataPage";

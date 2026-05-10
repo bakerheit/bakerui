@@ -63,6 +63,11 @@ const PRESET_THEMES: Array<{
     label: "Colored Eink",
     description: "Muted Kaleido-panel inks on dithered paper-grey",
   },
+  {
+    id: "toy-plastic",
+    label: "Toy Plastic",
+    description: "Fisher-Price primaries, thick outlines, hard offset shadows",
+  },
 ];
 
 export function ThemingPage({
@@ -211,7 +216,10 @@ export function ThemingPage({
             <strong>neon-sprawl</strong> (cyberpunk retro-futurism — magenta + cyan neon glow,
             chromatic-aberration headings, perspective grid backdrop), and{" "}
             <strong>colored-eink</strong> (color e-ink panel aesthetic — desaturated Kaleido-style
-            inks on dithered paper-grey, matte surfaces, no shadows, sharp corners).
+            inks on dithered paper-grey, matte surfaces, no shadows, sharp corners), and{" "}
+            <strong>toy-plastic</strong> (Fisher-Price / LeapFrog molded-plastic look — primary
+            colors, thick black outlines, hard offset shadows, chunky rounded corners; dark mode
+            is a glow-in-the-dark night-light variant on deep navy).
           </Text>
 
           <Heading level={3}>Using a built-in preset</Heading>

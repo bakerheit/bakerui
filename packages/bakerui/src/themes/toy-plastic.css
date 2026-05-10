@@ -1,0 +1,268 @@
+/*
+ * bakerui theme preset — "toy-plastic"
+ *
+ * Fisher-Price / LeapFrog / early-2000s kids'-toy aesthetic — molded ABS
+ * plastic in the four primary colors (red, yellow, blue, green), thick
+ * black outlines around every shape, very chunky rounded corners, and
+ * hard flat offset drop-shadows in place of soft blur shadows. Bold
+ * rounded sans for the type. Opt in:
+ *
+ *   import "bakerui/themes/toy-plastic.css";
+ *   <ThemeProvider preset="toy-plastic"> ... </ThemeProvider>
+ *
+ * Dark mode is a "night light" reinterpretation: deep navy-purple sky,
+ * same chunky primary palette but with a faint outer glow so each shape
+ * reads as a glow-in-the-dark sticker on a kid's bedroom ceiling.
+ */
+
+/* ---- Light (molded plastic on the playroom floor) ---- */
+[data-theme-preset="toy-plastic"] {
+  /* Off-white packaging cardboard — never pure white, that's too clinical
+     for the toy look. */
+  --bui-color-bg: #fffbe9;
+  --bui-color-bg-subtle: #fff4cc;
+  --bui-color-bg-muted: #ffe6a8;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-raised: #ffffff;
+
+  /* Heavy black outlines — the load-bearing feature of this whole look. */
+  --bui-color-border: #1a1a1a;
+  --bui-color-border-strong: #000000;
+
+  --bui-color-text: #1a1a1a;
+  --bui-color-text-muted: #4a4a4a;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Toy blue — the Fisher-Price / Duplo blue register. */
+  --bui-color-accent: #1e6dd6;
+  --bui-color-accent-hover: #1a5cb8;
+  --bui-color-accent-active: #144a96;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: #cfe3f8;
+
+  /* Primary palette — saturated, never pastel. */
+  --bui-color-success: #2eb83a;
+  --bui-color-warning: #ffd72b;
+  --bui-color-danger: #e6322b;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: #1a1a1a;
+
+  /* Four-color palette tokens — exposed so consumers can grab any of the
+     toy primaries directly without having to reach into accent/success
+     etc. Used by the theme below for badges. */
+  --bui-toy-red: #e6322b;
+  --bui-toy-yellow: #ffd72b;
+  --bui-toy-blue: #1e6dd6;
+  --bui-toy-green: #2eb83a;
+
+  /* Rounded, friendly sans — leans on Quicksand/Nunito if present, with
+     a sturdy rounded-leaning fallback chain. Weight is dialed up
+     because chunky toy type is heavy. */
+  --bui-font-family:
+    "Quicksand", "Nunito", "Avenir Next Heavy", "Avenir Next",
+    "Trebuchet MS", -apple-system, BlinkMacSystemFont, sans-serif;
+  --bui-font-weight-regular: 600;
+  --bui-font-weight-medium: 700;
+  --bui-font-weight-semibold: 800;
+  --bui-font-weight-bold: 900;
+  --bui-line-height-normal: 1.45;
+
+  /* Chunky rounded corners — toy-button-grade. */
+  --bui-radius-sm: 10px;
+  --bui-radius-md: 16px;
+  --bui-radius-lg: 22px;
+  --bui-radius-xl: 28px;
+  --bui-radius-full: 9999px;
+
+  /* Hard offset shadows in place of soft blur — no spread, no blur,
+     just a solid black block behind each shape. */
+  --bui-shadow-xs: 2px 2px 0 0 #1a1a1a;
+  --bui-shadow-sm: 3px 3px 0 0 #1a1a1a;
+  --bui-shadow-md: 4px 4px 0 0 #1a1a1a;
+  --bui-shadow-lg: 6px 6px 0 0 #1a1a1a;
+
+  --bui-color-overlay-backdrop: rgba(26, 26, 26, 0.45);
+}
+
+/* ---- Dark (night light) ----
+   Bedroom-ceiling aesthetic: deep navy-purple sky, same chunky primary
+   shapes, but each one glows softly so it reads as a glow-in-the-dark
+   sticker. Outlines lift to white so the silhouettes still pop. */
+[data-theme-preset="toy-plastic"][data-theme="dark"] {
+  --bui-color-bg: #1a1245;
+  --bui-color-bg-subtle: #251a5e;
+  --bui-color-bg-muted: #322578;
+  --bui-color-surface: #2a1f5a;
+  --bui-color-surface-raised: #382980;
+
+  /* White outlines instead of black — same role, inverted contrast. */
+  --bui-color-border: #f5f5f5;
+  --bui-color-border-strong: #ffffff;
+
+  --bui-color-text: #fff8e1;
+  --bui-color-text-muted: #c8b8f0;
+  --bui-color-text-inverse: #1a1245;
+
+  /* Toy primaries brightened just enough to glow on the navy sky. */
+  --bui-color-accent: #5da8ff;
+  --bui-color-accent-hover: #7ebbff;
+  --bui-color-accent-active: #4a8eda;
+  --bui-color-accent-fg: #1a1245;
+  --bui-color-accent-soft: rgba(93, 168, 255, 0.2);
+
+  --bui-color-success: #6fec79;
+  --bui-color-warning: #ffe566;
+  --bui-color-danger: #ff8a6c;
+  --bui-color-danger-fg: #1a1245;
+
+  --bui-color-focus-ring: #fff8e1;
+
+  --bui-toy-red: #ff8a6c;
+  --bui-toy-yellow: #ffe566;
+  --bui-toy-blue: #5da8ff;
+  --bui-toy-green: #6fec79;
+
+  /* Same hard-offset shape, but stacked with a soft outer glow so the
+     elements read as luminous. The hard offset still defines the
+     silhouette; the glow does the "night light" work. */
+  --bui-shadow-xs:
+    2px 2px 0 0 #000000,
+    0 0 8px 0 rgba(255, 248, 225, 0.18);
+  --bui-shadow-sm:
+    3px 3px 0 0 #000000,
+    0 0 12px 0 rgba(255, 248, 225, 0.2);
+  --bui-shadow-md:
+    4px 4px 0 0 #000000,
+    0 0 18px 0 rgba(255, 248, 225, 0.24);
+  --bui-shadow-lg:
+    6px 6px 0 0 #000000,
+    0 0 28px 0 rgba(255, 248, 225, 0.28);
+
+  --bui-color-overlay-backdrop: rgba(10, 5, 30, 0.78);
+}
+
+/* ---- Headings stay heavy and round ---- */
+[data-theme-preset="toy-plastic"] h1,
+[data-theme-preset="toy-plastic"] h2,
+[data-theme-preset="toy-plastic"] h3 {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* ---- Cards: thick outline + hard offset shadow ----
+   No soft drop shadow, no rounded-only-on-corners — the whole shape
+   is a cartoon outlined block. */
+[data-theme-preset="toy-plastic"] .bui-card {
+  background: var(--bui-color-surface);
+  border: 2.5px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-md);
+}
+
+/* ---- Buttons: chunky outlined keys ----
+   On press, the button slides into its shadow — the offset collapses
+   and the body translates the same amount, so the whole thing reads
+   like a physical key getting pressed flat. */
+[data-theme-preset="toy-plastic"] .bui-button:not(.bui-button--ghost) {
+  border: 2.5px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-sm);
+  font-weight: 800;
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="toy-plastic"] .bui-button:not(.bui-button--ghost):not(:disabled):hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--bui-color-border);
+}
+[data-theme-preset="toy-plastic"] .bui-button:not(.bui-button--ghost):not(:disabled):active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--bui-color-border);
+}
+
+/* Primary fills with the toy blue — solid, no gradients. */
+[data-theme-preset="toy-plastic"] .bui-button--primary {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+[data-theme-preset="toy-plastic"] .bui-button--secondary {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+}
+[data-theme-preset="toy-plastic"] .bui-button--danger {
+  background: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+}
+
+/* ---- Badges: pill-shaped, thick-outlined, primary fills ----
+   Cycle through the four toy primaries via the data-tone attribute the
+   Badge component exposes, so a row of badges in mixed tones reads as
+   a row of LEGO bricks. */
+[data-theme-preset="toy-plastic"] .bui-badge {
+  border: 2px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-full);
+  padding: 1px var(--bui-space-3);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: var(--bui-shadow-xs);
+}
+[data-theme-preset="toy-plastic"] .bui-badge[data-tone="accent"] {
+  background: var(--bui-toy-blue);
+  color: #ffffff;
+}
+[data-theme-preset="toy-plastic"] .bui-badge[data-tone="success"] {
+  background: var(--bui-toy-green);
+  color: #ffffff;
+}
+[data-theme-preset="toy-plastic"] .bui-badge[data-tone="warning"] {
+  background: var(--bui-toy-yellow);
+  color: #1a1a1a;
+}
+[data-theme-preset="toy-plastic"] .bui-badge[data-tone="danger"] {
+  background: var(--bui-toy-red);
+  color: #ffffff;
+}
+
+/* ---- Inputs: outlined plastic trays ----
+   Same chunky outline as buttons; on focus the border thickens and
+   takes the accent color, no glow or ring. */
+[data-theme-preset="toy-plastic"] .bui-input,
+[data-theme-preset="toy-plastic"] .bui-textarea,
+[data-theme-preset="toy-plastic"] .bui-select,
+[data-theme-preset="toy-plastic"] .bui-combobox-trigger,
+[data-theme-preset="toy-plastic"] .bui-datepicker__trigger,
+[data-theme-preset="toy-plastic"] .bui-timepicker__trigger,
+[data-theme-preset="toy-plastic"] .bui-input-wrapper {
+  border: 2.5px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  background: var(--bui-color-surface);
+}
+[data-theme-preset="toy-plastic"] .bui-input:focus-visible,
+[data-theme-preset="toy-plastic"] .bui-input:focus-within,
+[data-theme-preset="toy-plastic"] .bui-textarea:focus-visible {
+  outline: none;
+  border-color: var(--bui-color-accent);
+  box-shadow: var(--bui-shadow-sm);
+}
+
+/* ---- Decorative <hr>: chunky dashed plastic ruler ---- */
+[data-theme-preset="toy-plastic"] hr {
+  border: none;
+  border-top: 3px dashed var(--bui-color-border);
+  margin: 1.25rem 0;
+}
+
+/* ---- Selection: solid yellow highlighter, no transparency ---- */
+[data-theme-preset="toy-plastic"] ::selection {
+  background: var(--bui-toy-yellow);
+  color: #1a1a1a;
+}
+
+/* ---- Dialog: heaviest outline + biggest hard shadow ----
+   The dialog reads as a Polly Pocket clamshell — fat outline, snap-cornered. */
+[data-theme-preset="toy-plastic"] .bui-dialog {
+  border: 3px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-lg);
+  border-radius: var(--bui-radius-xl);
+}
