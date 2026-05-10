@@ -1,0 +1,317 @@
+/*
+ * bakerui theme preset — "zine"
+ *
+ * Photocopied punk/DIY zine aesthetic — uneven off-white paper, near-black
+ * toner ink, ONE bold spot color (xerox red), Impact-condensed display
+ * type mixing into a sturdy body sans for the "ransom note" energy. Cards
+ * and badges sit at slightly off-axis rotations like glue-stick paste-up.
+ * Thick uneven borders, hard offset shadows, and zero border-radius. Opt
+ * in:
+ *
+ *   import "bakerui/themes/zine.css";
+ *   <ThemeProvider preset="zine"> ... </ThemeProvider>
+ *
+ * Dark mode flips to a black-page zine — pure-black photocopy reverse,
+ * cream ink, the same spot red lifted into a subtle glow. Grittier toner
+ * noise, same paste-up rotations.
+ */
+
+/* ---- Light (toner-on-cheap-paper) ---- */
+[data-theme-preset="zine"] {
+  /* Photocopy paper — slightly grey-warm, never bright white, with a
+     toned bias that suggests aging copier paper. */
+  --bui-color-bg: #ece7dd;
+  --bui-color-bg-subtle: #e0dccf;
+  --bui-color-bg-muted: #c8c4b8;
+  --bui-color-surface: #f2efe7;
+  --bui-color-surface-raised: #f2efe7;
+
+  /* Heavy toner — warm near-black. */
+  --bui-color-border: #1a1a18;
+  --bui-color-border-strong: #000000;
+
+  --bui-color-text: #1a1a18;
+  --bui-color-text-muted: #44443e;
+  --bui-color-text-inverse: #f2efe7;
+
+  /* The ONE spot color — vivid xerox red, slightly warm so it reads
+     like cheap ink rather than a screen primary. Drives everything
+     loud: primary buttons, accent badges, selection, focus rings,
+     pull-quote markers. */
+  --bui-color-accent: #e3252b;
+  --bui-color-accent-hover: #c81d22;
+  --bui-color-accent-active: #a8161a;
+  --bui-color-accent-fg: #f2efe7;
+  --bui-color-accent-soft: #f9d2d4;
+
+  --bui-color-success: #3a6b3a;
+  --bui-color-warning: #c2a020;
+  --bui-color-danger: #a8161a;
+  --bui-color-danger-fg: #f2efe7;
+
+  --bui-color-focus-ring: #e3252b;
+
+  /* Body keeps a sturdy sans for readability; the condensed display
+     stack lives on headings/badges/buttons via dedicated overrides. */
+  --bui-font-family:
+    "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --bui-line-height-normal: 1.5;
+
+  /* No rounded corners. Punk zines are scissors-cut. */
+  --bui-radius-sm: 0;
+  --bui-radius-md: 0;
+  --bui-radius-lg: 0;
+  --bui-radius-xl: 0;
+  --bui-radius-full: 0;
+
+  /* Hard offset shadows — no blur. Layered paste-up effect. */
+  --bui-shadow-xs: 2px 2px 0 0 #1a1a18;
+  --bui-shadow-sm: 3px 3px 0 0 #1a1a18;
+  --bui-shadow-md: 4px 4px 0 0 #1a1a18;
+  --bui-shadow-lg: 6px 6px 0 0 #1a1a18;
+
+  --bui-color-overlay-backdrop: rgba(20, 20, 18, 0.55);
+}
+
+/* ---- Dark (black-page zine) ----
+   The xeroxed-black-page move: full-bleed black background, cream ink,
+   the spot red lifted just enough to glow on dark. Toner noise is
+   coarser in dark mode (more visible) to push the photocopy-of-a-photocopy
+   degradation. */
+[data-theme-preset="zine"][data-theme="dark"] {
+  --bui-color-bg: #0c0c0a;
+  --bui-color-bg-subtle: #181816;
+  --bui-color-bg-muted: #252522;
+  --bui-color-surface: #13130f;
+  --bui-color-surface-raised: #1a1a16;
+
+  --bui-color-border: #ebe6dc;
+  --bui-color-border-strong: #ffffff;
+
+  --bui-color-text: #ebe6dc;
+  --bui-color-text-muted: #a8a397;
+  --bui-color-text-inverse: #0c0c0a;
+
+  /* Red lifted and given a faint outer-glow via the shadow tokens. */
+  --bui-color-accent: #ff3a3f;
+  --bui-color-accent-hover: #ff5559;
+  --bui-color-accent-active: #d8262b;
+  --bui-color-accent-fg: #0c0c0a;
+  --bui-color-accent-soft: rgba(255, 58, 63, 0.2);
+
+  --bui-color-success: #7a9c5a;
+  --bui-color-warning: #d8b245;
+  --bui-color-danger: #ff3a3f;
+  --bui-color-danger-fg: #0c0c0a;
+
+  --bui-color-focus-ring: #ff3a3f;
+
+  /* Hard offset still in pure black; on dark surfaces this reads as a
+     deeper void behind the element. Layered on top is a faint red
+     glow so the spot color carries through to the shadow rim. */
+  --bui-shadow-xs:
+    2px 2px 0 0 #000000,
+    0 0 6px 0 rgba(255, 58, 63, 0.18);
+  --bui-shadow-sm:
+    3px 3px 0 0 #000000,
+    0 0 10px 0 rgba(255, 58, 63, 0.2);
+  --bui-shadow-md:
+    4px 4px 0 0 #000000,
+    0 0 14px 0 rgba(255, 58, 63, 0.22);
+  --bui-shadow-lg:
+    6px 6px 0 0 #000000,
+    0 0 22px 0 rgba(255, 58, 63, 0.26);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.85);
+}
+
+/* ---- Page backdrop ----
+   Coarser SVG turbulence than other themes — simulates the splotchy
+   uneven coverage of a worn copier drum. */
+[data-theme-preset="zine"].bui-root-page,
+[data-theme-preset="zine"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' seed='6'/><feColorMatrix values='0 0 0 0 0.15  0 0 0 0 0.13  0 0 0 0 0.10  0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+}
+[data-theme-preset="zine"][data-theme="dark"].bui-root-page,
+[data-theme-preset="zine"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' seed='13'/><feColorMatrix values='0 0 0 0 0.90  0 0 0 0 0.86  0 0 0 0 0.78  0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+}
+
+/* ---- Headings: condensed display, ALL CAPS ----
+   Impact/Haettenschweiler stack — universally shipped on Mac and Win.
+   Tight letter-spacing and very heavy weight push the ransom-note feel. */
+[data-theme-preset="zine"] h1,
+[data-theme-preset="zine"] h2,
+[data-theme-preset="zine"] h3 {
+  font-family:
+    "Anton", "Bebas Neue", "Oswald", "Haettenschweiler", "Impact",
+    "Arial Narrow Bold", "Helvetica Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+/* ---- Links: heavy underline in the spot red ---- */
+[data-theme-preset="zine"] a {
+  color: var(--bui-color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+  font-weight: 600;
+}
+[data-theme-preset="zine"] a:hover {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+  text-decoration: none;
+}
+
+/* ---- Decorative <hr>: rotated thick tape strip ---- */
+[data-theme-preset="zine"] hr {
+  border: none;
+  height: 4px;
+  background: var(--bui-color-border);
+  margin: 1.5rem 0;
+  transform: rotate(-0.4deg);
+}
+
+/* ---- Cards: thick uneven borders, slight paste-up rotation ----
+   Uneven border widths on each side simulate a hand-cut edge. The
+   tiny rotation breaks grid-perfect alignment. The hard shadow
+   anchors the element with a visible paste-up offset. */
+[data-theme-preset="zine"] .bui-card {
+  background: var(--bui-color-surface);
+  border-top: 3px solid var(--bui-color-border);
+  border-right: 2.5px solid var(--bui-color-border);
+  border-bottom: 3.5px solid var(--bui-color-border);
+  border-left: 2.5px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-md);
+  transform: rotate(-0.3deg);
+}
+
+/* ---- Buttons: stamped chrome ----
+   Condensed display family, uppercase, heavy. Hard offset shadow
+   collapses on :active so the button "stamps" down. */
+[data-theme-preset="zine"] .bui-button:not(.bui-button--ghost) {
+  border: 2.5px solid var(--bui-color-border);
+  border-radius: 0;
+  box-shadow: var(--bui-shadow-sm);
+  font-family:
+    "Anton", "Bebas Neue", "Oswald", "Haettenschweiler", "Impact",
+    "Arial Narrow Bold", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 900;
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="zine"] .bui-button:not(.bui-button--ghost):not(:disabled):hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--bui-color-border);
+}
+[data-theme-preset="zine"] .bui-button:not(.bui-button--ghost):not(:disabled):active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--bui-color-border);
+}
+
+[data-theme-preset="zine"] .bui-button--primary {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+[data-theme-preset="zine"] .bui-button--secondary {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+}
+[data-theme-preset="zine"] .bui-button--danger {
+  background: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+}
+
+/* ---- Badges: rubber-stamp paste-ons ----
+   Condensed caps, thick border, hard shadow, each tone rotated at a
+   different angle so a row of mixed-tone badges reads like cut-out
+   labels glued onto the page. */
+[data-theme-preset="zine"] .bui-badge {
+  border: 2px solid var(--bui-color-border);
+  border-radius: 0;
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  font-family:
+    "Anton", "Bebas Neue", "Oswald", "Haettenschweiler", "Impact",
+    "Arial Narrow Bold", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 900;
+  padding: 1px var(--bui-space-2);
+  box-shadow: var(--bui-shadow-xs);
+  transform: rotate(-1.2deg);
+}
+[data-theme-preset="zine"] .bui-badge[data-tone="accent"] {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+  transform: rotate(1.4deg);
+}
+[data-theme-preset="zine"] .bui-badge[data-tone="warning"] {
+  background: var(--bui-color-warning);
+  color: var(--bui-color-text);
+  transform: rotate(-0.7deg);
+}
+[data-theme-preset="zine"] .bui-badge[data-tone="success"] {
+  background: var(--bui-color-success);
+  color: var(--bui-color-text-inverse);
+  transform: rotate(0.9deg);
+}
+[data-theme-preset="zine"] .bui-badge[data-tone="danger"] {
+  background: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+  transform: rotate(-1.6deg);
+}
+
+/* ---- Inputs: thick-outlined paper boxes ----
+   Form fields stay un-rotated so they're still inviting to type into. */
+[data-theme-preset="zine"] .bui-input,
+[data-theme-preset="zine"] .bui-textarea,
+[data-theme-preset="zine"] .bui-select,
+[data-theme-preset="zine"] .bui-combobox-trigger,
+[data-theme-preset="zine"] .bui-datepicker__trigger,
+[data-theme-preset="zine"] .bui-timepicker__trigger,
+[data-theme-preset="zine"] .bui-input-wrapper {
+  background: var(--bui-color-surface);
+  border: 2.5px solid var(--bui-color-border);
+  border-radius: 0;
+}
+[data-theme-preset="zine"] .bui-input:focus-visible,
+[data-theme-preset="zine"] .bui-input:focus-within,
+[data-theme-preset="zine"] .bui-textarea:focus-visible {
+  outline: none;
+  border-color: var(--bui-color-accent);
+  box-shadow: var(--bui-shadow-sm);
+}
+
+/* ---- Selection: full xerox-red highlight ----
+   No transparency — like someone took a red marker to the line. */
+[data-theme-preset="zine"] ::selection {
+  background: var(--bui-color-accent);
+  color: var(--bui-color-accent-fg);
+}
+
+/* ---- Tabs: stamped section labels with red kicker ---- */
+[data-theme-preset="zine"] .bui-tabs-trigger {
+  border-radius: 0;
+  background: transparent;
+  font-family:
+    "Anton", "Bebas Neue", "Oswald", "Haettenschweiler", "Impact",
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 900;
+}
+[data-theme-preset="zine"] .bui-tabs-trigger[data-state="active"] {
+  border-bottom: 3px solid var(--bui-color-accent);
+  color: var(--bui-color-accent);
+}

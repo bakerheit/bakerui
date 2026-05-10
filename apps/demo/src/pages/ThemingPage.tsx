@@ -74,6 +74,11 @@ const PRESET_THEMES: Array<{
     label: "Newsprint",
     description: "Broadsheet ivory, serif type, hairline rules, masthead red",
   },
+  {
+    id: "zine",
+    label: "Zine",
+    description: "Photocopied punk paper, red spot color, stamped badges, paste-up tilt",
+  },
 ];
 
 export function ThemingPage({
@@ -226,7 +231,10 @@ export function ThemingPage({
             is a glow-in-the-dark night-light variant on deep navy), and{" "}
             <strong>newsprint</strong> (broadsheet editorial design — warm ivory paper, Georgia
             serif type, hairline rules, sharp corners, masthead red for accents; dark mode is a
-            night-mode newspaper-app variant with warm charcoal and sepia-cream text).
+            night-mode newspaper-app variant with warm charcoal and sepia-cream text), and{" "}
+            <strong>zine</strong> (photocopied punk/DIY zine — uneven copier paper, one xerox-red
+            spot color, Impact-condensed display headings, stamped badges at paste-up rotations,
+            uneven hand-cut borders; dark mode is a black-page zine with the red lifted to glow).
           </Text>
 
           <Heading level={3}>Using a built-in preset</Heading>

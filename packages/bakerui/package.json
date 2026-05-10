@@ -36,7 +36,8 @@
     "./themes/neon-sprawl.css": "./src/themes/neon-sprawl.css",
     "./themes/colored-eink.css": "./src/themes/colored-eink.css",
     "./themes/toy-plastic.css": "./src/themes/toy-plastic.css",
-    "./themes/newsprint.css": "./src/themes/newsprint.css"
+    "./themes/newsprint.css": "./src/themes/newsprint.css",
+    "./themes/zine.css": "./src/themes/zine.css"
   },
   "files": [
     "dist",

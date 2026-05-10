@@ -21,6 +21,7 @@ import "bakerui/themes/neon-sprawl.css";
 import "bakerui/themes/colored-eink.css";
 import "bakerui/themes/toy-plastic.css";
 import "bakerui/themes/newsprint.css";
+import "bakerui/themes/zine.css";
 import { HomePage } from "./pages/HomePage";
 import { ComponentsPage } from "./pages/ComponentsPage";
 import { DataPage } from "./pages/DataPage";
