@@ -161,9 +161,11 @@
 [data-theme-preset="glassx"] .bui-alert,
 [data-theme-preset="glassx"] .bui-accordion,
 [data-theme-preset="glassx"] .bui-table-wrapper,
-[data-theme-preset="glassx"] .bui-input,
+[data-theme-preset="glassx"] .bui-input-wrapper,
 [data-theme-preset="glassx"] .bui-select,
 [data-theme-preset="glassx"] .bui-combobox-trigger,
+[data-theme-preset="glassx"] .bui-datepicker__trigger,
+[data-theme-preset="glassx"] .bui-timepicker__trigger,
 [data-theme-preset="glassx"] .bui-tabs-list,
 [data-theme-preset="glassx"] .bui-button--secondary,
 [data-theme-preset="glassx"] .bui-topbar,
@@ -175,6 +177,19 @@
   border-color: var(--bui-color-border);
 }
 
+/* Make addons sit inside the wrapper's frosted surface as a tinted band
+   rather than a fully separate panel — keeps the input-group reading as
+   one connected unit, with the addon's own border doing the visual
+   separation. */
+[data-theme-preset="glassx"] .bui-input-wrapper__addon {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--bui-color-text);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-input-wrapper__addon {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--bui-color-text);
+}
+
 /* ---- Floaty surfaces: even more transparent, lighter blur ----
    Popovers, tooltips, dropdown menus, and combobox content sit
    "above" everything else and should feel like a thin sheet of glass
@@ -183,13 +198,102 @@
 [data-theme-preset="glassx"] .bui-popover,
 [data-theme-preset="glassx"] .bui-tooltip,
 [data-theme-preset="glassx"] .bui-menu,
-[data-theme-preset="glassx"] .bui-datepicker__popover {
+[data-theme-preset="glassx"] .bui-datepicker__popover,
+[data-theme-preset="glassx"] .bui-timepicker__popover {
   background-color: var(--bui-glassx-floaty-bg);
   backdrop-filter: blur(6px) saturate(140%);
   -webkit-backdrop-filter: blur(6px) saturate(140%);
   background-image: var(--bui-glassx-floaty-tint);
   box-shadow: var(--bui-glassx-rim), var(--bui-shadow-lg);
   border-color: var(--bui-color-border);
+}
+
+/* TimePicker stays transparent like the rest of the glass surfaces, but
+   each digit gets its own micro-halo via text-shadow — a soft outline
+   that hugs each character and makes it readable against whatever
+   color bleeds through, no matter how saturated. Same principle as
+   movie subtitles: text doesn't need an opaque background if every
+   character carries its own contrast separator. */
+[data-theme-preset="glassx"] .bui-timepicker__wheel-item {
+  /* Bump from text-muted to full text color — the halo gives the
+     contrast we used to lean on muting for. */
+  color: var(--bui-color-text);
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.7),
+    0 0 8px rgba(255, 255, 255, 0.45);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-timepicker__wheel-item {
+  text-shadow:
+    0 0 4px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(0, 0, 0, 0.5);
+}
+/* The selected row drops the halo (or uses a much lighter one) — it
+   sits in the band, has its own backing, and should read as the most
+   "in-focus" item without competing for attention. */
+[data-theme-preset="glassx"] .bui-timepicker__wheel-item[data-selected] {
+  text-shadow: none;
+  font-weight: var(--bui-font-weight-semibold);
+}
+[data-theme-preset="glassx"] .bui-timepicker__band {
+  background: rgba(0, 0, 0, 0.06);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-timepicker__band {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* Hide the popover-edge fade overlays in glassx — they were designed to
+   dissolve items into a solid surface, but the surface here is glass.
+   The halo handles legibility; let items just clip cleanly at the
+   wheel edges. */
+[data-theme-preset="glassx"] .bui-timepicker__fade {
+  display: none;
+}
+
+/* === Same halo treatment for Combobox + DatePicker ======================
+   These popovers are also thin-glass, and their interactive items (list
+   options, day cells) have the same readability-vs-translucency tradeoff
+   as the time picker wheels. Apply the same micro-halo so digits/text
+   stay legible against any color bleeding through, while the
+   highlighted/selected state drops the halo to read as the focal point. */
+
+/* Combobox list items */
+[data-theme-preset="glassx"] .bui-combobox-item,
+[data-theme-preset="glassx"] .bui-combobox-empty,
+[data-theme-preset="glassx"] .bui-combobox-group__label {
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.7),
+    0 0 8px rgba(255, 255, 255, 0.45);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-combobox-item,
+[data-theme-preset="glassx"][data-theme="dark"] .bui-combobox-empty,
+[data-theme-preset="glassx"][data-theme="dark"] .bui-combobox-group__label {
+  text-shadow:
+    0 0 4px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(0, 0, 0, 0.5);
+}
+[data-theme-preset="glassx"] .bui-combobox-item[data-highlighted="true"],
+[data-theme-preset="glassx"] .bui-combobox-item[data-selected="true"] {
+  text-shadow: none;
+}
+
+/* DatePicker day cells + month label + weekday headers */
+[data-theme-preset="glassx"] .bui-datepicker__day,
+[data-theme-preset="glassx"] .bui-datepicker__monthlabel,
+[data-theme-preset="glassx"] .bui-datepicker__weekday {
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.7),
+    0 0 8px rgba(255, 255, 255, 0.45);
+}
+[data-theme-preset="glassx"][data-theme="dark"] .bui-datepicker__day,
+[data-theme-preset="glassx"][data-theme="dark"] .bui-datepicker__monthlabel,
+[data-theme-preset="glassx"][data-theme="dark"] .bui-datepicker__weekday {
+  text-shadow:
+    0 0 4px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(0, 0, 0, 0.5);
+}
+[data-theme-preset="glassx"] .bui-datepicker__day:hover,
+[data-theme-preset="glassx"] .bui-datepicker__day--selected,
+[data-theme-preset="glassx"] .bui-datepicker__day--today {
+  text-shadow: none;
 }
 
 /* Combobox content is a SPECIAL CASE: it has a scrollable child

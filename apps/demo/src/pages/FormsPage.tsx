@@ -6,6 +6,7 @@ import {
   Checkbox,
   Combobox,
   DatePicker,
+  TimePicker,
   Divider,
   Field,
   HStack,
@@ -43,6 +44,7 @@ export function FormsPage() {
         <CheckboxSection />
         <ComboboxSection />
         <DatePickerSection />
+        <TimePickerSection />
         <DividerSection />
         <InputSection />
         <ProgressBarSection />
@@ -1232,7 +1234,16 @@ function InputSection() {
   return (
     <DocSection
       title="Input · Textarea · Field"
-      description="Text input primitives plus a Field wrapper that auto-wires labels, hints, and errors via aria attributes."
+      description={
+        <>
+          Text input primitives plus a Field wrapper that auto-wires labels, hints, and errors via
+          aria attributes. The classic <strong>input-group</strong> pattern (prefix/suffix slots
+          for icons, addon text, or inline buttons) lives directly on <code>Input</code> via the{" "}
+          <code>leadingIcon</code> / <code>trailingIcon</code> (inset) and{" "}
+          <code>leadingAddon</code> / <code>trailingAddon</code> (bordered) props — no separate
+          wrapper needed.
+        </>
+      }
       propsTable={[
         {
           name: "inputSize",
@@ -1311,26 +1322,50 @@ function InputSection() {
       </DocExample>
 
       <DocExample
-        label="Bordered addons"
-        code={`<Input
+        label="Input groups"
+        description="Combine icons, addon text, and inline buttons to compose the patterns most apps need: URLs, currency, search, email, quantities, copyable values."
+        code={`{/* URL with protocol + domain suffix */}
+<Input leadingAddon="https://" trailingAddon=".bakerui.app" placeholder="acme" />
+
+{/* Currency with code suffix */}
+<Input leadingAddon="$" trailingAddon="USD" placeholder="0.00" inputMode="decimal" />
+
+{/* Search field with leading icon */}
+<Input leadingIcon={<SearchIcon />} placeholder="Search docs" />
+
+{/* Email with leading mail glyph */}
+<Input leadingIcon={<MailIcon />} type="email" placeholder="ada@example.com" />
+
+{/* Quantity with unit suffix */}
+<Input trailingAddon="kg" type="number" placeholder="0" />
+
+{/* URL with inline action button */}
+<Input
   leadingAddon="https://"
-  trailingAddon=".bakerui.app"
-  placeholder="acme"
+  trailingAddon={<Button size="sm" variant="ghost">Copy</Button>}
+  defaultValue="bakerui.app/docs"
 />`}
       >
-        <div style={{ maxWidth: 420 }}>
+        <Stack gap="3" style={{ maxWidth: 480 }}>
           <Input leadingAddon="https://" trailingAddon=".bakerui.app" placeholder="acme" />
-        </div>
-      </DocExample>
-
-      <DocExample
-        label="Inline icons"
-        code={`<Input leadingIcon={<MailIcon />} placeholder="ada@example.com" />
-<Input trailingIcon={<SearchIcon />} placeholder="Search docs" />`}
-      >
-        <Stack gap="3" style={{ maxWidth: 420 }}>
-          <Input leadingIcon={<MailIcon />} placeholder="ada@example.com" />
-          <Input trailingIcon={<SearchIcon />} placeholder="Search docs" />
+          <Input
+            leadingAddon="$"
+            trailingAddon="USD"
+            placeholder="0.00"
+            inputMode="decimal"
+          />
+          <Input leadingIcon={<SearchIcon />} placeholder="Search docs" />
+          <Input leadingIcon={<MailIcon />} type="email" placeholder="ada@example.com" />
+          <Input trailingAddon="kg" type="number" placeholder="0" />
+          <Input
+            leadingAddon="https://"
+            trailingAddon={
+              <Button size="sm" variant="ghost">
+                Copy
+              </Button>
+            }
+            defaultValue="bakerui.app/docs"
+          />
         </Stack>
       </DocExample>
     </DocSection>
@@ -1523,6 +1558,130 @@ function DatePickerSection() {
         <div style={{ maxWidth: 280 }}>
           <DatePicker value={new Date()} onValueChange={() => {}} disabled />
         </div>
+      </DocExample>
+    </DocSection>
+  );
+}
+
+function TimePickerSection() {
+  const [time, setTime] = useState<string | null>("09:30");
+  const [meeting, setMeeting] = useState<string | null>("14:00");
+
+  return (
+    <DocSection
+      title="TimePicker"
+      description={
+        <>
+          iOS-style time picker — three side-by-side scroll wheels (Hours · Minutes · AM/PM with{" "}
+          <code>format="12h"</code>) snap to a center selection band as the user drags. Stores the
+          value as an <code>"HH:MM"</code> 24-hour string regardless of display format. Pairs
+          naturally with DatePicker when a flow needs both date and time.
+        </>
+      }
+      propsTable={[
+        {
+          name: "value",
+          type: "string | null",
+          description: 'Current time in "HH:MM" 24-hour format.',
+        },
+        {
+          name: "defaultValue",
+          type: "string | null",
+          description: "Initial time for uncontrolled mode.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string | null) => void",
+          description: "Fires whenever a wheel snaps to a new value.",
+        },
+        {
+          name: "format",
+          type: '"12h" | "24h"',
+          default: '"24h"',
+          description:
+            "Display format. 12h adds an AM/PM wheel. The internal value is always stored as 24h.",
+        },
+        {
+          name: "step",
+          type: "number",
+          default: "1",
+          description:
+            "Minutes between options on the minute wheel. Defaults to 1 to match iOS; bump to 5/15/30 for booking flows.",
+        },
+        {
+          name: "inputSize",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "Height of the trigger.",
+        },
+        {
+          name: "clearable",
+          type: "boolean",
+          default: "false",
+          description: "Show an X button when a value is set.",
+        },
+        {
+          name: "invalid",
+          type: "boolean",
+          description: "Apply error styling and aria-invalid.",
+        },
+      ]}
+    >
+      <DocExample
+        label="Default"
+        description="1-minute resolution, 24-hour display. Drag the wheels or click an item."
+        code={`const [time, setTime] = useState<string | null>("09:30");
+
+<TimePicker value={time} onValueChange={setTime} clearable />`}
+      >
+        <div style={{ maxWidth: 200 }}>
+          <TimePicker value={time} onValueChange={setTime} clearable />
+        </div>
+      </DocExample>
+
+      <DocExample
+        label="12-hour format"
+        description="Adds the AM/PM wheel. Internal value stays 24h; only the display flips."
+        code={`<TimePicker value={time} onValueChange={setTime} format="12h" />`}
+      >
+        <div style={{ maxWidth: 200 }}>
+          <TimePicker value={time} onValueChange={setTime} format="12h" />
+        </div>
+      </DocExample>
+
+      <DocExample
+        label="Coarser step for booking flows"
+        description="15-minute granularity reduces the minutes wheel to 4 options — better when consumers shouldn't pick odd minutes."
+        code={`<TimePicker
+  value={meeting}
+  onValueChange={setMeeting}
+  format="12h"
+  step={15}
+  placeholder="Pick a slot"
+/>`}
+      >
+        <div style={{ maxWidth: 220 }}>
+          <TimePicker
+            value={meeting}
+            onValueChange={setMeeting}
+            format="12h"
+            step={15}
+            placeholder="Pick a slot"
+          />
+        </div>
+      </DocExample>
+
+      <DocExample
+        label="Sizes and disabled"
+        code={`<TimePicker inputSize="sm" defaultValue="08:00" />
+<TimePicker inputSize="lg" defaultValue="14:00" />
+<TimePicker defaultValue="12:00" disabled />`}
+      >
+        <Stack gap="3" style={{ maxWidth: 220 }}>
+          <TimePicker inputSize="sm" defaultValue="08:00" />
+          <TimePicker inputSize="lg" defaultValue="14:00" />
+          <TimePicker defaultValue="12:00" disabled />
+        </Stack>
       </DocExample>
     </DocSection>
   );

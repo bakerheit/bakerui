@@ -1,0 +1,194 @@
+/* === Trigger ============================================================ */
+.bui-timepicker__trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  width: 100%;
+  min-width: 140px;
+  padding: 0 var(--bui-space-3);
+  height: var(--bui-timepicker-h);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  font: inherit;
+  font-size: var(--bui-font-size-sm);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-timepicker__trigger:hover:not(:disabled) {
+  border-color: var(--bui-color-border-strong);
+}
+.bui-timepicker__trigger:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+.bui-timepicker__trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.bui-timepicker__trigger--invalid {
+  border-color: var(--bui-color-danger);
+}
+.bui-timepicker__trigger--placeholder .bui-timepicker__value {
+  color: var(--bui-color-text-muted);
+}
+.bui-timepicker__trigger--sm { --bui-timepicker-h: 28px; font-size: var(--bui-font-size-xs); }
+.bui-timepicker__trigger--md { --bui-timepicker-h: 36px; }
+.bui-timepicker__trigger--lg { --bui-timepicker-h: 44px; font-size: var(--bui-font-size-md); }
+
+.bui-timepicker__value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bui-timepicker__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--bui-radius-sm);
+  color: var(--bui-color-text-muted);
+  cursor: pointer;
+  transition: background-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.bui-timepicker__clear:hover {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+
+/* === Popover ============================================================ */
+.bui-timepicker__popover {
+  position: absolute;
+  z-index: var(--bui-z-popover);
+  background: var(--bui-color-surface-raised);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  box-shadow: var(--bui-shadow-lg);
+  padding: var(--bui-space-2);
+  user-select: none;
+  /* The popover hosts the wheels and the fade overlays — overflow:hidden
+     keeps the fades clipped to the rounded corners. */
+  overflow: hidden;
+}
+
+/* === Wheels =============================================================
+   3 (or 2) side-by-side scroll wheels, fixed height = ITEM_HEIGHT * 5. The
+   selection band sits behind all wheels at the middle row. Top/bottom fade
+   overlays dissolve off-center items into the surface so the centered row
+   reads as the only "in-focus" item. */
+.bui-timepicker__wheels {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: var(--bui-space-1);
+  /* 5 × 36px = 180px. Item height kept in sync with TimePicker.tsx. */
+  height: 180px;
+}
+
+.bui-timepicker__band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  background: var(--bui-color-bg-subtle);
+  border-radius: var(--bui-radius-md);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bui-timepicker__sep {
+  align-self: center;
+  font-size: var(--bui-font-size-lg);
+  font-weight: var(--bui-font-weight-semibold);
+  color: var(--bui-color-text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  /* Slight raise — visually centers with the items, since the band is
+     vertically centered too. */
+  padding: 0 var(--bui-space-1);
+  z-index: 1;
+}
+
+.bui-timepicker__wheel {
+  position: relative;
+  z-index: 1;
+  flex: 0 1 auto;
+  min-width: 60px;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbars in all engines — the scroll affordance is the wheel itself. */
+  scrollbar-width: none;
+}
+.bui-timepicker__wheel::-webkit-scrollbar {
+  display: none;
+}
+.bui-timepicker__wheel:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: -2px;
+  border-radius: var(--bui-radius-md);
+}
+
+.bui-timepicker__wheel-item {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--bui-color-text-muted);
+  font: inherit;
+  font-size: var(--bui-font-size-md);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  scroll-snap-align: center;
+  transition: color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-timepicker__wheel-item[data-selected] {
+  color: var(--bui-color-text);
+  font-weight: var(--bui-font-weight-semibold);
+}
+
+/* === Fade overlays ====================================================== */
+.bui-timepicker__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  pointer-events: none;
+  z-index: 2;
+}
+.bui-timepicker__fade--top {
+  top: var(--bui-space-2);
+  background: linear-gradient(
+    to bottom,
+    var(--bui-color-surface-raised) 0%,
+    color-mix(in srgb, var(--bui-color-surface-raised) 80%, transparent) 60%,
+    transparent 100%
+  );
+}
+.bui-timepicker__fade--bottom {
+  bottom: var(--bui-space-2);
+  background: linear-gradient(
+    to top,
+    var(--bui-color-surface-raised) 0%,
+    color-mix(in srgb, var(--bui-color-surface-raised) 80%, transparent) 60%,
+    transparent 100%
+  );
+}

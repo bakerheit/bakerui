@@ -180,12 +180,15 @@
 [data-theme-preset="frutiger-aero"] .bui-input,
 [data-theme-preset="frutiger-aero"] .bui-select,
 [data-theme-preset="frutiger-aero"] .bui-combobox-trigger,
+[data-theme-preset="frutiger-aero"] .bui-datepicker__trigger,
+[data-theme-preset="frutiger-aero"] .bui-timepicker__trigger,
 [data-theme-preset="frutiger-aero"] .bui-tabs-list,
 [data-theme-preset="frutiger-aero"] .bui-button--secondary,
 [data-theme-preset="frutiger-aero"] .bui-topbar,
 [data-theme-preset="frutiger-aero"] .bui-sidebar,
 [data-theme-preset="frutiger-aero"] .bui-menu,
-[data-theme-preset="frutiger-aero"] .bui-datepicker__popover {
+[data-theme-preset="frutiger-aero"] .bui-datepicker__popover,
+[data-theme-preset="frutiger-aero"] .bui-timepicker__popover {
   backdrop-filter: blur(10px) saturate(170%);
   -webkit-backdrop-filter: blur(10px) saturate(170%);
   background-image: var(--bui-aero-panel-gloss);

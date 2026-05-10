@@ -17,6 +17,7 @@ export * from "./components/Select";
 export * from "./components/Combobox";
 export * from "./components/DataTable";
 export * from "./components/DatePicker";
+export * from "./components/TimePicker";
 export * from "./components/Spinner";
 export * from "./components/Skeleton";
 export * from "./components/ProgressBar";
