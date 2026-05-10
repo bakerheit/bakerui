@@ -34,7 +34,7 @@
     "./themes/cassette-futurism.css": "./src/themes/cassette-futurism.css",
     "./themes/94-doors.css": "./src/themes/94-doors.css",
     "./themes/neon-sprawl.css": "./src/themes/neon-sprawl.css",
-    "./themes/colored-ebook.css": "./src/themes/colored-ebook.css"
+    "./themes/colored-eink.css": "./src/themes/colored-eink.css"
   },
   "files": [
     "dist",

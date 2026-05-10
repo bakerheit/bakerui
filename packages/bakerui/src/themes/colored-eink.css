@@ -1,0 +1,256 @@
+/*
+ * bakerui theme preset — "colored-eink"
+ *
+ * Color e-ink display aesthetic — the look of a Kaleido / Colorsoft panel
+ * sitting on a desk: a slightly cool, paper-like pale-grey backdrop, dense
+ * near-black text, and a small palette of desaturated inks (dusty blue,
+ * sage, ochre, brick) that look like they were laid down through a color
+ * filter array. Matte by definition: no shadows, no glow, sharp corners,
+ * no gradients. Opt in:
+ *
+ *   import "bakerui/themes/colored-eink.css";
+ *   <ThemeProvider preset="colored-eink"> ... </ThemeProvider>
+ *
+ * Distinct from `soft` (vivid pastels, app-y) and `terminal` (mono on
+ * black) by committing to the one thing e-ink actually looks like:
+ * matte, low-saturation ink on dithered grey paper, with type — not
+ * surfaces — doing the visual work.
+ */
+
+/* ---- Light (panel at rest) ----
+   Pale warm-grey background, like a Paperwhite or Kaleido panel reflecting
+   ambient light. Never pure white — that's an LCD tell. */
+[data-theme-preset="colored-eink"] {
+  --bui-color-bg: #e7e3d8;
+  --bui-color-bg-subtle: #ddd9cd;
+  --bui-color-bg-muted: #cbc7bc;
+  --bui-color-surface: #ece8dd;
+  --bui-color-surface-raised: #f0ece2;
+
+  --bui-color-border: #aeaaa0;
+  --bui-color-border-strong: #6c6960;
+
+  /* Near-black warm ink. Real e-ink particles are charcoal, not ink-black,
+     and the cover glass adds a faint warmth. */
+  --bui-color-text: #1f1d18;
+  --bui-color-text-muted: #66635a;
+  --bui-color-text-inverse: #ece8dd;
+
+  /* Dusty blue — what cyan looks like through a Kaleido color filter
+     array. Desaturated by ~40% from a "real" cyan. */
+  --bui-color-accent: #3f6585;
+  --bui-color-accent-hover: #355773;
+  --bui-color-accent-active: #2a4660;
+  --bui-color-accent-fg: #ece8dd;
+  --bui-color-accent-soft: #c9d3dc;
+
+  /* Semantic colors all pulled down to the same low-saturation register
+     so they look like they were printed on the same panel. */
+  --bui-color-success: #557a4d;
+  --bui-color-warning: #8c6d2e;
+  --bui-color-danger: #944a3a;
+  --bui-color-danger-fg: #ece8dd;
+
+  --bui-color-focus-ring: #3f6585;
+
+  /* The four "filter inks" — exposed so consumers can dab them anywhere
+     for the same dithered, slightly washed feel the theme uses. */
+  --bui-eink-ink-blue: #3f6585;
+  --bui-eink-ink-sage: #557a4d;
+  --bui-eink-ink-ochre: #8c6d2e;
+  --bui-eink-ink-brick: #944a3a;
+
+  /* Stock UI sans — what most reader software ships for chrome.
+     Bookerly / Charter / etc are body-text faces; we leave those to the
+     consumer's own prose styles. */
+  --bui-font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --bui-line-height-normal: 1.55;
+
+  /* Sharp corners. E-ink UIs almost universally are. */
+  --bui-radius-sm: 0;
+  --bui-radius-md: 2px;
+  --bui-radius-lg: 2px;
+  --bui-radius-xl: 4px;
+
+  /* No shadows — e-ink is matte and doesn't emit. We zero the tokens
+     rather than overriding component-by-component. */
+  --bui-shadow-xs: none;
+  --bui-shadow-sm: none;
+  --bui-shadow-md: none;
+  --bui-shadow-lg: none;
+
+  --bui-color-overlay-backdrop: rgba(35, 32, 25, 0.55);
+}
+
+/* ---- Dark (inverted ink, low-saturation charcoal) ----
+   E-readers in dark mode don't go to pure black — there's a small refresh
+   halo around glyphs, and pure black on e-ink looks gritty. Charcoal with
+   warm-cream text matches what Kindle "black" actually renders as. */
+[data-theme-preset="colored-eink"][data-theme="dark"] {
+  --bui-color-bg: #1c1b18;
+  --bui-color-bg-subtle: #232220;
+  --bui-color-bg-muted: #2e2d2a;
+  --bui-color-surface: #232220;
+  --bui-color-surface-raised: #2a2926;
+
+  --bui-color-border: #3d3c38;
+  --bui-color-border-strong: #6e6c66;
+
+  --bui-color-text: #d4d0c2;
+  --bui-color-text-muted: #8a8678;
+  --bui-color-text-inverse: #1c1b18;
+
+  /* Inks lifted just enough to read on charcoal — still desaturated. */
+  --bui-color-accent: #7d9bb8;
+  --bui-color-accent-hover: #92aec9;
+  --bui-color-accent-active: #6a85a0;
+  --bui-color-accent-fg: #1c1b18;
+  --bui-color-accent-soft: rgba(125, 155, 184, 0.18);
+
+  --bui-color-success: #94b283;
+  --bui-color-warning: #c69b5e;
+  --bui-color-danger: #c68070;
+  --bui-color-danger-fg: #1c1b18;
+
+  --bui-color-focus-ring: #7d9bb8;
+
+  --bui-eink-ink-blue: #7d9bb8;
+  --bui-eink-ink-sage: #94b283;
+  --bui-eink-ink-ochre: #c69b5e;
+  --bui-eink-ink-brick: #c68070;
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.75);
+}
+
+/* ---- Page backdrop ----
+   Very faint dithered noise simulates pigment-grain texture under raking
+   light. Visible to the eye, not enough to lift contrast. */
+[data-theme-preset="colored-eink"].bui-root-page,
+[data-theme-preset="colored-eink"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.18  0 0 0 0 0.17  0 0 0 0 0.13  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+}
+[data-theme-preset="colored-eink"][data-theme="dark"].bui-root-page,
+[data-theme-preset="colored-eink"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='11'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.82  0 0 0 0 0.74  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+}
+
+/* ---- Headings stay sturdy ----
+   No hairline display weights — e-ink panels can't render thin strokes
+   without ghosting, so 600 is the sweet spot. */
+[data-theme-preset="colored-eink"] h1,
+[data-theme-preset="colored-eink"] h2,
+[data-theme-preset="colored-eink"] h3 {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+/* ---- Links: dotted underline in accent ink ----
+   No highlight gradient — that's LCD candy on a panel. A plain dotted
+   rule reads as a typeset footnote indicator. */
+[data-theme-preset="colored-eink"] a {
+  color: var(--bui-color-accent);
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+[data-theme-preset="colored-eink"] a:hover {
+  text-decoration-style: solid;
+}
+
+/* ---- Decorative <hr> — typeset section break. */
+[data-theme-preset="colored-eink"] hr {
+  border: none;
+  height: 1.25rem;
+  background: none;
+  position: relative;
+  margin: 1.25rem 0;
+}
+[data-theme-preset="colored-eink"] hr::before {
+  content: "· · ·";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.45em;
+  color: var(--bui-color-text-muted);
+  font-size: 1em;
+  line-height: 1;
+}
+
+/* ---- Cards: outlined, no fill differentiation ----
+   E-ink readers separate regions with hairline rules, not surfaces. */
+[data-theme-preset="colored-eink"] .bui-card {
+  background: var(--bui-color-surface);
+  border: 1px solid var(--bui-color-border);
+}
+
+/* ---- Buttons ----
+   Primary fills with accent ink; secondary is pure outlined chrome —
+   how an e-reader's nav UI typically looks. */
+[data-theme-preset="colored-eink"] .bui-button--primary {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--bui-color-accent-active);
+}
+[data-theme-preset="colored-eink"] .bui-button--secondary {
+  background: transparent;
+  border: 1px solid var(--bui-color-border-strong);
+  color: var(--bui-color-text);
+}
+
+/* ---- Badges: flat tinted swatches ----
+   Sharp-cornered, no rounding — a swatch on the panel. */
+[data-theme-preset="colored-eink"] .bui-badge {
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  border-radius: 0;
+  padding: 0 var(--bui-space-2);
+}
+
+/* ---- Inputs: single bottom rule ----
+   No box, no fill. Text sits on the paper directly. */
+[data-theme-preset="colored-eink"] .bui-input,
+[data-theme-preset="colored-eink"] .bui-textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--bui-color-border-strong);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+[data-theme-preset="colored-eink"] .bui-input:focus-visible,
+[data-theme-preset="colored-eink"] .bui-input:focus-within,
+[data-theme-preset="colored-eink"] .bui-textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--bui-color-accent);
+  box-shadow: 0 1px 0 0 var(--bui-color-accent);
+}
+
+/* ---- Selection: matte ink-block ----
+   E-readers show selection as a flat rectangle, never gradient. */
+[data-theme-preset="colored-eink"] ::selection {
+  background: var(--bui-color-accent-soft);
+  color: var(--bui-color-text);
+}
+
+/* ---- Tables: horizontal rules only, like a printed index ----
+   No vertical separators, no zebra fill — type does the work. */
+[data-theme-preset="colored-eink"] .bui-table {
+  border-collapse: collapse;
+}
+[data-theme-preset="colored-eink"] .bui-table th,
+[data-theme-preset="colored-eink"] .bui-table td {
+  border-top: 1px solid var(--bui-color-border);
+  border-bottom: 1px solid var(--bui-color-border);
+  border-left: none;
+  border-right: none;
+}

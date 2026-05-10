@@ -59,9 +59,9 @@ const PRESET_THEMES: Array<{
     description: "Cyberpunk magenta + cyan glow, grid backdrop",
   },
   {
-    id: "colored-ebook",
-    label: "Colored Ebook",
-    description: "Serif paper, deep teal cover, highlighter accents",
+    id: "colored-eink",
+    label: "Colored Eink",
+    description: "Muted Kaleido-panel inks on dithered paper-grey",
   },
 ];
 
@@ -210,8 +210,8 @@ export function ThemingPage({
             navy title bars, Tahoma type, on a teal desktop), and{" "}
             <strong>neon-sprawl</strong> (cyberpunk retro-futurism — magenta + cyan neon glow,
             chromatic-aberration headings, perspective grid backdrop), and{" "}
-            <strong>colored-ebook</strong> (serif reading face on warm tinted paper, deep-teal
-            cover accent, highlighter-yellow link underlines).
+            <strong>colored-eink</strong> (color e-ink panel aesthetic — desaturated Kaleido-style
+            inks on dithered paper-grey, matte surfaces, no shadows, sharp corners).
           </Text>
 
           <Heading level={3}>Using a built-in preset</Heading>
