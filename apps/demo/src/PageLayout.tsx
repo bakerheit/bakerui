@@ -50,8 +50,14 @@ export function PageLayout({ children }: PageLayoutProps) {
 }
 
 function Toc({ tree, active }: { tree: TocNode[]; active: string | null }) {
+  // 3-level layout (categories → sections → examples) needs a distinct
+  // scale so the middle tier — the component names — doesn't end up
+  // visually smaller than the sub-items below it. Detect from the tree.
+  const isNested = tree.some((node) =>
+    node.items.some((child) => child.items.length > 0),
+  );
   return (
-    <div className="page-toc">
+    <div className={isNested ? "page-toc page-toc--nested" : "page-toc"}>
       <div className="page-toc__heading">On this page</div>
       <ul className="page-toc__list">
         {tree.map((node) => (
@@ -114,28 +120,58 @@ function flattenIds(tree: TocNode[]): string[] {
   return out;
 }
 
-/** Discover sections + sub-items from the rendered DOM. */
+/**
+ * Discover the TOC from the rendered DOM. Two modes:
+ *
+ *  • Category mode — pages that mark groups with `data-toc-category` (e.g.
+ *    the consolidated Components page). Categories sit at the top level,
+ *    `data-toc-section` items nest beneath their parent category, and each
+ *    section's `data-toc-example` entries (Options / individual examples)
+ *    nest one level deeper. Three-level hierarchy.
+ *
+ *  • Flat mode — every other page. Sections at the top level, with their
+ *    examples nested below them. Two-level hierarchy.
+ */
 function useTocTree(): TocNode[] {
   const [tree, setTree] = useState<TocNode[]>([]);
   const lastJsonRef = useRef("");
 
   useLayoutEffect(() => {
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-toc-section]"),
-    );
-    const next: TocNode[] = sections.map((section) => ({
-      id: section.id,
-      label: section.dataset.tocLabel ?? section.id,
-      items: Array.from(
-        section.querySelectorAll<HTMLElement>("[data-toc-example]"),
-      )
+    const examplesOf = (parent: HTMLElement): TocNode[] =>
+      Array.from(parent.querySelectorAll<HTMLElement>("[data-toc-example]"))
         .filter((ex) => !!ex.id)
         .map((ex) => ({
           id: ex.id,
           label: ex.dataset.tocLabel ?? ex.id,
           items: [],
-        })),
-    }));
+        }));
+
+    const sectionToNode = (section: HTMLElement): TocNode => ({
+      id: section.id,
+      label: section.dataset.tocLabel ?? section.id,
+      items: examplesOf(section),
+    });
+
+    const categories = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-toc-category]"),
+    );
+
+    let next: TocNode[];
+    if (categories.length > 0) {
+      next = categories.map((cat) => ({
+        id: cat.id,
+        label: cat.dataset.tocLabel ?? cat.id,
+        items: Array.from(
+          cat.querySelectorAll<HTMLElement>("[data-toc-section]"),
+        )
+          .filter((s) => !!s.id)
+          .map(sectionToNode),
+      }));
+    } else {
+      next = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-toc-section]"),
+      ).map(sectionToNode);
+    }
 
     const json = JSON.stringify(next);
     if (json !== lastJsonRef.current) {

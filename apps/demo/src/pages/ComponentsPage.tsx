@@ -17,7 +17,7 @@ import {
   Text,
   VStack,
 } from "bakerui";
-import { DocExample, DocSection } from "../Doc";
+import { DocExample, DocSection, slug } from "../Doc";
 import { PageLayout } from "../PageLayout";
 
 // Compose every component's docs onto a single page. The sidebar lists
@@ -142,24 +142,28 @@ export function ComponentsPage() {
   );
 }
 
-// Visual section divider above each block of components. Not anchored —
-// only individual components are sidebar targets.
+// Category divider on the consolidated Components page. Marked with
+// `data-toc-category` so the right-rail TOC promotes it to a top-level
+// entry; the contained `DocSection`s nest beneath it.
 function Category({ title, children }: { title: string; children: ReactNode }) {
+  const id = `category-${slug(title)}`;
   return (
-    <Stack gap="8" className="components-category">
-      <div className="components-category__head">
-        <Text
-          size="sm"
-          tone="muted"
-          weight="semibold"
-          style={{ letterSpacing: "0.06em", textTransform: "uppercase" }}
-        >
-          {title}
-        </Text>
-        <div className="components-category__rule" aria-hidden />
-      </div>
-      <Stack gap="14">{children}</Stack>
-    </Stack>
+    <section
+      id={id}
+      data-toc-category
+      data-toc-label={title}
+      className="components-category"
+    >
+      <Stack gap="8">
+        <div className="components-category__head">
+          <Heading level={2} size="2xl" className="components-category__title">
+            {title}
+          </Heading>
+          <div className="components-category__rule" aria-hidden />
+        </div>
+        <Stack gap="14">{children}</Stack>
+      </Stack>
+    </section>
   );
 }
 

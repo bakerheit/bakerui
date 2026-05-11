@@ -22,6 +22,7 @@ import {
   Text,
   TimePicker,
   Toggle,
+  Tooltip,
   Tree,
   toast,
   useTheme,
@@ -36,13 +37,18 @@ interface HomePageProps {
   onGetStarted: () => void;
   onComponents: () => void;
   onTheming: () => void;
+  onTokens: () => void;
   onChangelog: () => void;
 }
+
+const NPM_URL = "https://www.npmjs.com/package/bakerui";
+const GITHUB_URL = "https://github.com/bakerheit/bakerui";
 
 export function HomePage({
   onGetStarted,
   onComponents,
   onTheming,
+  onTokens,
   onChangelog,
 }: HomePageProps) {
   return (
@@ -59,6 +65,13 @@ export function HomePage({
         <WhatsNew onChangelog={onChangelog} />
         <Stats />
         <FinalCta onGetStarted={onGetStarted} onComponents={onComponents} />
+        <HomeFooter
+          onGetStarted={onGetStarted}
+          onComponents={onComponents}
+          onTheming={onTheming}
+          onTokens={onTokens}
+          onChangelog={onChangelog}
+        />
       </Stack>
     </PageLayout>
   );
@@ -93,14 +106,29 @@ function Hero({
           is a token you can override — no theme objects, no CSS-in-JS runtime, and{" "}
           <code>ThemeProvider</code> is optional, not required.
         </Text>
-        <HStack gap="3" wrap>
+        <HStack gap="3" wrap align="center">
           <Button size="lg" onClick={onGetStarted}>
             Get started
           </Button>
           <Button size="lg" variant="secondary" onClick={onComponents}>
             Browse components
           </Button>
+          <Tooltip>
+            <Tooltip.Trigger asChild>
+              <a
+                className="home-hero__ghlink"
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="View bakerui on GitHub"
+              >
+                <GithubMark />
+              </a>
+            </Tooltip.Trigger>
+            <Tooltip.Content placement="bottom">View on GitHub</Tooltip.Content>
+          </Tooltip>
         </HStack>
+        <InstallBar />
         <Text size="sm" tone="muted">
           Or jump to the{" "}
           <a
@@ -962,5 +990,184 @@ function PaletteIcon() {
       <circle cx="9.5" cy="5.5" r=".9" fill="currentColor" stroke="none" />
       <circle cx="13" cy="8" r=".9" fill="currentColor" stroke="none" />
     </svg>
+  );
+}
+
+function GithubMark() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+      <path
+        fillRule="evenodd"
+        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+        -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+        .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+        -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0
+        1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
+        1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01
+        1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+      />
+    </svg>
+  );
+}
+
+/* ========================================================================== */
+/* Install bar                                                                */
+/* ========================================================================== */
+
+function InstallBar() {
+  const [copied, setCopied] = useState(false);
+  const command = "npm install bakerui";
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(command);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      /* clipboard may not be available; the visible command still teaches the install. */
+    }
+  };
+  return (
+    <div className="home-hero__install" role="group" aria-label="Install command">
+      <span className="home-hero__install-prompt" aria-hidden>
+        $
+      </span>
+      <code className="home-hero__install-cmd">{command}</code>
+      <button
+        type="button"
+        className="home-hero__install-copy"
+        onClick={copy}
+        aria-label={copied ? "Copied" : "Copy install command"}
+      >
+        {copied ? <CheckIcon /> : <CopyIcon />}
+      </button>
+    </div>
+  );
+}
+
+function CopyIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" aria-hidden>
+      <rect x="5" y="5" width="9" height="9" rx="1.5" />
+      <path d="M3 11V3.5A1.5 1.5 0 014.5 2H11" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3.5 8.5l3 3 6-7" />
+    </svg>
+  );
+}
+
+/* ========================================================================== */
+/* Footer                                                                     */
+/* ========================================================================== */
+
+function HomeFooter({
+  onGetStarted,
+  onComponents,
+  onTheming,
+  onTokens,
+  onChangelog,
+}: {
+  onGetStarted: () => void;
+  onComponents: () => void;
+  onTheming: () => void;
+  onTokens: () => void;
+  onChangelog: () => void;
+}) {
+  return (
+    <footer className="home-footer">
+      <div className="home-footer__top">
+        <div className="home-footer__brand">
+          <Heading level={3} size="md">
+            bakerui
+          </Heading>
+          <Text size="sm" tone="muted" style={{ maxWidth: "36ch" }}>
+            A small, durable React UI kit themed with plain CSS variables — no theme
+            objects, no CSS-in-JS runtime.
+          </Text>
+        </div>
+        <div className="home-footer__cols">
+          <FooterCol title="Package">
+            <FooterLink href={NPM_URL} external>
+              npm
+            </FooterLink>
+            <FooterLink href={GITHUB_URL} external>
+              GitHub
+            </FooterLink>
+            <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`} external>
+              MIT License
+            </FooterLink>
+          </FooterCol>
+          <FooterCol title="Docs">
+            <FooterLink onClick={onGetStarted}>Getting Started</FooterLink>
+            <FooterLink onClick={onComponents}>Components</FooterLink>
+            <FooterLink onClick={onTheming}>Theming</FooterLink>
+            <FooterLink onClick={onTokens}>Design tokens</FooterLink>
+          </FooterCol>
+          <FooterCol title="Releases">
+            <FooterLink onClick={onChangelog}>Changelog</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/releases`} external>
+              GitHub releases
+            </FooterLink>
+          </FooterCol>
+        </div>
+      </div>
+      <div className="home-footer__bottom">
+        <Text size="xs" tone="muted">
+          © bakerui · MIT
+        </Text>
+        <Text size="xs" tone="muted">
+          {VERSION_LABEL}
+        </Text>
+      </div>
+    </footer>
+  );
+}
+
+function FooterCol({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="home-footer__col">
+      <span className="home-footer__col-title">{title}</span>
+      {children}
+    </div>
+  );
+}
+
+function FooterLink({
+  children,
+  href,
+  external,
+  onClick,
+}: {
+  children: React.ReactNode;
+  href?: string;
+  external?: boolean;
+  onClick?: () => void;
+}) {
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className="home-footer__link"
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
+  }
+  return (
+    <a
+      className="home-footer__link"
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+    >
+      {children}
+    </a>
   );
 }

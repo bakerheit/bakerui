@@ -183,6 +183,24 @@ body {
   font-weight: var(--bui-font-weight-regular);
 }
 
+/* 3-level (Components page) — Categories at depth=0 are most prominent,
+   the component names beneath them at depth=1 read normal-weight at the
+   default size, and individual examples at depth=2 are the smallest. The
+   flat-mode rule above is overridden inside this scope. */
+.page-toc--nested .page-toc__link[data-depth="0"] {
+  font-weight: var(--bui-font-weight-semibold);
+}
+.page-toc--nested .page-toc__link[data-depth="1"] {
+  padding-left: calc(var(--bui-space-3) + var(--bui-space-4));
+  font-size: var(--bui-font-size-sm);
+  font-weight: var(--bui-font-weight-medium);
+}
+.page-toc--nested .page-toc__link[data-depth="2"] {
+  padding-left: calc(var(--bui-space-3) + var(--bui-space-4) + var(--bui-space-4));
+  font-size: var(--bui-font-size-xs);
+  font-weight: var(--bui-font-weight-regular);
+}
+
 @media (max-width: 1100px) {
   .demo-rail {
     display: none;
@@ -337,6 +355,161 @@ body {
 /* Section heading shared by Showcase / Pillars. */
 .home-section-heading {
   max-width: 60ch;
+}
+
+/* --- Hero: install command bar + GitHub icon link ---------------------- */
+.home-hero__install {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-1) var(--bui-space-1) var(--bui-space-1) var(--bui-space-3);
+  background: var(--bui-color-bg-subtle);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  font-family: var(--bui-font-family-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: var(--bui-font-size-sm);
+  width: max-content;
+  max-width: 100%;
+}
+.home-hero__install-prompt {
+  color: var(--bui-color-text-muted);
+  user-select: none;
+}
+.home-hero__install-cmd {
+  color: var(--bui-color-text);
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+.home-hero__install-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  color: var(--bui-color-text-muted);
+  cursor: pointer;
+  border-radius: var(--bui-radius-sm);
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.home-hero__install-copy:hover {
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+}
+.home-hero__install-copy:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.home-hero__ghlink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--bui-radius-md);
+  color: var(--bui-color-text-muted);
+  transition:
+    background-color var(--bui-duration-fast) var(--bui-easing-standard),
+    color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.home-hero__ghlink:hover {
+  background: var(--bui-color-bg-subtle);
+  color: var(--bui-color-text);
+}
+.home-hero__ghlink:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* --- Footer ------------------------------------------------------------ */
+.home-footer {
+  margin-top: var(--bui-space-8);
+  padding-top: var(--bui-space-10);
+  border-top: 1px solid var(--bui-color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-6);
+}
+
+.home-footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: var(--bui-space-8);
+  align-items: start;
+}
+
+.home-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+}
+
+.home-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--bui-space-6);
+}
+
+.home-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+}
+
+.home-footer__col-title {
+  font-size: var(--bui-font-size-xs);
+  font-weight: var(--bui-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bui-color-text-muted);
+  margin-bottom: var(--bui-space-1);
+}
+
+.home-footer__link {
+  display: inline-block;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+.home-footer__link:hover {
+  color: var(--bui-color-accent);
+}
+.home-footer__link:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--bui-radius-sm);
+}
+
+.home-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--bui-space-4);
+  border-top: 1px solid var(--bui-color-border);
+}
+
+@media (max-width: 720px) {
+  .home-footer__top {
+    grid-template-columns: 1fr;
+  }
+  .home-footer__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* === Component showcase grid =========================================== */

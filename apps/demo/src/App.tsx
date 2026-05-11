@@ -356,6 +356,7 @@ export function App() {
                     onGetStarted={() => navigate("getting-started")}
                     onComponents={() => navigate("components")}
                     onTheming={() => navigate("theming")}
+                    onTokens={() => navigate("tokens")}
                     onChangelog={() => navigate("changelog")}
                   />
                 )}
