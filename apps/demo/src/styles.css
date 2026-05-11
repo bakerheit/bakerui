@@ -1149,3 +1149,75 @@ body {
   border-color: var(--bui-color-accent);
   background: var(--bui-color-accent-soft);
 }
+
+/* --- Getting started ----------------------------------------------------
+ * Small section subhead used between the three token-override variants,
+ * and the next-step card grid at the bottom of the page.
+ */
+.demo-getting-started__subhead {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bui-color-text-muted);
+}
+
+.demo-getting-started__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--bui-space-3);
+}
+
+.demo-getting-started__card {
+  height: 100%;
+}
+
+/* --- Changelog ----------------------------------------------------------
+ * Release blocks read like a vertical timeline; the version heading and
+ * its metadata sit on one row, with the change groups stacked beneath.
+ */
+.demo-changelog-release {
+  border-top: 1px solid var(--bui-color-border);
+  padding-top: var(--bui-space-6);
+}
+.demo-changelog-release:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.demo-changelog-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--bui-space-3);
+}
+
+.demo-changelog-version {
+  margin: 0;
+}
+
+.demo-changelog-group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+}
+
+.demo-changelog-list {
+  margin: 0;
+  padding-left: var(--bui-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  color: var(--bui-color-text);
+}
+
+.demo-changelog-list li {
+  line-height: var(--bui-line-height-normal);
+}
+
+.demo-changelog-list code {
+  font-family: var(--bui-font-family-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 0.9em;
+  padding: 0 4px;
+  background: var(--bui-color-bg-subtle);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-sm);
+}

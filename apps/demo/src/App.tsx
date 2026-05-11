@@ -37,6 +37,8 @@ import { RegisterTemplatesPage } from "./pages/RegisterTemplatesPage";
 import { SettingsTemplatesPage } from "./pages/SettingsTemplatesPage";
 import { ThemingPage } from "./pages/ThemingPage";
 import { TokensPage } from "./pages/TokensPage";
+import { ChangelogPage } from "./pages/ChangelogPage";
+import { GettingStartedPage } from "./pages/GettingStartedPage";
 import { TocSlotContext } from "./PageLayout";
 import { VERSION_LABEL } from "./version";
 
@@ -51,7 +53,9 @@ type PageId =
   | "templates-login"
   | "templates-register"
   | "theming"
-  | "tokens";
+  | "tokens"
+  | "changelog"
+  | "getting-started";
 
 interface NavItem {
   id: PageId;
@@ -68,7 +72,11 @@ interface NavGroup {
 const NAV_GROUPS: NavGroup[] = [
   {
     label: "Get started",
-    items: [{ id: "home", label: "Overview", icon: <HomeIcon /> }],
+    items: [
+      { id: "home", label: "Overview", icon: <HomeIcon /> },
+      { id: "getting-started", label: "Getting Started", icon: <GettingStartedIcon /> },
+      { id: "changelog", label: "Changelog", icon: <ChangelogIcon /> },
+    ],
   },
   {
     label: "Building blocks",
@@ -216,6 +224,15 @@ export function App() {
                   />
                 )}
                 {page === "tokens" && <TokensPage />}
+                {page === "changelog" && <ChangelogPage />}
+                {page === "getting-started" && (
+                  <GettingStartedPage
+                    onComponents={() => navigate("components")}
+                    onTheming={() => navigate("theming")}
+                    onTokens={() => navigate("tokens")}
+                    onChangelog={() => navigate("changelog")}
+                  />
+                )}
               </main>
               <aside
                 ref={setTocSlot}
@@ -313,6 +330,42 @@ function TokensIcon() {
     <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
       <circle cx="6" cy="6" r="3" />
       <circle cx="10" cy="10" r="3" />
+    </svg>
+  );
+}
+function GettingStartedIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 11.5L11 3.5" />
+      <path d="M3 11.5L5.5 12.5L4 14L3 11.5z" />
+      <path d="M11 3.5L13 5.5C12 7 10 7 9 7" />
+      <circle cx="10.5" cy="5.5" r="1" />
+    </svg>
+  );
+}
+function ChangelogIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="3" y="2.5" width="10" height="11" rx="1.5" />
+      <path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3" />
     </svg>
   );
 }
