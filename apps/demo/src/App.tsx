@@ -338,7 +338,7 @@ export function App() {
               <Sidebar.Footer>
                 <a
                   className="demo-sidebar-link"
-                  href="https://github.com/anthropics/claude-code"
+                  href="https://github.com/bakerheit/bakerui"
                   target="_blank"
                   rel="noreferrer"
                 >
