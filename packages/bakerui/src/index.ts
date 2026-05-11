@@ -15,6 +15,7 @@ export * from "./components/Checkbox";
 export * from "./components/Radio";
 export * from "./components/Select";
 export * from "./components/Combobox";
+export * from "./components/MultiCombobox";
 export * from "./components/DataTable";
 export * from "./components/DatePicker";
 export * from "./components/TimePicker";

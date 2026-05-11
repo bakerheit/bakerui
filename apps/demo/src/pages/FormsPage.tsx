@@ -12,6 +12,7 @@ import {
   HStack,
   Heading,
   Input,
+  MultiCombobox,
   Radio,
   RadioGroup,
   Select,
@@ -44,6 +45,7 @@ export function FormsPage() {
         <ButtonStateSection />
         <CheckboxSection />
         <ComboboxSection />
+        <MultiComboboxSection />
         <DatePickerSection />
         <TimePickerSection />
         <DividerSection />
@@ -1222,6 +1224,156 @@ function ComboboxSection() {
             </Combobox.Content>
           </Combobox>
           {framework && <Badge tone="accent">Picked: {framework}</Badge>}
+        </Stack>
+      </DocExample>
+    </DocSection>
+  );
+}
+
+function MultiComboboxSection() {
+  const [tags, setTags] = useState<string[]>(["react", "ts"]);
+  const [capped, setCapped] = useState<string[]>([]);
+
+  return (
+    <DocSection
+      title="MultiCombobox"
+      description="Searchable picker for selecting many values at once. Selected items render as chips inside the trigger; clicking an item in the popover toggles it without closing. Backspace on the empty search box pops the last selection."
+      propsTable={[
+        {
+          name: "value",
+          type: "string[]",
+          description: "Controlled list of selected values.",
+        },
+        {
+          name: "defaultValue",
+          type: "string[]",
+          description: "Initial selections when uncontrolled.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string[]) => void",
+          description: "Fires whenever the selection set changes.",
+        },
+        {
+          name: "maxSelected",
+          type: "number",
+          description: "Cap the number of selectable values. Items beyond the cap render disabled until the user removes one.",
+        },
+        {
+          name: "open / onOpenChange",
+          type: "boolean / (open) => void",
+          description: "Controlled popover state, matching the single Combobox.",
+        },
+        {
+          name: "MultiCombobox.Trigger.placeholder",
+          type: "string",
+          default: '"Select…"',
+          description: "Shown when no values are selected.",
+        },
+        {
+          name: "MultiCombobox.Content.placement",
+          type: "Placement",
+          default: '"bottom-start"',
+          description: "Popover anchor relative to the trigger.",
+        },
+        {
+          name: "MultiCombobox.Item.value",
+          type: "string",
+          required: true,
+          description: "Item value toggled on click / Enter.",
+        },
+        {
+          name: "MultiCombobox.Item.keywords",
+          type: "string[]",
+          description: "Additional searchable terms beyond the visible children.",
+        },
+      ]}
+    >
+      <DocExample
+        label="Tag picker"
+        description="Type to filter; click to toggle. Enter toggles the highlighted item without closing. The remove (×) on each chip clears just that selection."
+        code={`const [tags, setTags] = useState<string[]>(["react", "ts"]);
+
+<MultiCombobox value={tags} onValueChange={setTags}>
+  <MultiCombobox.Trigger placeholder="Pick tags" />
+  <MultiCombobox.Content>
+    <MultiCombobox.Input placeholder="Search tags…" />
+    <MultiCombobox.List>
+      <MultiCombobox.Empty>No matches.</MultiCombobox.Empty>
+      <MultiCombobox.Item value="react">React</MultiCombobox.Item>
+      <MultiCombobox.Item value="ts">TypeScript</MultiCombobox.Item>
+      …
+    </MultiCombobox.List>
+  </MultiCombobox.Content>
+</MultiCombobox>`}
+      >
+        <Stack gap="3" style={{ maxWidth: 360 }}>
+          <MultiCombobox value={tags} onValueChange={setTags}>
+            <MultiCombobox.Trigger placeholder="Pick tags" />
+            <MultiCombobox.Content>
+              <MultiCombobox.Input placeholder="Search tags…" />
+              <MultiCombobox.List>
+                <MultiCombobox.Empty>No matches.</MultiCombobox.Empty>
+                <MultiCombobox.Item value="react" keywords={["jsx", "frontend"]}>
+                  React
+                </MultiCombobox.Item>
+                <MultiCombobox.Item value="vue">Vue</MultiCombobox.Item>
+                <MultiCombobox.Item value="svelte">Svelte</MultiCombobox.Item>
+                <MultiCombobox.Item value="solid">Solid</MultiCombobox.Item>
+                <MultiCombobox.Item value="ts" keywords={["typescript"]}>
+                  TypeScript
+                </MultiCombobox.Item>
+                <MultiCombobox.Item value="js" keywords={["javascript"]}>
+                  JavaScript
+                </MultiCombobox.Item>
+                <MultiCombobox.Item value="css">CSS</MultiCombobox.Item>
+                <MultiCombobox.Item value="rust">Rust</MultiCombobox.Item>
+                <MultiCombobox.Item value="go" keywords={["golang"]}>
+                  Go
+                </MultiCombobox.Item>
+                <MultiCombobox.Item value="python">Python</MultiCombobox.Item>
+              </MultiCombobox.List>
+            </MultiCombobox.Content>
+          </MultiCombobox>
+          {tags.length > 0 && (
+            <Text size="sm" tone="muted">
+              Selected: <code>{tags.join(", ")}</code>{" "}
+              <Button size="sm" variant="ghost" onClick={() => setTags([])}>
+                Clear all
+              </Button>
+            </Text>
+          )}
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="With maxSelected"
+        description="Capped selections. Items beyond the cap render disabled until the user removes one — discoverable without surprising the consumer."
+        code={`<MultiCombobox value={tags} onValueChange={setTags} maxSelected={3}>
+  …
+</MultiCombobox>`}
+      >
+        <Stack gap="2" style={{ maxWidth: 360 }}>
+          <MultiCombobox value={capped} onValueChange={setCapped} maxSelected={3}>
+            <MultiCombobox.Trigger placeholder="Pick up to 3 fruits" />
+            <MultiCombobox.Content>
+              <MultiCombobox.Input placeholder="Search fruits…" />
+              <MultiCombobox.List>
+                <MultiCombobox.Empty>No matches.</MultiCombobox.Empty>
+                <MultiCombobox.Item value="apple">Apple</MultiCombobox.Item>
+                <MultiCombobox.Item value="banana">Banana</MultiCombobox.Item>
+                <MultiCombobox.Item value="cherry">Cherry</MultiCombobox.Item>
+                <MultiCombobox.Item value="date">Date</MultiCombobox.Item>
+                <MultiCombobox.Item value="fig">Fig</MultiCombobox.Item>
+                <MultiCombobox.Item value="grape">Grape</MultiCombobox.Item>
+                <MultiCombobox.Item value="kiwi">Kiwi</MultiCombobox.Item>
+                <MultiCombobox.Item value="mango">Mango</MultiCombobox.Item>
+              </MultiCombobox.List>
+            </MultiCombobox.Content>
+          </MultiCombobox>
+          <Text size="sm" tone="muted">
+            {capped.length} / 3 selected
+          </Text>
         </Stack>
       </DocExample>
     </DocSection>

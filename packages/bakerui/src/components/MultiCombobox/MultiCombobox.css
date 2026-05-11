@@ -1,0 +1,110 @@
+/* === MultiCombobox ========================================================
+ * Trigger is structurally a div (not a button) because it contains
+ * removable chips — buttons can't legally nest buttons. Selection
+ * happens inside the popover; the trigger toggles it open.
+ *
+ * The popover content/list/input/item reuse .bui-combobox-* classes,
+ * so any theme tweak that retouches Combobox automatically tracks here.
+ */
+
+.bui-multicombobox-trigger {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bui-space-1);
+  width: 100%;
+  min-height: var(--bui-control-height-md);
+  padding: 3px var(--bui-control-padding-x-md) 3px var(--bui-space-2);
+  font-family: inherit;
+  font-size: var(--bui-font-size-md);
+  color: var(--bui-color-text);
+  background: var(--bui-color-surface);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-multicombobox-trigger:hover:not([aria-disabled="true"]):not([aria-expanded="true"]) {
+  border-color: var(--bui-color-border-strong);
+}
+
+.bui-multicombobox-trigger:focus-visible,
+.bui-multicombobox-trigger[aria-expanded="true"] {
+  outline: none;
+  border-color: var(--bui-color-accent);
+  box-shadow: 0 0 0 3px var(--bui-color-focus-ring);
+}
+
+.bui-multicombobox-trigger--disabled,
+.bui-multicombobox-trigger[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--bui-color-bg-muted);
+}
+
+.bui-multicombobox-trigger__values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bui-space-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.bui-multicombobox-trigger__placeholder {
+  color: var(--bui-color-text-muted);
+}
+
+.bui-multicombobox-trigger__chevron {
+  flex-shrink: 0;
+  color: var(--bui-color-text-muted);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* --- Chip --------------------------------------------------------------
+ * Renders as a bakerui Badge so theme presets (zine, 94-doors, etc.)
+ * that restyle badges automatically restyle these chips. Only the
+ * remove-button affordances and edge-hugging padding live here.
+ */
+.bui-multicombobox-chip {
+  padding-right: var(--bui-space-1);
+  max-width: 100%;
+}
+
+.bui-multicombobox-chip__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bui-multicombobox-chip__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: currentColor;
+  opacity: 0.7;
+  cursor: pointer;
+  border-radius: var(--bui-radius-sm);
+  flex-shrink: 0;
+}
+.bui-multicombobox-chip__remove:hover:not(:disabled) {
+  opacity: 1;
+}
+.bui-multicombobox-chip__remove:focus-visible {
+  outline: 2px solid var(--bui-color-focus-ring);
+  outline-offset: 1px;
+  opacity: 1;
+}
+.bui-multicombobox-chip__remove:disabled {
+  cursor: not-allowed;
+}
