@@ -69,7 +69,7 @@ export function FormsPage() {
   );
 }
 
-function AlertSection() {
+export function AlertSection() {
   const [dismissed, setDismissed] = useState(false);
   return (
     <DocSection
@@ -165,7 +165,7 @@ function AlertSection() {
   );
 }
 
-function ToastSection() {
+export function ToastSection() {
   const fakeUpload = () =>
     new Promise<{ name: string }>((resolve, reject) => {
       window.setTimeout(() => {
@@ -387,7 +387,7 @@ export default function App() {
   );
 }
 
-function ToggleSection() {
+export function ToggleSection() {
   return (
     <DocSection
       title="Toggle"
@@ -436,7 +436,7 @@ function ToggleSection() {
   );
 }
 
-function ButtonStateSection() {
+export function ButtonStateSection() {
   const [loading, setLoading] = useState(false);
   return (
     <DocSection
@@ -514,7 +514,7 @@ function ButtonStateSection() {
   );
 }
 
-function SpinnerSection() {
+export function SpinnerSection() {
   return (
     <DocSection
       title="Spinner"
@@ -557,7 +557,7 @@ function SpinnerSection() {
   );
 }
 
-function SliderSection() {
+export function SliderSection() {
   const [volume, setVolume] = useState(35);
   const [range, setRange] = useState<[number, number]>([20, 80]);
   const [stepped, setStepped] = useState(50);
@@ -702,7 +702,7 @@ function SliderSection() {
   );
 }
 
-function SkeletonSection() {
+export function SkeletonSection() {
   return (
     <DocSection
       title="Skeleton"
@@ -752,7 +752,7 @@ function SkeletonSection() {
   );
 }
 
-function ProgressBarSection() {
+export function ProgressBarSection() {
   const [progress, setProgress] = useState(35);
   return (
     <DocSection
@@ -837,7 +837,7 @@ function ProgressBarSection() {
   );
 }
 
-function CheckboxSection() {
+export function CheckboxSection() {
   const [agreed, setAgreed] = useState(false);
   const [marketing, setMarketing] = useState(false);
   return (
@@ -914,7 +914,7 @@ function CheckboxSection() {
   );
 }
 
-function RadioSection() {
+export function RadioSection() {
   const [plan, setPlan] = useState("pro");
   return (
     <DocSection
@@ -1004,7 +1004,7 @@ function RadioSection() {
   );
 }
 
-function SelectSection() {
+export function SelectSection() {
   const [country, setCountry] = useState("us");
   return (
     <DocSection
@@ -1051,7 +1051,7 @@ function SelectSection() {
   );
 }
 
-function ComboboxSection() {
+export function ComboboxSection() {
   const [country, setCountry] = useState<string | null>(null);
   const [framework, setFramework] = useState<string | null>("react");
 
@@ -1234,7 +1234,7 @@ function ComboboxSection() {
   );
 }
 
-function MultiComboboxSection() {
+export function MultiComboboxSection() {
   const [tags, setTags] = useState<string[]>(["react", "ts"]);
   const [capped, setCapped] = useState<string[]>([]);
 
@@ -1384,7 +1384,7 @@ function MultiComboboxSection() {
   );
 }
 
-function InputSection() {
+export function InputSection() {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const invalid = email.length > 0 && !email.includes("@");
@@ -1530,7 +1530,7 @@ function InputSection() {
   );
 }
 
-function DatePickerSection() {
+export function DatePickerSection() {
   const [date, setDate] = useState<Date | null>(new Date());
   const [bounded, setBounded] = useState<Date | null>(null);
   const [longFormat, setLongFormat] = useState<Date | null>(new Date());
@@ -1721,7 +1721,7 @@ function DatePickerSection() {
   );
 }
 
-function TimePickerSection() {
+export function TimePickerSection() {
   const [time, setTime] = useState<string | null>("09:30");
   const [meeting, setMeeting] = useState<string | null>("14:00");
 
@@ -1845,7 +1845,7 @@ function TimePickerSection() {
   );
 }
 
-function DividerSection() {
+export function DividerSection() {
   return (
     <DocSection
       title="Divider"
@@ -1976,7 +1976,7 @@ function FullFormExample() {
   );
 }
 
-function NumberInputSection() {
+export function NumberInputSection() {
   const [quantity, setQuantity] = useState<number | null>(1);
   const [price, setPrice] = useState<number | null>(19.99);
   const [score, setScore] = useState<number | null>(50);
@@ -2104,7 +2104,7 @@ function NumberInputSection() {
   );
 }
 
-function OTPInputSection() {
+export function OTPInputSection() {
   const [code, setCode] = useState("");
   const [pinCode, setPinCode] = useState("");
   const [verified, setVerified] = useState<"idle" | "ok" | "fail">("idle");
@@ -2233,7 +2233,7 @@ function OTPInputSection() {
   );
 }
 
-function TagInputSection() {
+export function TagInputSection() {
   const [tags, setTags] = useState<string[]>(["react", "typescript"]);
   return (
     <DocSection

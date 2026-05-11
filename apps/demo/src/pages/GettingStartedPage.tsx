@@ -207,7 +207,7 @@ function NextStepCard({
   onClick: () => void;
 }) {
   return (
-    <Card className="demo-getting-started__card">
+    <Card padded className="demo-getting-started__card">
       <Stack gap="2">
         <Heading level={3} size="sm">
           {label}

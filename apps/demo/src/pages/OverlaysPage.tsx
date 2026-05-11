@@ -42,7 +42,7 @@ export function OverlaysPage() {
   );
 }
 
-function DialogSection() {
+export function DialogSection() {
   return (
     <DocSection
       title="Dialog"
@@ -87,6 +87,12 @@ function DialogSection() {
           type: "boolean",
           default: "true",
           description: "Render the floating close-X button in the upper right.",
+        },
+        {
+          name: "Dialog.Content.alert",
+          type: "boolean",
+          default: "false",
+          description: "Render as an alert dialog: sets role=\"alertdialog\" and disables Escape, backdrop-click, and the close-X so the user must pick an action. Use for destructive confirmations.",
         },
         {
           name: "Dialog.Title",
@@ -192,54 +198,78 @@ function DialogSection() {
       </DocExample>
 
       <DocExample
-        label="Confirmation pattern"
-        description="Controlled `open` lets you keep the dialog open while an async action runs, then close it on success."
+        label="Destructive confirmation"
+        description="Combine `alert` with a controlled `open`: the alert role disables Escape and backdrop dismiss so the user has to pick an action, and the controlled state keeps the dialog open while an async operation runs."
         code={`const [open, setOpen] = useState(false);
+const [deleting, setDeleting] = useState(false);
+
+async function handleDelete() {
+  setDeleting(true);
+  await deleteProject();
+  setDeleting(false);
+  setOpen(false);
+}
 
 <Dialog open={open} onOpenChange={setOpen}>
   <Dialog.Trigger asChild>
-    <Button variant="danger">Delete account…</Button>
+    <Button variant="danger">Delete project</Button>
   </Dialog.Trigger>
-  <Dialog.Content size="sm">
+  <Dialog.Content alert size="sm">
     <Dialog.Header>
-      <Dialog.Title>Delete account?</Dialog.Title>
-      <Dialog.Description>This is permanent. There's no undo.</Dialog.Description>
+      <Dialog.Title>Delete this project?</Dialog.Title>
+      <Dialog.Description>
+        This permanently removes the project and its data. This cannot be undone.
+      </Dialog.Description>
     </Dialog.Header>
     <Dialog.Footer>
       <Dialog.Close asChild>
-        <Button variant="ghost">Cancel</Button>
+        <Button variant="ghost" disabled={deleting}>Cancel</Button>
       </Dialog.Close>
-      <Button variant="danger" onClick={() => setOpen(false)}>Delete</Button>
+      <Button variant="danger" onClick={handleDelete} disabled={deleting}>
+        {deleting ? "Deleting…" : "Delete"}
+      </Button>
     </Dialog.Footer>
   </Dialog.Content>
 </Dialog>`}
       >
-        <ControlledDangerDialog />
+        <DestructiveConfirmDialog />
       </DocExample>
     </DocSection>
   );
 }
 
-function ControlledDangerDialog() {
+function DestructiveConfirmDialog() {
   const [open, setOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  async function handleDelete() {
+    setDeleting(true);
+    // Pretend to call an API; close on "success".
+    await new Promise((r) => setTimeout(r, 900));
+    setDeleting(false);
+    setOpen(false);
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <Button variant="danger">Delete account…</Button>
+        <Button variant="danger">Delete project</Button>
       </Dialog.Trigger>
-      <Dialog.Content size="sm">
+      <Dialog.Content alert size="sm">
         <Dialog.Header>
-          <Dialog.Title>Delete account?</Dialog.Title>
+          <Dialog.Title>Delete this project?</Dialog.Title>
           <Dialog.Description>
-            This permanently removes your workspace. There's no undo.
+            This permanently removes the project and its data. This cannot be undone.
           </Dialog.Description>
         </Dialog.Header>
         <Dialog.Footer>
           <Dialog.Close asChild>
-            <Button variant="ghost">Cancel</Button>
+            <Button variant="ghost" disabled={deleting}>
+              Cancel
+            </Button>
           </Dialog.Close>
-          <Button variant="danger" onClick={() => setOpen(false)}>
-            Delete
+          <Button variant="danger" onClick={handleDelete} disabled={deleting}>
+            {deleting ? "Deleting…" : "Delete"}
           </Button>
         </Dialog.Footer>
       </Dialog.Content>
@@ -247,7 +277,7 @@ function ControlledDangerDialog() {
   );
 }
 
-function DrawerSection() {
+export function DrawerSection() {
   const [side, setSide] = useState<DrawerSide>("right");
   const [persistOpen, setPersistOpen] = useState(false);
 
@@ -467,7 +497,7 @@ function DrawerSection() {
   );
 }
 
-function TooltipSection() {
+export function TooltipSection() {
   const placements: Placement[] = ["top", "right", "bottom", "left"];
   return (
     <DocSection
@@ -568,7 +598,7 @@ function TooltipSection() {
   );
 }
 
-function PopoverSection() {
+export function PopoverSection() {
   return (
     <DocSection
       title="Popover"
@@ -682,7 +712,7 @@ function PopoverSection() {
   );
 }
 
-function DropdownMenuSection() {
+export function DropdownMenuSection() {
   const [last, setLast] = useState<string>("");
   return (
     <DocSection

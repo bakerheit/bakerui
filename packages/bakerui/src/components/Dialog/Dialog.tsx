@@ -131,13 +131,22 @@ interface ContentProps extends HTMLAttributes<HTMLDivElement> {
   size?: "sm" | "md" | "lg";
   closeOnBackdropClick?: boolean;
   showCloseButton?: boolean;
+  /**
+   * Render as an alert dialog. Switches `role` to `"alertdialog"` and
+   * forces an explicit decision: Escape, backdrop click, and the close-X
+   * are all disabled by default, so the user must use one of the action
+   * buttons in `Dialog.Footer`. The individual `closeOnBackdropClick` and
+   * `showCloseButton` props still win if you set them explicitly.
+   */
+  alert?: boolean;
 }
 
 const DialogContent = forwardRef<HTMLDivElement, ContentProps>(function DialogContent(
   {
     size = "md",
-    closeOnBackdropClick = true,
-    showCloseButton = true,
+    closeOnBackdropClick,
+    showCloseButton,
+    alert,
     className,
     children,
     onKeyDown,
@@ -149,6 +158,12 @@ const DialogContent = forwardRef<HTMLDivElement, ContentProps>(function DialogCo
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [mountState, setMountState] = useState<"closed" | "open">("closed");
 
+  // Alert dialogs default to all-dismiss-paths-disabled — the whole point
+  // is to make the user pick an action. Consumers can still opt back in
+  // per-prop if they have a reason to.
+  const resolvedCloseOnBackdrop = closeOnBackdropClick ?? !alert;
+  const resolvedShowClose = showCloseButton ?? !alert;
+
   // Defer to open state so CSS transitions can run.
   useEffect(() => {
     if (open) {
@@ -158,14 +173,14 @@ const DialogContent = forwardRef<HTMLDivElement, ContentProps>(function DialogCo
     setMountState("closed");
   }, [open]);
 
-  useEscape(open, () => setOpen(false));
+  useEscape(open && !alert, () => setOpen(false));
   useFocusTrap(open, contentRef);
   useBodyScrollLock(open);
 
   if (!open) return null;
 
   const onBackdropClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget && closeOnBackdropClick) {
+    if (event.target === event.currentTarget && resolvedCloseOnBackdrop) {
       setOpen(false);
     }
   };
@@ -183,7 +198,7 @@ const DialogContent = forwardRef<HTMLDivElement, ContentProps>(function DialogCo
             if (typeof ref === "function") ref(node);
             else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
           }}
-          role="dialog"
+          role={alert ? "alertdialog" : "dialog"}
           aria-modal="true"
           aria-labelledby={hasTitle ? titleId : undefined}
           aria-describedby={hasDescription ? descriptionId : undefined}
@@ -192,7 +207,7 @@ const DialogContent = forwardRef<HTMLDivElement, ContentProps>(function DialogCo
           onKeyDown={onKeyDown}
           {...rest}
         >
-          {showCloseButton && (
+          {resolvedShowClose && (
             <button
               type="button"
               className="bui-dialog__close-x"

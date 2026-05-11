@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type CSSProperties,
   type ReactNode,
@@ -61,32 +62,44 @@ export interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export function ThemeProvider({
-  defaultTheme = "light",
-  theme: controlledTheme,
-  onThemeChange,
-  defaultPreset,
-  preset: controlledPreset,
-  onPresetChange,
-  tokens,
-  className,
-  style,
-  children,
-}: ThemeProviderProps) {
+export function ThemeProvider(props: ThemeProviderProps) {
+  const {
+    defaultTheme = "light",
+    theme: controlledTheme,
+    onThemeChange,
+    defaultPreset,
+    preset: controlledPreset,
+    onPresetChange,
+    tokens,
+    className,
+    style,
+    children,
+  } = props;
+
+  // Detect controlled-ness from prop *presence*, not value. Otherwise a
+  // parent that controls `preset` and wants to clear it by passing
+  // `preset={undefined}` falls into the `controlledPreset ?? internalPreset`
+  // fallback and the stale internal value sticks. The pattern matches how
+  // React itself resolves controlled vs uncontrolled inputs.
+  const isThemeControlledRef = useRef("theme" in props);
+  const isPresetControlledRef = useRef("preset" in props);
+  const isThemeControlled = isThemeControlledRef.current;
+  const isPresetControlled = isPresetControlledRef.current;
+
   const [internalTheme, setInternalTheme] = useState<ThemeName>(defaultTheme);
-  const theme = controlledTheme ?? internalTheme;
+  const theme = isThemeControlled ? (controlledTheme as ThemeName) : internalTheme;
 
   const [internalPreset, setInternalPreset] = useState<ThemePreset | undefined>(
     defaultPreset,
   );
-  const preset = controlledPreset ?? internalPreset;
+  const preset = isPresetControlled ? controlledPreset : internalPreset;
 
   const setTheme = useCallback(
     (next: ThemeName) => {
-      if (controlledTheme === undefined) setInternalTheme(next);
+      if (!isThemeControlled) setInternalTheme(next);
       onThemeChange?.(next);
     },
-    [controlledTheme, onThemeChange],
+    [isThemeControlled, onThemeChange],
   );
 
   const toggleTheme = useCallback(() => {
@@ -95,10 +108,10 @@ export function ThemeProvider({
 
   const setPreset = useCallback(
     (next: ThemePreset | undefined) => {
-      if (controlledPreset === undefined) setInternalPreset(next);
+      if (!isPresetControlled) setInternalPreset(next);
       onPresetChange?.(next);
     },
-    [controlledPreset, onPresetChange],
+    [isPresetControlled, onPresetChange],
   );
 
   const value = useMemo(

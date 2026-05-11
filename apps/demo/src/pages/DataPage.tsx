@@ -126,7 +126,7 @@ const FILE_TREE: TreeNode[] = [
   { value: "package.json", label: "package.json", icon: <FileIcon />, disabled: true },
 ];
 
-function TreeSection() {
+export function TreeSection() {
   const [selectedFile, setSelectedFile] = useState<string | null>("Tree.tsx");
   const [permissions, setPermissions] = useState<string[]>([
     "read.posts",
@@ -297,7 +297,7 @@ function statusTone(s: User["status"]): "success" | "accent" | "danger" {
   return "danger";
 }
 
-function DataTableSection() {
+export function DataTableSection() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<SortState | null>({ key: "name", direction: "asc" });
   const [filters, setFilters] = useState<FilterState>({});
@@ -694,7 +694,7 @@ function DataTableSection() {
   );
 }
 
-function PaginationSection() {
+export function PaginationSection() {
   const [page, setPage] = useState(3);
   const [longPage, setLongPage] = useState(7);
   const [smallPage, setSmallPage] = useState(2);

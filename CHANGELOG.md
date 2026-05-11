@@ -1,6 +1,8 @@
 # Changelog
 
-All notable changes to **bakerui** are documented in this file. The format is
+All notable changes to the **bakerui** npm package are documented in this
+file. Demo-site and CI changes are intentionally excluded — this list
+reflects what library consumers will see when they upgrade. The format is
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the
 project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -18,12 +20,19 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `TagInput` component — comma-separated chip input with paste-merge and
   duplicate handling.
 - Theme presets: `lcars`, `wabi-sabi`, `glass26`, `ransom-note`.
+- `Dialog.Content.alert` — opt into the `alertdialog` role with all
+  dismiss-paths (Escape, backdrop click, close-X) disabled so the user
+  must pick a footer action. Use for destructive confirmations.
 
 ### Changed
 - `TagInput` chips now render as `Badge` so theme presets that restyle badges
   (e.g. zine, 94-doors) automatically restyle tags.
-- Theme switcher on the Theming page now uses `Combobox` instead of a button
-  grid.
+
+### Fixed
+- `ThemeProvider`: passing `preset={undefined}` (or `theme={undefined}`) to a
+  controlled provider now actually clears the value. The previous
+  `controlled ?? internal` fallback grabbed the stale internal state, so
+  resets from a parent never propagated.
 
 ## [0.4.0] - 2026-05-10
 
@@ -51,24 +60,18 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.3.1] - 2026-05-10
 
 ### Fixed
-- Mobile scroll and iOS chrome handling across themes.
+- Mobile scroll and iOS chrome handling across theme presets.
 - `glassx` styles refined for improved mobile display.
 
 ## [0.3.0] - 2026-05-10
 
 ### Added
 - Theme presets: `frutiger-aero`, `glassx`, `soft`, `terminal`.
-- Registration and login templates with various layouts.
 
 ## [0.2.0] - 2026-05-09
 
 ### Added
 - `DatePicker` and `Drawer` components.
-- GitHub Pages demo deploy.
-
-### Fixed
-- Mobile sidebar behavior and horizontal scrolling in the demo.
-- Demo build in CI.
 
 ## [0.1.0] - 2026-05-09
 

@@ -39,7 +39,7 @@ export function LayoutPage() {
   );
 }
 
-function BreadcrumbSection() {
+export function BreadcrumbSection() {
   return (
     <DocSection
       title="Breadcrumb"
@@ -142,7 +142,7 @@ function BreadcrumbSection() {
   );
 }
 
-function TopbarSection() {
+export function TopbarSection() {
   return (
     <DocSection
       title="Topbar"
@@ -300,7 +300,7 @@ function PlaceholderPane({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SidebarSection() {
+export function SidebarSection() {
   const [position, setPosition] = useState<SidebarPosition>("left");
   const [active, setActive] = useState<Section>("dashboard");
 

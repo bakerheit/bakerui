@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   Accordion,
   Avatar,
@@ -20,29 +20,146 @@ import {
 import { DocExample, DocSection } from "../Doc";
 import { PageLayout } from "../PageLayout";
 
+// Compose every component's docs onto a single page. The sidebar lists
+// each component by name and scrolls to that section's anchor — `DocSection`
+// generates the anchor id from its `title` via `slug()`.
+import {
+  AlertSection,
+  CheckboxSection,
+  ComboboxSection,
+  DatePickerSection,
+  DividerSection,
+  InputSection,
+  MultiComboboxSection,
+  NumberInputSection,
+  OTPInputSection,
+  ProgressBarSection,
+  RadioSection,
+  SelectSection,
+  SkeletonSection,
+  SliderSection,
+  SpinnerSection,
+  TagInputSection,
+  TimePickerSection,
+  ToastSection,
+  ToggleSection,
+} from "./FormsPage";
+import {
+  DataTableSection,
+  PaginationSection,
+  TreeSection,
+} from "./DataPage";
+import {
+  BreadcrumbSection,
+  SidebarSection,
+  TopbarSection,
+} from "./LayoutPage";
+import {
+  DialogSection,
+  DrawerSection,
+  DropdownMenuSection,
+  PopoverSection,
+  TooltipSection,
+} from "./OverlaysPage";
+
 export function ComponentsPage() {
   return (
     <PageLayout>
-      <Stack gap="10" className="demo-section">
+      <Stack gap="14" className="demo-section">
         <Stack gap="2">
           <Heading level={1}>Components</Heading>
           <Text tone="muted">
-            Every component below is rendered with bakerui's default tokens. Each example links
-            to its source snippet — copy/paste to use directly.
+            Every component in bakerui, grouped by category. Pick one from the sidebar
+            to jump to it, or scroll through to browse — each section anchors at{" "}
+            <code>#component-name</code> for deep-linking.
           </Text>
         </Stack>
 
-        <AccordionExample />
-        <AvatarExample />
-        <BadgesExample />
-        <ButtonsExample />
-        <CardsExample />
-        <LayoutExample />
-        <StepperExample />
-        <TabsExample />
-        <TypographyExample />
+        <Category title="Actions">
+          <ButtonsExample />
+        </Category>
+
+        <Category title="Forms">
+          <InputSection />
+          <NumberInputSection />
+          <OTPInputSection />
+          <TagInputSection />
+          <CheckboxSection />
+          <RadioSection />
+          <ToggleSection />
+          <SelectSection />
+          <ComboboxSection />
+          <MultiComboboxSection />
+          <DatePickerSection />
+          <TimePickerSection />
+          <SliderSection />
+        </Category>
+
+        <Category title="Display">
+          <TypographyExample />
+          <AvatarExample />
+          <BadgesExample />
+          <CardsExample />
+        </Category>
+
+        <Category title="Layout">
+          <LayoutExample />
+          <DividerSection />
+          <SidebarSection />
+          <TopbarSection />
+        </Category>
+
+        <Category title="Navigation">
+          <TabsExample />
+          <AccordionExample />
+          <BreadcrumbSection />
+          <StepperExample />
+          <PaginationSection />
+        </Category>
+
+        <Category title="Overlays">
+          <DialogSection />
+          <DrawerSection />
+          <PopoverSection />
+          <TooltipSection />
+          <DropdownMenuSection />
+        </Category>
+
+        <Category title="Feedback">
+          <AlertSection />
+          <ToastSection />
+          <SpinnerSection />
+          <SkeletonSection />
+          <ProgressBarSection />
+        </Category>
+
+        <Category title="Data">
+          <DataTableSection />
+          <TreeSection />
+        </Category>
       </Stack>
     </PageLayout>
+  );
+}
+
+// Visual section divider above each block of components. Not anchored —
+// only individual components are sidebar targets.
+function Category({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <Stack gap="8" className="components-category">
+      <div className="components-category__head">
+        <Text
+          size="sm"
+          tone="muted"
+          weight="semibold"
+          style={{ letterSpacing: "0.06em", textTransform: "uppercase" }}
+        >
+          {title}
+        </Text>
+        <div className="components-category__rule" aria-hidden />
+      </div>
+      <Stack gap="14">{children}</Stack>
+    </Stack>
   );
 }
 

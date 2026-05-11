@@ -28,10 +28,6 @@ import "bakerui/themes/glass26.css";
 import "bakerui/themes/ransom-note.css";
 import { HomePage } from "./pages/HomePage";
 import { ComponentsPage } from "./pages/ComponentsPage";
-import { DataPage } from "./pages/DataPage";
-import { FormsPage } from "./pages/FormsPage";
-import { LayoutPage } from "./pages/LayoutPage";
-import { OverlaysPage } from "./pages/OverlaysPage";
 import { LoginTemplatesPage } from "./pages/LoginTemplatesPage";
 import { RegisterTemplatesPage } from "./pages/RegisterTemplatesPage";
 import { SettingsTemplatesPage } from "./pages/SettingsTemplatesPage";
@@ -45,10 +41,6 @@ import { VERSION_LABEL } from "./version";
 type PageId =
   | "home"
   | "components"
-  | "forms"
-  | "data"
-  | "layout"
-  | "overlays"
   | "templates-settings"
   | "templates-login"
   | "templates-register"
@@ -57,35 +49,25 @@ type PageId =
   | "changelog"
   | "getting-started";
 
-interface NavItem {
+interface PageNavItem {
   id: PageId;
   label: string;
   icon: ReactNode;
   badge?: string;
 }
 
-interface NavGroup {
+interface PageNavGroup {
   label: string;
-  items: NavItem[];
+  items: PageNavItem[];
 }
 
-const NAV_GROUPS: NavGroup[] = [
+const PAGE_NAV_GROUPS: PageNavGroup[] = [
   {
     label: "Get started",
     items: [
       { id: "home", label: "Overview", icon: <HomeIcon /> },
       { id: "getting-started", label: "Getting Started", icon: <GettingStartedIcon /> },
       { id: "changelog", label: "Changelog", icon: <ChangelogIcon /> },
-    ],
-  },
-  {
-    label: "Building blocks",
-    items: [
-      { id: "components", label: "Components", icon: <ComponentsIcon /> },
-      { id: "forms", label: "Forms & Feedback", icon: <FormsIcon /> },
-      { id: "data", label: "Data", icon: <DataIcon /> },
-      { id: "layout", label: "Layout", icon: <LayoutIcon /> },
-      { id: "overlays", label: "Overlays", icon: <OverlaysIcon /> },
     ],
   },
   {
@@ -105,7 +87,102 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
-const ALL_NAV: NavItem[] = NAV_GROUPS.flatMap((g) => g.items);
+/**
+ * Per-component sidebar entries. The anchor is the `id` that `DocSection`
+ * assigns to its `<section>` (derived from its `title` via the `slug()`
+ * helper in `Doc.tsx`). Keep these in sync when a section title changes.
+ */
+interface ComponentNavItem {
+  label: string;
+  anchor: string;
+}
+
+interface ComponentNavCategory {
+  label: string;
+  items: ComponentNavItem[];
+}
+
+const COMPONENT_NAV: ComponentNavCategory[] = [
+  {
+    label: "Actions",
+    items: [{ label: "Button", anchor: "button" }],
+  },
+  {
+    label: "Forms",
+    items: [
+      { label: "Input", anchor: "input-textarea-field" },
+      { label: "NumberInput", anchor: "numberinput" },
+      { label: "OTPInput", anchor: "otpinput" },
+      { label: "TagInput", anchor: "taginput" },
+      { label: "Checkbox", anchor: "checkbox" },
+      { label: "Radio", anchor: "radiogroup-radio" },
+      { label: "Toggle", anchor: "toggle" },
+      { label: "Select", anchor: "select" },
+      { label: "Combobox", anchor: "combobox" },
+      { label: "MultiCombobox", anchor: "multicombobox" },
+      { label: "DatePicker", anchor: "datepicker" },
+      { label: "TimePicker", anchor: "timepicker" },
+      { label: "Slider", anchor: "slider" },
+    ],
+  },
+  {
+    label: "Display",
+    items: [
+      { label: "Typography", anchor: "typography-text-heading" },
+      { label: "Avatar", anchor: "avatar" },
+      { label: "Badge", anchor: "badge" },
+      { label: "Card", anchor: "card" },
+    ],
+  },
+  {
+    label: "Layout",
+    items: [
+      { label: "Stack", anchor: "stack-hstack-vstack" },
+      { label: "Divider", anchor: "divider" },
+      { label: "Sidebar", anchor: "sidebar" },
+      { label: "Topbar", anchor: "topbar" },
+    ],
+  },
+  {
+    label: "Navigation",
+    items: [
+      { label: "Tabs", anchor: "tabs" },
+      { label: "Accordion", anchor: "accordion" },
+      { label: "Breadcrumb", anchor: "breadcrumb" },
+      { label: "Stepper", anchor: "stepper" },
+      { label: "Pagination", anchor: "pagination" },
+    ],
+  },
+  {
+    label: "Overlays",
+    items: [
+      { label: "Dialog", anchor: "dialog" },
+      { label: "Drawer", anchor: "drawer" },
+      { label: "Popover", anchor: "popover" },
+      { label: "Tooltip", anchor: "tooltip" },
+      { label: "DropdownMenu", anchor: "dropdownmenu" },
+    ],
+  },
+  {
+    label: "Feedback",
+    items: [
+      { label: "Alert", anchor: "alert" },
+      { label: "Toast", anchor: "toast" },
+      { label: "Spinner", anchor: "spinner" },
+      { label: "Skeleton", anchor: "skeleton" },
+      { label: "ProgressBar", anchor: "progressbar" },
+    ],
+  },
+  {
+    label: "Data",
+    items: [
+      { label: "DataTable", anchor: "datatable" },
+      { label: "Tree", anchor: "tree" },
+    ],
+  },
+];
+
+const ALL_PAGE_NAV: PageNavItem[] = PAGE_NAV_GROUPS.flatMap((g) => g.items);
 
 export function App() {
   const [page, setPage] = useState<PageId>("home");
@@ -114,15 +191,51 @@ export function App() {
   const [accent, setAccent] = useState<string>("");
   const mainRef = useRef<HTMLElement | null>(null);
   const [tocSlot, setTocSlot] = useState<HTMLElement | null>(null);
+  // Anchor to scroll to once the Components page is mounted. Set by sidebar
+  // clicks; cleared by the effect below after scrolling.
+  const [pendingAnchor, setPendingAnchor] = useState<string | null>(null);
+  // Anchor currently in view on the Components page — drives the active
+  // state on per-component sidebar items.
+  const [currentAnchor, setCurrentAnchor] = useState<string | null>(null);
 
   const tokens = accent ? { "--bui-color-accent": accent } : undefined;
 
-  // Scroll to top whenever the user navigates to a new page.
+  // One unified scroll effect. We use a ref to track whether `page` actually
+  // changed between renders so that clearing `pendingAnchor` (after a
+  // successful anchor scroll) doesn't snap the page back to the top.
+  const prevPageRef = useRef(page);
   useEffect(() => {
-    mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  }, [page]);
+    const pageChanged = prevPageRef.current !== page;
+    prevPageRef.current = page;
 
-  const navigate = (id: PageId) => setPage(id);
+    // Priority 1: queued anchor on the Components page — scroll to it.
+    if (page === "components" && pendingAnchor) {
+      const anchor = pendingAnchor;
+      const frame = requestAnimationFrame(() => {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        setCurrentAnchor(anchor);
+        setPendingAnchor(null);
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+
+    // Priority 2: page actually changed (and no anchor queued) — top-scroll.
+    if (pageChanged) {
+      mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [page, pendingAnchor]);
+
+  const navigate = (id: PageId) => {
+    setPage(id);
+    // Leaving the Components page clears the active per-component highlight.
+    if (id !== "components") setCurrentAnchor(null);
+  };
+
+  const navigateToComponent = (anchor: string) => {
+    setPage("components");
+    setPendingAnchor(anchor);
+  };
 
   const isMobile =
     typeof window !== "undefined" &&
@@ -168,8 +281,43 @@ export function App() {
               aria-label="Sections"
             >
               <Sidebar.Body>
-                {NAV_GROUPS.map((group, i) => (
+                {/* Page-level nav (Get started / Templates / Design system) */}
+                <Sidebar.Group label={PAGE_NAV_GROUPS[0].label}>
+                  {PAGE_NAV_GROUPS[0].items.map((item) => (
+                    <Sidebar.Item
+                      key={item.id}
+                      icon={item.icon}
+                      active={page === item.id}
+                      onClick={() => navigate(item.id)}
+                      trailing={item.badge ? <Badge tone="accent">{item.badge}</Badge> : undefined}
+                    >
+                      {item.label}
+                    </Sidebar.Item>
+                  ))}
+                </Sidebar.Group>
+
+                <Sidebar.Separator />
+
+                {/* Components — one row of category sub-groups; each item
+                    scrolls to its anchor on the consolidated Components page. */}
+                {COMPONENT_NAV.map((category) => (
+                  <Sidebar.Group key={category.label} label={category.label}>
+                    {category.items.map((item) => (
+                      <Sidebar.Item
+                        key={item.anchor}
+                        active={page === "components" && currentAnchor === item.anchor}
+                        onClick={() => navigateToComponent(item.anchor)}
+                      >
+                        {item.label}
+                      </Sidebar.Item>
+                    ))}
+                  </Sidebar.Group>
+                ))}
+
+                {/* Remaining page groups (Templates, Design system) */}
+                {PAGE_NAV_GROUPS.slice(1).map((group) => (
                   <div key={group.label}>
+                    <Sidebar.Separator />
                     <Sidebar.Group label={group.label}>
                       {group.items.map((item) => (
                         <Sidebar.Item
@@ -183,7 +331,6 @@ export function App() {
                         </Sidebar.Item>
                       ))}
                     </Sidebar.Group>
-                    {i < NAV_GROUPS.length - 1 && <Sidebar.Separator />}
                   </div>
                 ))}
               </Sidebar.Body>
@@ -204,12 +351,15 @@ export function App() {
 
             <TocSlotContext.Provider value={tocSlot}>
               <main ref={mainRef} className="demo-main">
-                {page === "home" && <HomePage onExplore={() => navigate("components")} />}
+                {page === "home" && (
+                  <HomePage
+                    onGetStarted={() => navigate("getting-started")}
+                    onComponents={() => navigate("components")}
+                    onTheming={() => navigate("theming")}
+                    onChangelog={() => navigate("changelog")}
+                  />
+                )}
                 {page === "components" && <ComponentsPage />}
-                {page === "forms" && <FormsPage />}
-                {page === "data" && <DataPage />}
-                {page === "layout" && <LayoutPage />}
-                {page === "overlays" && <OverlaysPage />}
                 {page === "templates-settings" && <SettingsTemplatesPage />}
                 {page === "templates-login" && <LoginTemplatesPage />}
                 {page === "templates-register" && <RegisterTemplatesPage />}
@@ -250,7 +400,7 @@ export function App() {
 
 // titleFor is referenced from elsewhere if needed; keep it tiny.
 export function titleFor(page: PageId): string {
-  return ALL_NAV.find((item) => item.id === page)?.label ?? "bakerui";
+  return ALL_PAGE_NAV.find((item) => item.id === page)?.label ?? "bakerui";
 }
 
 function Brand() {
@@ -268,50 +418,6 @@ function HomeIcon() {
     <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
       <path d="M2.5 7.5L8 3l5.5 4.5V13a1 1 0 01-1 1H3.5a1 1 0 01-1-1V7.5z" />
       <path d="M6.5 14V9h3v5" />
-    </svg>
-  );
-}
-function ComponentsIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
-      <rect x="2" y="2" width="5" height="5" rx="1" />
-      <rect x="9" y="2" width="5" height="5" rx="1" />
-      <rect x="2" y="9" width="5" height="5" rx="1" />
-      <rect x="9" y="9" width="5" height="5" rx="1" />
-    </svg>
-  );
-}
-function DataIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
-      <ellipse cx="8" cy="3.5" rx="5" ry="1.5" />
-      <path d="M3 3.5v9c0 .8 2.2 1.5 5 1.5s5-.7 5-1.5v-9" />
-      <path d="M3 8c0 .8 2.2 1.5 5 1.5s5-.7 5-1.5" />
-    </svg>
-  );
-}
-function FormsIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round">
-      <rect x="2" y="3" width="12" height="3" rx="1" />
-      <rect x="2" y="8" width="12" height="3" rx="1" />
-      <path d="M5 13.5h6" />
-    </svg>
-  );
-}
-function LayoutIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <rect x="2" y="2" width="12" height="12" rx="1" />
-      <path d="M6 2v12M2 6h12" />
-    </svg>
-  );
-}
-function OverlaysIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <rect x="2" y="3" width="9" height="9" rx="1" />
-      <rect x="5" y="6" width="9" height="7" rx="1" />
     </svg>
   );
 }

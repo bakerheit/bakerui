@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Accordion,
   Avatar,
   AvatarGroup,
   Badge,
@@ -8,36 +9,56 @@ import {
   Checkbox,
   Combobox,
   DataTable,
+  DatePicker,
   Heading,
   HStack,
   Input,
+  MultiCombobox,
+  OTPInput,
   Pagination,
   Slider,
   Stack,
   Stepper,
   Text,
+  TimePicker,
   Toggle,
+  Tree,
   toast,
+  useTheme,
   type DataTableColumn,
+  type TreeNode,
 } from "bakerui";
-import { CodeBlock } from "../CodeBlock";
 import { PageLayout } from "../PageLayout";
 import { VERSION_LABEL } from "../version";
+import { CHANGELOG } from "../changelog";
 
 interface HomePageProps {
-  onExplore: () => void;
+  onGetStarted: () => void;
+  onComponents: () => void;
+  onTheming: () => void;
+  onChangelog: () => void;
 }
 
-export function HomePage({ onExplore }: HomePageProps) {
+export function HomePage({
+  onGetStarted,
+  onComponents,
+  onTheming,
+  onChangelog,
+}: HomePageProps) {
   return (
     <PageLayout>
       <Stack gap="14" className="demo-section">
-        <Hero onExplore={onExplore} />
+        <Hero
+          onGetStarted={onGetStarted}
+          onComponents={onComponents}
+          onTheming={onTheming}
+        />
         <Showcase />
         <Pillars />
-        <Quickstart />
+        <ThemePresets onTheming={onTheming} />
+        <WhatsNew onChangelog={onChangelog} />
         <Stats />
-        <FinalCta onExplore={onExplore} />
+        <FinalCta onGetStarted={onGetStarted} onComponents={onComponents} />
       </Stack>
     </PageLayout>
   );
@@ -47,7 +68,15 @@ export function HomePage({ onExplore }: HomePageProps) {
 /* Hero                                                                       */
 /* ========================================================================== */
 
-function Hero({ onExplore }: { onExplore: () => void }) {
+function Hero({
+  onGetStarted,
+  onComponents,
+  onTheming,
+}: {
+  onGetStarted: () => void;
+  onComponents: () => void;
+  onTheming: () => void;
+}) {
   return (
     <div className="home-hero">
       <Stack gap="5" className="home-hero__content">
@@ -60,18 +89,31 @@ function Hero({ onExplore }: { onExplore: () => void }) {
           A small, durable React UI kit.
         </Heading>
         <Text size="lg" tone="muted" className="home-hero__subtitle">
-          Built around plain CSS variables. Every color, space, radius, and font knob is a
-          token you can override — no theme objects, no providers required, no CSS-in-JS
-          runtime to outlive your project.
+          Built around plain CSS variables. Every color, space, radius, and font knob
+          is a token you can override — no theme objects, no CSS-in-JS runtime, and{" "}
+          <code>ThemeProvider</code> is optional, not required.
         </Text>
         <HStack gap="3" wrap>
-          <Button size="lg" onClick={onExplore}>
+          <Button size="lg" onClick={onGetStarted}>
+            Get started
+          </Button>
+          <Button size="lg" variant="secondary" onClick={onComponents}>
             Browse components
           </Button>
-          <Button size="lg" variant="secondary" onClick={onExplore}>
-            See theming playground
-          </Button>
         </HStack>
+        <Text size="sm" tone="muted">
+          Or jump to the{" "}
+          <a
+            href="#theming"
+            onClick={(e) => {
+              e.preventDefault();
+              onTheming();
+            }}
+          >
+            theming playground
+          </a>
+          .
+        </Text>
       </Stack>
 
       <div className="home-hero__preview" aria-hidden>
@@ -123,7 +165,7 @@ function Showcase() {
         <Text size="sm" tone="muted" weight="semibold" style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>
           What's in the box
         </Text>
-        <Heading level={2}>30+ components, one consistent feel</Heading>
+        <Heading level={2}>40+ components, one consistent feel</Heading>
         <Text tone="muted" size="lg" style={{ maxWidth: "60ch" }}>
           From buttons and inputs to data tables, overlays, and steppers — every component
           ships with sensible defaults and overrides through the same token system.
@@ -224,6 +266,30 @@ function Showcase() {
               </HStack>
             </Card>
           </Stack>
+        </ShowcaseTile>
+
+        <ShowcaseTile category="Auth" title="Verification">
+          <VerificationTileBody />
+        </ShowcaseTile>
+
+        <ShowcaseTile category="Hierarchy" title="Project explorer" featured>
+          <ProjectExplorerTileBody />
+        </ShowcaseTile>
+
+        <ShowcaseTile category="Filters" title="Tag picker">
+          <TagPickerTileBody />
+        </ShowcaseTile>
+
+        <ShowcaseTile category="Scheduling" title="Pick a time">
+          <SchedulingTileBody />
+        </ShowcaseTile>
+
+        <ShowcaseTile category="Disclosure" title="Frequently asked">
+          <FaqTileBody />
+        </ShowcaseTile>
+
+        <ShowcaseTile category="Pricing" title="Choose a plan">
+          <PricingTileBody />
         </ShowcaseTile>
 
         <ShowcaseTile category="Data" title="DataTable" wide>
@@ -376,6 +442,198 @@ function DataTableTileBody() {
   );
 }
 
+function VerificationTileBody() {
+  return (
+    <Stack gap="3">
+      <Text size="sm" tone="muted">
+        We sent a 6-digit code to <code>ada@example.com</code>.
+      </Text>
+      <OTPInput
+        inputSize="sm"
+        defaultValue="123"
+        aria-label="Verification code demo"
+      />
+      <HStack gap="2">
+        <Button size="sm">Verify</Button>
+        <Button size="sm" variant="ghost">
+          Resend
+        </Button>
+      </HStack>
+    </Stack>
+  );
+}
+
+// Inline so the icons stay close to the only tile that uses them — keeps
+// the showcase block self-contained even if these get hoisted later.
+function TileFolderIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" aria-hidden>
+      <path d="M1.5 3.5a1 1 0 0 1 1-1h3l1 1h5a1 1 0 0 1 1 1V11a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V3.5z" />
+    </svg>
+  );
+}
+function TileFileIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      aria-hidden
+    >
+      <path d="M3.5 1.5h5l3 3V12a.5.5 0 0 1-.5.5h-7.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z" />
+      <path d="M8.5 1.5V4.5h3" />
+    </svg>
+  );
+}
+
+const HOME_FILE_TREE: TreeNode[] = [
+  {
+    value: "src",
+    label: "src",
+    icon: <TileFolderIcon />,
+    children: [
+      {
+        value: "components",
+        label: "components",
+        icon: <TileFolderIcon />,
+        children: [
+          { value: "Button.tsx", label: "Button.tsx", icon: <TileFileIcon /> },
+          { value: "Tree.tsx", label: "Tree.tsx", icon: <TileFileIcon /> },
+        ],
+      },
+      { value: "index.ts", label: "index.ts", icon: <TileFileIcon /> },
+    ],
+  },
+  {
+    value: "docs",
+    label: "docs",
+    icon: <TileFolderIcon />,
+    children: [
+      { value: "README.md", label: "README.md", icon: <TileFileIcon /> },
+    ],
+  },
+];
+
+function ProjectExplorerTileBody() {
+  return (
+    <Tree
+      data={HOME_FILE_TREE}
+      defaultExpanded={["src", "components"]}
+      defaultSelected="Tree.tsx"
+      aria-label="Project files"
+    />
+  );
+}
+
+function TagPickerTileBody() {
+  const [tags, setTags] = useState<string[]>(["react", "ts"]);
+  return (
+    <Stack gap="2">
+      <MultiCombobox value={tags} onValueChange={setTags}>
+        <MultiCombobox.Trigger placeholder="Pick tags" />
+        <MultiCombobox.Content>
+          <MultiCombobox.Input placeholder="Search…" />
+          <MultiCombobox.List>
+            <MultiCombobox.Empty>No matches.</MultiCombobox.Empty>
+            <MultiCombobox.Item value="react">React</MultiCombobox.Item>
+            <MultiCombobox.Item value="ts">TypeScript</MultiCombobox.Item>
+            <MultiCombobox.Item value="css">CSS</MultiCombobox.Item>
+            <MultiCombobox.Item value="rust">Rust</MultiCombobox.Item>
+            <MultiCombobox.Item value="go">Go</MultiCombobox.Item>
+          </MultiCombobox.List>
+        </MultiCombobox.Content>
+      </MultiCombobox>
+      <Text size="xs" tone="muted">
+        {tags.length} tag{tags.length === 1 ? "" : "s"} selected
+      </Text>
+    </Stack>
+  );
+}
+
+function SchedulingTileBody() {
+  const [date, setDate] = useState<Date | null>(() => {
+    // Anchor on a stable demo date rather than `new Date()` so the
+    // homepage doesn't visually shift day-to-day.
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 3);
+    return d;
+  });
+  const [time, setTime] = useState<string | null>("14:00");
+  return (
+    <Stack gap="2">
+      <DatePicker
+        value={date}
+        onValueChange={setDate}
+        inputSize="sm"
+        aria-label="Meeting date"
+      />
+      <TimePicker
+        value={time}
+        onValueChange={setTime}
+        inputSize="sm"
+        step={15}
+        aria-label="Meeting time"
+      />
+    </Stack>
+  );
+}
+
+function FaqTileBody() {
+  return (
+    <Accordion type="single" defaultValue="bundle" collapsible>
+      <Accordion.Item value="bundle">
+        <Accordion.Trigger>What's the bundle size?</Accordion.Trigger>
+        <Accordion.Content>
+          37 kB of JS gzipped, 11 kB of CSS gzipped — both tree-shakeable.
+        </Accordion.Content>
+      </Accordion.Item>
+      <Accordion.Item value="ssr">
+        <Accordion.Trigger>Does it work with Next.js / Remix?</Accordion.Trigger>
+        <Accordion.Content>
+          Yes — components are SSR-safe; browser-only paths live in effects.
+        </Accordion.Content>
+      </Accordion.Item>
+      <Accordion.Item value="ts">
+        <Accordion.Trigger>Is it TypeScript-first?</Accordion.Trigger>
+        <Accordion.Content>
+          Yes — types ship in the package and every component is fully typed.
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
+function PricingTileBody() {
+  return (
+    <Stack gap="3">
+      <HStack gap="2" align="center">
+        <Heading level={4} size="md">
+          Team
+        </Heading>
+        <Badge tone="accent">Popular</Badge>
+      </HStack>
+      <HStack gap="1" align="baseline">
+        <Text size="2xl" weight="bold">
+          $29
+        </Text>
+        <Text size="sm" tone="muted">
+          /seat/mo
+        </Text>
+      </HStack>
+      <Stack gap="1">
+        <Text size="sm">✓ Up to 10 seats</Text>
+        <Text size="sm">✓ Priority support</Text>
+        <Text size="sm">✓ Advanced analytics</Text>
+      </Stack>
+      <Button size="sm">Choose Team</Button>
+    </Stack>
+  );
+}
+
 /* ========================================================================== */
 /* Pillars                                                                    */
 /* ========================================================================== */
@@ -407,8 +665,8 @@ function Pillars() {
         />
         <Pillar
           icon={<PaletteIcon />}
-          title="Two themes, infinite palettes"
-          body="Light and dark via [data-theme]. Any token can be overridden per scope — sandbox a section, theme a tenant."
+          title="Light, dark, plus 17 presets"
+          body="Light and dark via [data-theme], or opt into a preset stylesheet — brutalist, terminal, glassx, zine, and more. Every token is overridable per scope, so a single section or tenant can carry its own palette."
         />
       </div>
     </Stack>
@@ -440,29 +698,162 @@ function Pillar({
 }
 
 /* ========================================================================== */
-/* Quickstart                                                                 */
+/* Theme preset chips                                                         */
 /* ========================================================================== */
 
-function Quickstart() {
+interface PresetChip {
+  id: string;
+  label: string;
+}
+
+// Hand-picked subset that's most visually distinctive. Full list (17) lives
+// on the Theming page; clicking "+9 more" jumps there.
+const PRESET_CHIPS: PresetChip[] = [
+  { id: "brutalist", label: "Brutalist" },
+  { id: "zine", label: "Zine" },
+  { id: "terminal", label: "Terminal" },
+  { id: "glassx", label: "GlassX" },
+  { id: "newsprint", label: "Newsprint" },
+  { id: "neon-sprawl", label: "Neon Sprawl" },
+  { id: "lcars", label: "LCARS" },
+  { id: "toy-plastic", label: "Toy Plastic" },
+];
+
+function ThemePresets({ onTheming }: { onTheming: () => void }) {
+  const { preset, setPreset } = useTheme();
+  return (
+    <Stack gap="5">
+      <Stack gap="2" className="home-section-heading">
+        <Text
+          size="sm"
+          tone="muted"
+          weight="semibold"
+          style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}
+        >
+          Try a theme
+        </Text>
+        <Heading level={2}>One token system, 17 looks</Heading>
+        <Text tone="muted" size="lg" style={{ maxWidth: "60ch" }}>
+          Each preset is a single CSS file that overrides bakerui's tokens.
+          Click a chip to apply it to the whole demo — the topbar, sidebar,
+          and every component on this page adapt in place.
+        </Text>
+      </Stack>
+
+      <div className="home-presets">
+        {PRESET_CHIPS.map((chip) => {
+          const active = preset === chip.id;
+          return (
+            <button
+              key={chip.id}
+              type="button"
+              className="home-presets__chip"
+              data-active={active || undefined}
+              aria-pressed={active}
+              onClick={() => setPreset(chip.id)}
+            >
+              {/* The preview uses data-theme-preset so all token CSS vars
+                  inside resolve to *this* preset, regardless of the
+                  globally-applied one. */}
+              <span className="home-presets__chip-preview" data-theme-preset={chip.id}>
+                <span className="home-presets__chip-bar" />
+                <span className="home-presets__chip-row">
+                  <span className="home-presets__chip-dot" />
+                  <span className="home-presets__chip-pill">Aa</span>
+                </span>
+              </span>
+              <span className="home-presets__chip-label">{chip.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <HStack gap="3" wrap>
+        <Text size="sm" tone="muted">
+          <a
+            href="#theming"
+            onClick={(e) => {
+              e.preventDefault();
+              onTheming();
+            }}
+          >
+            See all 17 presets on the Theming page →
+          </a>
+        </Text>
+        {preset && (
+          <Button size="sm" variant="ghost" onClick={() => setPreset(undefined)}>
+            Reset to default
+          </Button>
+        )}
+      </HStack>
+    </Stack>
+  );
+}
+
+/* ========================================================================== */
+/* What's new                                                                 */
+/* ========================================================================== */
+
+function WhatsNew({ onChangelog }: { onChangelog: () => void }) {
+  // Show the most recent *released* version (skip "Unreleased"). Falls back
+  // to Unreleased if nothing has shipped yet so a fresh project still has
+  // something to render.
+  const release =
+    CHANGELOG.find((r) => !/^unreleased$/i.test(r.version)) ?? CHANGELOG[0];
+  if (!release) return null;
+
+  // Flatten the first few "Added" entries — that's the most marketable
+  // category — and fall back to whatever the first group has.
+  const highlightGroup =
+    release.groups.find((g) => g.kind === "added") ?? release.groups[0];
+  const highlights = highlightGroup?.entries.slice(0, 3) ?? [];
+
   return (
     <Stack gap="3">
-      <Stack gap="1">
-        <Heading level={2}>Quickstart</Heading>
-        <Text tone="muted">Install, import the styles, and render.</Text>
+      <Stack gap="2" className="home-section-heading">
+        <Text
+          size="sm"
+          tone="muted"
+          weight="semibold"
+          style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}
+        >
+          What's new
+        </Text>
+        <Heading level={2}>Latest release · v{release.version}</Heading>
+        {release.date && (
+          <Text tone="muted" size="sm">
+            Released {release.date}
+          </Text>
+        )}
       </Stack>
-      <CodeBlock
-        filename="App.tsx"
-        code={`import { Button, ThemeProvider } from "bakerui";
-import "bakerui/styles.css";
-
-export default function App() {
-  return (
-    <ThemeProvider defaultTheme="light">
-      <Button>Hello world</Button>
-    </ThemeProvider>
-  );
-}`}
-      />
+      {highlights.length > 0 && (
+        <Card padded className="home-whats-new">
+          <Stack gap="3">
+            <ul className="home-whats-new__list">
+              {highlights.map((entry, i) => (
+                <li key={i}>
+                  {entry.content.map((node, j) => {
+                    if (node.kind === "code") return <code key={j}>{node.value}</code>;
+                    if (node.kind === "strong") return <strong key={j}>{node.value}</strong>;
+                    if (node.kind === "link")
+                      return (
+                        <a key={j} href={node.href} target="_blank" rel="noreferrer">
+                          {node.text}
+                        </a>
+                      );
+                    return <span key={j}>{node.value}</span>;
+                  })}
+                </li>
+              ))}
+            </ul>
+            <div>
+              <Button size="sm" variant="ghost" onClick={onChangelog}>
+                View full changelog →
+              </Button>
+            </div>
+          </Stack>
+        </Card>
+      )}
     </Stack>
   );
 }
@@ -474,9 +865,9 @@ export default function App() {
 function Stats() {
   const items: Array<{ value: string; label: string }> = [
     { value: "0", label: "Runtime deps" },
-    { value: "30+", label: "Components" },
-    { value: "60+", label: "Design tokens" },
-    { value: "24 kB", label: "JS gzipped" },
+    { value: "40+", label: "Components" },
+    { value: "120+", label: "Design tokens" },
+    { value: "37 kB", label: "JS gzipped" },
   ];
   return (
     <div className="home-stats">
@@ -494,7 +885,13 @@ function Stats() {
 /* Final CTA                                                                  */
 /* ========================================================================== */
 
-function FinalCta({ onExplore }: { onExplore: () => void }) {
+function FinalCta({
+  onGetStarted,
+  onComponents,
+}: {
+  onGetStarted: () => void;
+  onComponents: () => void;
+}) {
   return (
     <div className="home-cta">
       <Stack gap="3" align="center" style={{ textAlign: "center" }}>
@@ -503,15 +900,18 @@ function FinalCta({ onExplore }: { onExplore: () => void }) {
         </Heading>
         <Text tone="muted" size="lg" style={{ maxWidth: "52ch" }}>
           Every component is documented with live examples, props references, and
-          copy-paste snippets. Pick something and start composing.
+          copy-paste snippets. Install in one command and start composing.
         </Text>
         <HStack gap="3">
-          <Button size="lg" onClick={onExplore}>
+          <Button size="lg" onClick={onGetStarted}>
+            Get started
+          </Button>
+          <Button size="lg" variant="secondary" onClick={onComponents}>
             Browse components
           </Button>
           <Button
             size="lg"
-            variant="secondary"
+            variant="ghost"
             onClick={() =>
               toast.success({
                 title: "Welcome to bakerui!",
