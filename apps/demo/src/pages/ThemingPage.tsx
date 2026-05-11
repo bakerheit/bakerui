@@ -146,7 +146,7 @@ export function ThemingPage({
             </Button>
           </HStack>
 
-          <Heading level={3}>Preset</Heading>
+          <Heading level={3}>Preset Themes</Heading>
           <Text tone="muted" size="sm">
             Presets are addon CSS files that override design tokens (and a few component
             selectors) via <code>[data-theme-preset="…"]</code>. Each ships with its own light
