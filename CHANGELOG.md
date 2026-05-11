@@ -36,6 +36,11 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `Drawer`: the panel now sizes against `100dvh` (dynamic viewport height)
   instead of `100vh`, so iOS Safari's URL bar no longer pushes the footer
   off-screen and the action buttons stay reachable on mobile.
+- `Toast` / `Toaster`: on screens ≤640px the toaster now ignores the chosen
+  left/right anchor and centers horizontally (keeping the chosen top/bottom
+  edge). Matches Sonner/Radix mobile behavior. Padding also respects
+  `env(safe-area-inset-*)` so iOS notches and home indicators don't clip
+  the corners.
 
 ## [0.4.0] - 2026-05-10
 

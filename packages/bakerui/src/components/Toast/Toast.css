@@ -4,9 +4,19 @@
   display: flex;
   flex-direction: column;
   gap: var(--bui-space-2);
-  padding: var(--bui-space-4);
+  /* Pad with safe-area awareness so the panel doesn't slide under iOS
+   * notches / home indicators when anchored to an edge. The `max(...)`
+   * keeps the floor at our 16px design gutter on devices without insets. */
+  padding:
+    max(var(--bui-space-4), env(safe-area-inset-top, 0px))
+    max(var(--bui-space-4), env(safe-area-inset-right, 0px))
+    max(var(--bui-space-4), env(safe-area-inset-bottom, 0px))
+    max(var(--bui-space-4), env(safe-area-inset-left, 0px));
   pointer-events: none;
-  width: min(100%, 380px);
+  /* Symmetric 16px gutters by default; on phones the panel is force-
+   * centered (see media query at the bottom of this file), so the gutters
+   * land equally on both sides regardless of the chosen position. */
+  width: min(100% - var(--bui-space-8), 380px);
   max-width: 100vw;
   /* The container is just a positioning frame; only the toasts inside
    * should paint. (The shared .bui-root rule sets a page background.) */
@@ -155,4 +165,30 @@
 .bui-toast__close:focus-visible {
   outline: 2px solid var(--bui-color-focus-ring);
   outline-offset: 2px;
+}
+
+/* === Mobile: force horizontal centering ==============================
+ * On phones, edge-anchored toasters (top-right / bottom-left / etc.) look
+ * off-center because the panel can't fully reach the chosen side without
+ * disappearing into the viewport gutter. Center them horizontally and let
+ * only the chosen vertical edge (top vs bottom) control placement —
+ * matches how Sonner / Radix behave at narrow widths.
+ */
+@media (max-width: 640px) {
+  .bui-toaster {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    align-items: center;
+  }
+  /* Override the per-position left/right anchors above so center-mode
+   * wins. The top/bottom rules from those classes keep working. */
+  .bui-toaster--top-right,
+  .bui-toaster--top-left,
+  .bui-toaster--bottom-right,
+  .bui-toaster--bottom-left {
+    left: 50%;
+    right: auto;
+  }
+  /* Top/bottom-center already use translateX(-50%); leave them alone. */
 }
