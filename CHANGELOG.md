@@ -33,6 +33,9 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   controlled provider now actually clears the value. The previous
   `controlled ?? internal` fallback grabbed the stale internal state, so
   resets from a parent never propagated.
+- `Drawer`: the panel now sizes against `100dvh` (dynamic viewport height)
+  instead of `100vh`, so iOS Safari's URL bar no longer pushes the footer
+  off-screen and the action buttons stay reachable on mobile.
 
 ## [0.4.0] - 2026-05-10
 

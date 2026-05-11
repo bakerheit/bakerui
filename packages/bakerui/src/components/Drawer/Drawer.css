@@ -39,11 +39,18 @@
   transform: translate(0, 0);
 }
 
-/* Slide in from the chosen edge. Translate matches the side it anchors to. */
-.bui-drawer--right  { transform: translateX(16px); height: 100vh; max-width: 100vw; }
-.bui-drawer--left   { transform: translateX(-16px); height: 100vh; max-width: 100vw; }
-.bui-drawer--top    { transform: translateY(-16px); width: 100vw; max-height: 100vh; }
-.bui-drawer--bottom { transform: translateY(16px);  width: 100vw; max-height: 100vh; }
+/* Slide in from the chosen edge. Translate matches the side it anchors to.
+ *
+ * Height uses `dvh` (dynamic viewport height) so iOS Safari's collapsing
+ * URL bar doesn't push the footer off-screen — `100vh` measures the
+ * *full* viewport including chrome, so when the URL bar is visible the
+ * panel overflows below the fold and the Footer's action buttons get
+ * clipped. `dvh` accounts for the currently-visible chrome. Older
+ * browsers still understand `vh` via the explicit fallback. */
+.bui-drawer--right  { transform: translateX(16px); height: 100vh; height: 100dvh; max-width: 100vw; }
+.bui-drawer--left   { transform: translateX(-16px); height: 100vh; height: 100dvh; max-width: 100vw; }
+.bui-drawer--top    { transform: translateY(-16px); width: 100vw; max-height: 100vh; max-height: 100dvh; }
+.bui-drawer--bottom { transform: translateY(16px);  width: 100vw; max-height: 100vh; max-height: 100dvh; }
 
 /* Sizes — width for left/right, height for top/bottom. */
 .bui-drawer--right.bui-drawer--sm,
@@ -66,7 +73,7 @@
 .bui-drawer--top.bui-drawer--xl,
 .bui-drawer--bottom.bui-drawer--xl   { height: 640px; }
 .bui-drawer--top.bui-drawer--full,
-.bui-drawer--bottom.bui-drawer--full { height: 100vh; }
+.bui-drawer--bottom.bui-drawer--full { height: 100vh; height: 100dvh; }
 
 /* Header / body / footer — match Dialog so the API feels familiar. */
 .bui-drawer__header {
