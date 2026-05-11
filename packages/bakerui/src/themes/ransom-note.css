@@ -1,0 +1,459 @@
+/*
+ * bakerui theme preset — "ransom-note"
+ *
+ * Cut-and-glued kidnapper note: every heading really does pick up a
+ * different font per character — not faked, not a per-letter wrap. We
+ * declare four `@font-face` blocks all named `bui-rn-mix`, each one
+ * mapped to a different `unicode-range` of letters, so the browser
+ * substitutes a different system font for each bucket of characters.
+ *
+ *     A E I M Q U Y → Georgia (chunky serif)
+ *     B F J N R V Z → Courier New (typewriter mono)
+ *     C G K O S W   → Impact (condensed display)
+ *     D H L P T X   → Arial Black (heavy sans)
+ *
+ * (Lowercase + digits split the same way.) The `size-adjust` and
+ * `ascent-override` descriptors normalize the wildly different x-heights
+ * so a mixed line still sits on a baseline.
+ *
+ * Pages are kraft-paper brown with a subtle fiber grain. Cards are
+ * white "clipped paper" rectangles, slightly rotated (different angle
+ * per sibling), with two strips of yellow "tape" at the corners drawn
+ * via ::before/::after. This intentionally looks GLUED, not Xeroxed —
+ * which is what differentiates it from the existing `zine` theme.
+ *
+ *   import "bakerui/themes/ransom-note.css";
+ *   <ThemeProvider preset="ransom-note"> ... </ThemeProvider>
+ */
+
+/* ---- The unicode-range font mash-up ----
+   Four @font-face blocks share a family name. The browser picks the
+   one whose unicode-range contains each character. local() means no
+   network fetch — these all reference fonts already on the system.
+   If a particular system lacks one (Linux without Impact, say) the
+   browser falls back through the stack on the consumer rule below,
+   which still produces a chaotic mixed look. */
+@font-face {
+  font-family: "bui-rn-mix";
+  src: local("Georgia"), local("Times New Roman"), serif;
+  unicode-range: U+0041, U+0045, U+0049, U+004D, U+0051, U+0055, U+0059,
+    U+0061, U+0065, U+0069, U+006D, U+0071, U+0075, U+0079, U+0031, U+0035,
+    U+0039;
+  size-adjust: 100%;
+}
+@font-face {
+  font-family: "bui-rn-mix";
+  src: local("Courier New"), local("Courier"), monospace;
+  unicode-range: U+0042, U+0046, U+004A, U+004E, U+0052, U+0056, U+005A,
+    U+0062, U+0066, U+006A, U+006E, U+0072, U+0076, U+007A, U+0032, U+0036;
+  size-adjust: 110%;
+}
+@font-face {
+  font-family: "bui-rn-mix";
+  src: local("Impact"), local("Haettenschweiler"), local("Arial Narrow Bold"),
+    sans-serif;
+  unicode-range: U+0043, U+0047, U+004B, U+004F, U+0053, U+0057, U+0063,
+    U+0067, U+006B, U+006F, U+0073, U+0077, U+0033, U+0037;
+  size-adjust: 95%;
+}
+@font-face {
+  font-family: "bui-rn-mix";
+  src: local("Arial Black"), local("Helvetica Bold"), local("Liberation Sans"),
+    sans-serif;
+  unicode-range: U+0044, U+0048, U+004C, U+0050, U+0054, U+0058, U+0064,
+    U+0068, U+006C, U+0070, U+0074, U+0078, U+0034, U+0038, U+0030;
+  size-adjust: 105%;
+}
+
+/* ---- Light (kraft paper) ---- */
+[data-theme-preset="ransom-note"] {
+  /* Kraft / unbleached card stock — warm tan, never beige */
+  --bui-color-bg: #b89968;
+  --bui-color-bg-subtle: #ad8e5d;
+  --bui-color-bg-muted: #9a7e51;
+  --bui-color-surface: #faf6ed;
+  --bui-color-surface-raised: #ffffff;
+
+  --bui-color-border: #2a2218;
+  --bui-color-border-strong: #000000;
+
+  --bui-color-text: #0d0a05;
+  --bui-color-text-muted: #4a3e28;
+  --bui-color-text-inverse: #faf6ed;
+
+  /* Fluorescent highlighter yellow — the tape color and accent */
+  --bui-color-accent: #d4a017;
+  --bui-color-accent-hover: #b8870e;
+  --bui-color-accent-active: #9c6f08;
+  --bui-color-accent-fg: #0d0a05;
+  --bui-color-accent-soft: #f4dc7a;
+
+  --bui-color-success: #4a7c2e;
+  --bui-color-warning: #d4a017;
+  --bui-color-danger: #b91c1c;
+  --bui-color-danger-fg: #faf6ed;
+
+  --bui-color-focus-ring: #b91c1c;
+
+  /* Ransom-note tokens */
+  --bui-rn-tape: rgba(244, 220, 122, 0.7);
+  --bui-rn-tape-edge: rgba(180, 150, 50, 0.4);
+  --bui-rn-paper-shadow: 2px 3px 0 rgba(0, 0, 0, 0.18),
+    4px 6px 14px rgba(0, 0, 0, 0.25);
+
+  /* Fonts: body is plain serif so paragraphs stay readable. The mixed
+     family is opt-in per element via the .bui-rn-mix selectors below. */
+  --bui-font-family: Georgia, "Times New Roman", serif;
+
+  /* Almost-square cards (clipped paper) — small radii only */
+  --bui-radius-sm: 1px;
+  --bui-radius-md: 2px;
+  --bui-radius-lg: 3px;
+  --bui-radius-xl: 4px;
+  --bui-radius-full: 0;
+
+  /* Hard offset shadows — the paper-on-paper look */
+  --bui-shadow-xs: 1px 1px 0 rgba(0, 0, 0, 0.15);
+  --bui-shadow-sm: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  --bui-shadow-md: var(--bui-rn-paper-shadow);
+  --bui-shadow-lg:
+    3px 4px 0 rgba(0, 0, 0, 0.22),
+    6px 10px 24px rgba(0, 0, 0, 0.35);
+
+  --bui-color-overlay-backdrop: rgba(13, 10, 5, 0.6);
+}
+
+/* ---- Dark (note photographed under a desk lamp at night) ---- */
+[data-theme-preset="ransom-note"][data-theme="dark"] {
+  /* Deep umber — like kraft paper in low light */
+  --bui-color-bg: #1f160c;
+  --bui-color-bg-subtle: #281d0f;
+  --bui-color-bg-muted: #322512;
+  --bui-color-surface: #f0e8d4;
+  --bui-color-surface-raised: #faf2dd;
+
+  --bui-color-border: #0d0a05;
+  --bui-color-border-strong: #000000;
+
+  /* Paper is still light — only the *desk* gets dark. The note is
+     literally a photo of paper, so it stays bright. */
+  --bui-color-text: #0d0a05;
+  --bui-color-text-muted: #4a3e28;
+  --bui-color-text-inverse: #1f160c;
+
+  --bui-color-accent: #f4dc7a;
+  --bui-color-accent-hover: #ffeb99;
+  --bui-color-accent-active: #d4a017;
+  --bui-color-accent-fg: #0d0a05;
+  --bui-color-accent-soft: #c9a44a;
+
+  --bui-color-success: #6ea041;
+  --bui-color-warning: #f4dc7a;
+  --bui-color-danger: #dc2626;
+  --bui-color-danger-fg: #faf6ed;
+
+  --bui-color-focus-ring: #dc2626;
+
+  --bui-rn-tape: rgba(244, 220, 122, 0.85);
+  --bui-rn-tape-edge: rgba(180, 150, 50, 0.5);
+  --bui-rn-paper-shadow: 2px 3px 0 rgba(0, 0, 0, 0.5),
+    4px 6px 14px rgba(0, 0, 0, 0.7);
+
+  --bui-shadow-xs: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  --bui-shadow-sm: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  --bui-shadow-md: var(--bui-rn-paper-shadow);
+  --bui-shadow-lg:
+    3px 4px 0 rgba(0, 0, 0, 0.55),
+    6px 10px 24px rgba(0, 0, 0, 0.8);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.78);
+}
+
+/* ---- Page backdrop: kraft fiber grain ----
+   Layered noise from gradients gives the cardboard-fiber feel without
+   a bitmap. Slightly different in dark mode (deeper, warmer specks). */
+[data-theme-preset="ransom-note"].bui-root-page,
+[data-theme-preset="ransom-note"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(
+      circle at 25% 30%,
+      rgba(0, 0, 0, 0.06) 0,
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 75% 70%,
+      rgba(255, 240, 200, 0.08) 0,
+      transparent 35%
+    ),
+    repeating-linear-gradient(
+      23deg,
+      rgba(0, 0, 0, 0.03) 0,
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      113deg,
+      rgba(0, 0, 0, 0.025) 0,
+      rgba(0, 0, 0, 0.025) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+  background-attachment: fixed;
+}
+
+/* ---- Mixed-font headline treatment ----
+   Apply the `bui-rn-mix` family + heavy weight + tight tracking to all
+   headings, buttons, badges, and labels so cut-out letters appear
+   wherever the user reads UI chrome. Body paragraphs stay in plain
+   serif so long-form text is still legible. */
+[data-theme-preset="ransom-note"] h1,
+[data-theme-preset="ransom-note"] h2,
+[data-theme-preset="ransom-note"] h3,
+[data-theme-preset="ransom-note"] h4,
+[data-theme-preset="ransom-note"] h5,
+[data-theme-preset="ransom-note"] h6,
+[data-theme-preset="ransom-note"] .bui-button,
+[data-theme-preset="ransom-note"] .bui-badge,
+[data-theme-preset="ransom-note"] .bui-field__label,
+[data-theme-preset="ransom-note"] .bui-tabs__trigger,
+[data-theme-preset="ransom-note"] .bui-table th,
+[data-theme-preset="ransom-note"] .bui-card__header {
+  font-family: "bui-rn-mix", Georgia, serif;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  /* Hard, slightly-offset white "paper square" behind each glyph.
+     Can't actually wrap each letter in white card stock without span
+     wrapping, but a chunky text-shadow reads as the white halo of a
+     cut-out letter against the surrounding card. */
+  text-shadow:
+    -1px -1px 0 #faf6ed,
+    1px -1px 0 #faf6ed,
+    -1px 1px 0 #faf6ed,
+    1px 1px 0 #faf6ed,
+    2px 2px 0 rgba(0, 0, 0, 0.25);
+  color: #0d0a05;
+}
+[data-theme-preset="ransom-note"] h1 {
+  font-size: 2.4rem;
+  line-height: 1.1;
+}
+[data-theme-preset="ransom-note"] h2 {
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+
+/* ---- Cards as glued paper squares ----
+   Each card is a white sheet on the kraft desk, slightly tilted, with
+   tape at two corners. The rotation rotates through 4 angles across
+   siblings so a stack doesn't look mechanical. The tape is two
+   pseudo-elements positioned across the corners. */
+[data-theme-preset="ransom-note"] .bui-card,
+[data-theme-preset="ransom-note"] .bui-alert,
+[data-theme-preset="ransom-note"] .bui-accordion,
+[data-theme-preset="ransom-note"] .bui-table-wrapper {
+  background: var(--bui-color-surface);
+  color: #0d0a05;
+  border: 1px solid var(--bui-color-border);
+  box-shadow: var(--bui-rn-paper-shadow);
+  position: relative;
+  transform: rotate(-0.6deg);
+}
+[data-theme-preset="ransom-note"] .bui-card:nth-of-type(2n) {
+  transform: rotate(0.8deg);
+}
+[data-theme-preset="ransom-note"] .bui-card:nth-of-type(3n) {
+  transform: rotate(-0.3deg);
+}
+[data-theme-preset="ransom-note"] .bui-card:nth-of-type(4n) {
+  transform: rotate(1.1deg);
+}
+
+/* Two strips of "scotch tape" at the top corners — a yellow-tinted
+   semi-transparent rectangle, slightly rotated, with a darker edge to
+   sell the layered-tape look. */
+[data-theme-preset="ransom-note"] .bui-card::before,
+[data-theme-preset="ransom-note"] .bui-card::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 64px;
+  height: 18px;
+  background: var(--bui-rn-tape);
+  border-left: 1px solid var(--bui-rn-tape-edge);
+  border-right: 1px solid var(--bui-rn-tape-edge);
+  pointer-events: none;
+  z-index: 1;
+}
+[data-theme-preset="ransom-note"] .bui-card::before {
+  left: 12px;
+  transform: rotate(-6deg);
+}
+[data-theme-preset="ransom-note"] .bui-card::after {
+  right: 12px;
+  transform: rotate(7deg);
+}
+
+[data-theme-preset="ransom-note"] .bui-card__header {
+  padding: var(--bui-space-3) var(--bui-space-4);
+  background: transparent;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.15);
+}
+[data-theme-preset="ransom-note"] .bui-card__body {
+  color: #0d0a05;
+}
+
+/* ---- Popovers / dialogs — also white paper, less tilt ----
+   Tape is omitted on overlays since they appear/disappear and the
+   tape pseudo-elements would pop in/out awkwardly. */
+[data-theme-preset="ransom-note"] .bui-dialog,
+[data-theme-preset="ransom-note"] .bui-popover,
+[data-theme-preset="ransom-note"] .bui-menu,
+[data-theme-preset="ransom-note"] .bui-combobox-content,
+[data-theme-preset="ransom-note"] .bui-datepicker__popover,
+[data-theme-preset="ransom-note"] .bui-timepicker__popover,
+[data-theme-preset="ransom-note"] .bui-toast {
+  background: var(--bui-color-surface-raised);
+  color: #0d0a05;
+  border: 1px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-lg);
+}
+
+[data-theme-preset="ransom-note"] .bui-tooltip {
+  background: #0d0a05;
+  color: var(--bui-color-accent);
+  border: none;
+  font-family: "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---- Buttons read as glued letter-tiles ----
+   Each button sits on a white paper square with a hard offset shadow.
+   The mixed-font treatment from the heading rule above already applies
+   to the label, so a button labeled "SUBMIT" really does have S in
+   condensed, U in serif, B in mono, etc. */
+[data-theme-preset="ransom-note"] .bui-button {
+  background: var(--bui-color-surface);
+  color: #0d0a05;
+  border: 2px solid #0d0a05;
+  border-radius: 1px;
+  box-shadow: var(--bui-shadow-sm);
+  padding: var(--bui-space-2) var(--bui-space-4);
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+  /* Each button gets a tiny tilt so a row reads as hand-pasted */
+  transform: rotate(-0.5deg);
+}
+[data-theme-preset="ransom-note"] .bui-button:nth-of-type(2n) {
+  transform: rotate(0.6deg);
+}
+[data-theme-preset="ransom-note"] .bui-button:nth-of-type(3n) {
+  transform: rotate(-0.2deg);
+}
+[data-theme-preset="ransom-note"] .bui-button:not(:disabled):hover {
+  transform: rotate(0deg) translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+}
+[data-theme-preset="ransom-note"] .bui-button:not(:disabled):active {
+  transform: rotate(0deg) translate(1px, 1px);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+[data-theme-preset="ransom-note"] .bui-button--primary {
+  background: var(--bui-color-accent);
+  border-color: #0d0a05;
+}
+[data-theme-preset="ransom-note"] .bui-button--danger {
+  background: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+  border-color: #0d0a05;
+}
+
+/* ---- Inputs read as label-strips on the paper ----
+   Sharp white rectangles with thick black border — no rounding, no
+   gloss. Labels above are mixed-font (already covered by the heading
+   rule); inputs themselves use a typewriter mono so user-entered text
+   contrasts visibly with the cut-letter chrome. */
+[data-theme-preset="ransom-note"] .bui-input,
+[data-theme-preset="ransom-note"] .bui-textarea,
+[data-theme-preset="ransom-note"] .bui-select,
+[data-theme-preset="ransom-note"] .bui-combobox-trigger,
+[data-theme-preset="ransom-note"] .bui-datepicker__trigger,
+[data-theme-preset="ransom-note"] .bui-timepicker__trigger,
+[data-theme-preset="ransom-note"] .bui-input-wrapper {
+  background: var(--bui-color-surface);
+  color: #0d0a05;
+  border: 2px solid #0d0a05;
+  border-radius: 1px;
+  font-family: "Courier New", "Courier", monospace;
+  box-shadow: var(--bui-shadow-xs);
+}
+
+[data-theme-preset="ransom-note"] .bui-input:focus-visible,
+[data-theme-preset="ransom-note"] .bui-input:focus-within,
+[data-theme-preset="ransom-note"] .bui-textarea:focus-visible {
+  outline: none;
+  border-color: var(--bui-color-danger);
+  box-shadow:
+    var(--bui-shadow-xs),
+    0 0 0 3px var(--bui-color-accent);
+}
+
+/* ---- Badges as tiny tape-flagged chips ----
+   The mixed-font rule above already handles the type. Just a yellow
+   highlighter rectangle with sharp corners and a hard shadow. */
+[data-theme-preset="ransom-note"] .bui-badge {
+  background: var(--bui-color-accent);
+  color: #0d0a05;
+  border: 1.5px solid #0d0a05;
+  border-radius: 1px;
+  padding: 1px 6px;
+  font-size: 0.7rem;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+  transform: rotate(-1.5deg);
+  display: inline-block;
+}
+
+/* ---- Tabs ride along like dog-eared paper tags ---- */
+[data-theme-preset="ransom-note"] .bui-tabs__trigger {
+  background: var(--bui-color-surface);
+  color: #0d0a05;
+  border: 2px solid #0d0a05;
+  border-radius: 1px;
+  padding: var(--bui-space-2) var(--bui-space-3);
+  margin-right: 4px;
+  transform: rotate(-0.6deg);
+}
+[data-theme-preset="ransom-note"] .bui-tabs__trigger:nth-of-type(2n) {
+  transform: rotate(0.8deg);
+}
+[data-theme-preset="ransom-note"] .bui-tabs__trigger[data-state="active"] {
+  background: var(--bui-color-accent);
+}
+
+/* ---- Tables ----
+   Header row gets the cut-letter treatment via the heading rule above.
+   Body rows alternate with a faint kraft tint to suggest the paper
+   underneath showing through. */
+[data-theme-preset="ransom-note"] .bui-table th {
+  background: var(--bui-color-accent);
+  color: #0d0a05;
+  border-bottom: 2px solid #0d0a05;
+}
+[data-theme-preset="ransom-note"] .bui-table td {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+/* ---- Toggle ---- */
+[data-theme-preset="ransom-note"] .bui-toggle__track {
+  background: var(--bui-color-surface);
+  border: 2px solid #0d0a05;
+  border-radius: 1px;
+}
+[data-theme-preset="ransom-note"] .bui-toggle[data-state="checked"] .bui-toggle__track,
+[data-theme-preset="ransom-note"] .bui-toggle__track[data-state="checked"] {
+  background: var(--bui-color-accent);
+}

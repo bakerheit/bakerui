@@ -37,7 +37,11 @@
     "./themes/colored-eink.css": "./src/themes/colored-eink.css",
     "./themes/toy-plastic.css": "./src/themes/toy-plastic.css",
     "./themes/newsprint.css": "./src/themes/newsprint.css",
-    "./themes/zine.css": "./src/themes/zine.css"
+    "./themes/zine.css": "./src/themes/zine.css",
+    "./themes/lcars.css": "./src/themes/lcars.css",
+    "./themes/wabi-sabi.css": "./src/themes/wabi-sabi.css",
+    "./themes/glass26.css": "./src/themes/glass26.css",
+    "./themes/ransom-note.css": "./src/themes/ransom-note.css"
   },
   "files": [
     "dist",

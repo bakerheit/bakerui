@@ -1,0 +1,390 @@
+/*
+ * bakerui theme preset — "wabi-sabi"
+ *
+ * Japanese aesthetic of beauty in imperfection, asymmetry, and the
+ * patina of age. Unbleached rice-paper backdrop, sumi-ink text, muted
+ * clay and indigo accents. Cards have asymmetric corner radii (no two
+ * the same) so nothing reads as machine-perfect; headings sit on top
+ * of soft ink-wash blotches; a faint paper grain runs across the page.
+ *
+ * Light mode is the canonical wabi look — washi paper + ink. Dark mode
+ * is sumi-on-stone: near-black backdrop with bone-white text and the
+ * same clay/indigo accents kept low-saturation. Opt in:
+ *
+ *   import "bakerui/themes/wabi-sabi.css";
+ *   <ThemeProvider preset="wabi-sabi"> ... </ThemeProvider>
+ */
+
+/* ---- Light (washi paper + sumi ink) ---- */
+[data-theme-preset="wabi-sabi"] {
+  /* Unbleached linen / rice paper — warm, never pure white */
+  --bui-color-bg: #ebe3d3;
+  --bui-color-bg-subtle: #e2d8c4;
+  --bui-color-bg-muted: #d4c8b0;
+  --bui-color-surface: #f2ebdb;
+  --bui-color-surface-raised: #f7f1e3;
+
+  /* Ink-stick charcoal, never #000 — handmade ink has warmth */
+  --bui-color-border: #5c4f3d;
+  --bui-color-border-strong: #2e2820;
+
+  --bui-color-text: #2e2820;
+  --bui-color-text-muted: #6b5d48;
+  --bui-color-text-inverse: #f7f1e3;
+
+  /* Clay / raw umber primary — the color of weathered terracotta */
+  --bui-color-accent: #8b5a3c;
+  --bui-color-accent-hover: #74482e;
+  --bui-color-accent-active: #5e3923;
+  --bui-color-accent-fg: #f7f1e3;
+  --bui-color-accent-soft: #d4b896;
+
+  --bui-color-success: #6b7c4a;
+  --bui-color-warning: #b8862e;
+  --bui-color-danger: #8b3a2e;
+  --bui-color-danger-fg: #f7f1e3;
+
+  --bui-color-focus-ring: #8b5a3c;
+
+  /* Wabi palette — used as ink-wash blotch tints and accent strokes */
+  --bui-ws-clay: #8b5a3c;
+  --bui-ws-indigo: #2e3a52;
+  --bui-ws-moss: #6b7c4a;
+  --bui-ws-rust: #8b3a2e;
+  --bui-ws-bone: #f7f1e3;
+  --bui-ws-ink: #2e2820;
+
+  /* Humanist serif — feels like brush calligraphy in a Western face */
+  --bui-font-family: "Cormorant Garamond", "EB Garamond", Georgia,
+    "Hiragino Mincho ProN", "Yu Mincho", serif;
+
+  /* No two radii match — even within a single value, we'll override
+     per-corner on cards. These are the *base* values for inputs etc. */
+  --bui-radius-sm: 3px;
+  --bui-radius-md: 6px;
+  --bui-radius-lg: 10px;
+  --bui-radius-xl: 14px;
+
+  /* Soft, off-axis shadows — like the diffused light through shoji */
+  --bui-shadow-xs: 0 1px 2px rgba(46, 40, 32, 0.08);
+  --bui-shadow-sm: 1px 2px 4px rgba(46, 40, 32, 0.1);
+  --bui-shadow-md: 2px 4px 10px rgba(46, 40, 32, 0.12);
+  --bui-shadow-lg: 3px 8px 24px rgba(46, 40, 32, 0.18);
+
+  --bui-color-overlay-backdrop: rgba(46, 40, 32, 0.5);
+}
+
+/* ---- Dark (sumi ink on stone) ---- */
+[data-theme-preset="wabi-sabi"][data-theme="dark"] {
+  /* Warm-tinted near-black — wet ink stone, not LCD black */
+  --bui-color-bg: #1a1612;
+  --bui-color-bg-subtle: #221c16;
+  --bui-color-bg-muted: #2c241c;
+  --bui-color-surface: #221c16;
+  --bui-color-surface-raised: #2c241c;
+
+  --bui-color-border: #5c4f3d;
+  --bui-color-border-strong: #8b7a5c;
+
+  /* Bone-white text, never #fff — keeps the handmade warmth */
+  --bui-color-text: #ebe3d3;
+  --bui-color-text-muted: #a89880;
+  --bui-color-text-inverse: #1a1612;
+
+  --bui-color-accent: #c08866;
+  --bui-color-accent-hover: #d49a78;
+  --bui-color-accent-active: #a87454;
+  --bui-color-accent-fg: #1a1612;
+  --bui-color-accent-soft: #4a3527;
+
+  --bui-color-success: #8ba366;
+  --bui-color-warning: #d4a85c;
+  --bui-color-danger: #c0664a;
+  --bui-color-danger-fg: #1a1612;
+
+  --bui-color-focus-ring: #c08866;
+
+  --bui-ws-clay: #c08866;
+  --bui-ws-indigo: #5c6e8c;
+  --bui-ws-moss: #8ba366;
+  --bui-ws-rust: #c0664a;
+  --bui-ws-bone: #ebe3d3;
+  --bui-ws-ink: #1a1612;
+
+  --bui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --bui-shadow-sm: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  --bui-shadow-md: 2px 4px 10px rgba(0, 0, 0, 0.55);
+  --bui-shadow-lg: 3px 8px 24px rgba(0, 0, 0, 0.65);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.75);
+}
+
+/* ---- Page backdrop with paper grain ----
+   Faint multi-layer noise built from repeating gradients gives the
+   washi-fiber feel without an external image. The vertical accent bar
+   on the right edge is a nod to the Japanese hanging-scroll mounting. */
+[data-theme-preset="wabi-sabi"].bui-root-page,
+[data-theme-preset="wabi-sabi"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(46, 40, 32, 0.04) 0,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(139, 90, 60, 0.05) 0,
+      transparent 50%
+    ),
+    repeating-linear-gradient(
+      37deg,
+      rgba(46, 40, 32, 0.015) 0,
+      rgba(46, 40, 32, 0.015) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  background-attachment: fixed;
+}
+
+[data-theme-preset="wabi-sabi"][data-theme="dark"].bui-root-page,
+[data-theme-preset="wabi-sabi"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(192, 136, 102, 0.04) 0,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(92, 110, 140, 0.04) 0,
+      transparent 50%
+    ),
+    repeating-linear-gradient(
+      37deg,
+      rgba(235, 227, 211, 0.012) 0,
+      rgba(235, 227, 211, 0.012) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  background-attachment: fixed;
+}
+
+/* ---- Cards / panels with asymmetric radii ----
+   No two corners share a radius — this is the visual core of wabi:
+   imperfect, hand-shaped. Combined with the off-axis soft shadow,
+   each panel reads as a torn piece of paper laid down by hand. */
+[data-theme-preset="wabi-sabi"] .bui-card,
+[data-theme-preset="wabi-sabi"] .bui-alert,
+[data-theme-preset="wabi-sabi"] .bui-accordion {
+  border: 1px solid var(--bui-color-border);
+  border-radius: 18px 4px 22px 8px;
+  background: var(--bui-color-surface);
+}
+
+/* Rotate the asymmetry pattern across siblings so a row of cards
+   doesn't look like clones — every card is its own irregular shape */
+[data-theme-preset="wabi-sabi"] .bui-card:nth-of-type(2n) {
+  border-radius: 6px 24px 4px 18px;
+}
+[data-theme-preset="wabi-sabi"] .bui-card:nth-of-type(3n) {
+  border-radius: 22px 10px 4px 16px;
+}
+[data-theme-preset="wabi-sabi"] .bui-card:nth-of-type(5n) {
+  border-radius: 4px 20px 14px 6px;
+}
+
+/* Card headers get a soft ink-wash blotch behind the text — a faint
+   asymmetric radial blob that suggests brushed sumi. */
+[data-theme-preset="wabi-sabi"] .bui-card__header {
+  background: radial-gradient(
+    ellipse 80% 60% at 30% 50%,
+    rgba(139, 90, 60, 0.12) 0,
+    transparent 70%
+  );
+}
+[data-theme-preset="wabi-sabi"][data-theme="dark"] .bui-card__header {
+  background: radial-gradient(
+    ellipse 80% 60% at 30% 50%,
+    rgba(192, 136, 102, 0.15) 0,
+    transparent 70%
+  );
+}
+
+/* ---- Popovers / dialogs / menus ---- */
+[data-theme-preset="wabi-sabi"] .bui-dialog,
+[data-theme-preset="wabi-sabi"] .bui-popover,
+[data-theme-preset="wabi-sabi"] .bui-menu,
+[data-theme-preset="wabi-sabi"] .bui-combobox-content,
+[data-theme-preset="wabi-sabi"] .bui-datepicker__popover,
+[data-theme-preset="wabi-sabi"] .bui-timepicker__popover,
+[data-theme-preset="wabi-sabi"] .bui-toast {
+  background: var(--bui-color-surface-raised);
+  border: 1px solid var(--bui-color-border);
+  border-radius: 14px 4px 18px 6px;
+}
+
+[data-theme-preset="wabi-sabi"] .bui-tooltip {
+  background: var(--bui-ws-ink);
+  color: var(--bui-ws-bone);
+  border: none;
+  border-radius: 8px 2px 10px 3px;
+  font-style: italic;
+}
+
+/* ---- Headings have a brushed ink underline ----
+   Not a clean rule — a slightly-uneven gradient stroke that fades at
+   the ends, like the start and finish of a calligraphy stroke. */
+[data-theme-preset="wabi-sabi"] h1,
+[data-theme-preset="wabi-sabi"] h2,
+[data-theme-preset="wabi-sabi"] h3 {
+  font-weight: var(--bui-font-weight-medium);
+  letter-spacing: 0.01em;
+  position: relative;
+  padding-bottom: 0.2em;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--bui-ws-ink) 8%,
+    var(--bui-ws-ink) 60%,
+    transparent 85%
+  );
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 70% 2px;
+}
+[data-theme-preset="wabi-sabi"][data-theme="dark"] h1,
+[data-theme-preset="wabi-sabi"][data-theme="dark"] h2,
+[data-theme-preset="wabi-sabi"][data-theme="dark"] h3 {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--bui-ws-bone) 8%,
+    var(--bui-ws-bone) 60%,
+    transparent 85%
+  );
+}
+
+/* Italic body text gets a clay tint — feels like marginalia */
+[data-theme-preset="wabi-sabi"] em {
+  color: var(--bui-ws-clay);
+}
+
+/* ---- Buttons read as inked seal-stamps ----
+   Asymmetric corners + a slight rotation give every button the feel
+   of a hanko (name seal) pressed into the paper. The press state
+   sinks slightly and clips the off-axis shadow. */
+[data-theme-preset="wabi-sabi"] .bui-button {
+  border-radius: 10px 4px 12px 6px;
+  border: 1px solid var(--bui-color-border);
+  font-weight: var(--bui-font-weight-medium);
+  letter-spacing: 0.02em;
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="wabi-sabi"] .bui-button:not(:disabled):active {
+  transform: translateY(1px);
+  box-shadow: var(--bui-shadow-xs);
+}
+
+[data-theme-preset="wabi-sabi"] .bui-button--primary {
+  background: var(--bui-ws-clay);
+  color: var(--bui-ws-bone);
+  border-color: var(--bui-color-accent-active);
+}
+[data-theme-preset="wabi-sabi"] .bui-button--secondary {
+  background: var(--bui-color-surface-raised);
+  color: var(--bui-ws-ink);
+}
+[data-theme-preset="wabi-sabi"][data-theme="dark"] .bui-button--secondary {
+  color: var(--bui-ws-bone);
+}
+[data-theme-preset="wabi-sabi"] .bui-button--danger {
+  background: var(--bui-ws-rust);
+  color: var(--bui-ws-bone);
+  border-color: var(--bui-ws-rust);
+}
+
+/* ---- Inputs — torn-paper data fields ----
+   Bottom-only border (like writing on a single ruled line) plus an
+   asymmetric top radius so the field doesn't read as a hard rectangle. */
+[data-theme-preset="wabi-sabi"] .bui-input,
+[data-theme-preset="wabi-sabi"] .bui-textarea,
+[data-theme-preset="wabi-sabi"] .bui-select,
+[data-theme-preset="wabi-sabi"] .bui-combobox-trigger,
+[data-theme-preset="wabi-sabi"] .bui-datepicker__trigger,
+[data-theme-preset="wabi-sabi"] .bui-timepicker__trigger,
+[data-theme-preset="wabi-sabi"] .bui-input-wrapper {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--bui-color-border);
+  border-radius: 6px 2px 0 0;
+  padding-left: var(--bui-space-2);
+  padding-right: var(--bui-space-2);
+  transition: border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+[data-theme-preset="wabi-sabi"] .bui-input:focus-visible,
+[data-theme-preset="wabi-sabi"] .bui-input:focus-within,
+[data-theme-preset="wabi-sabi"] .bui-textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--bui-ws-clay);
+  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 0 var(--bui-ws-clay);
+}
+
+/* ---- Badges look like inked chops ----
+   Soft asymmetric pill, italic, low-saturation accent — feels like a
+   hand-pressed seal rather than a rigid tag. */
+[data-theme-preset="wabi-sabi"] .bui-badge {
+  border-radius: 8px 3px 10px 4px;
+  background: var(--bui-color-accent-soft);
+  color: var(--bui-ws-ink);
+  font-style: italic;
+  font-weight: var(--bui-font-weight-medium);
+  letter-spacing: 0.02em;
+  border: none;
+  padding: 2px 10px;
+}
+[data-theme-preset="wabi-sabi"][data-theme="dark"] .bui-badge {
+  background: var(--bui-color-accent-soft);
+  color: var(--bui-ws-bone);
+}
+
+/* ---- Tabs as torn paper tabs ---- */
+[data-theme-preset="wabi-sabi"] .bui-tabs__trigger {
+  border-radius: 10px 4px 0 0;
+  background: transparent;
+  color: var(--bui-color-text-muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+[data-theme-preset="wabi-sabi"] .bui-tabs__trigger[data-state="active"] {
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  border-bottom-color: var(--bui-ws-clay);
+}
+
+/* ---- Tables — minimal hairline rules, no zebra fills ----
+   Wabi favors restraint — a single thin line per row, never two. */
+[data-theme-preset="wabi-sabi"] .bui-table th {
+  background: transparent;
+  border-bottom: 1.5px solid var(--bui-color-border-strong);
+  font-weight: var(--bui-font-weight-medium);
+  font-style: italic;
+  color: var(--bui-color-text-muted);
+}
+[data-theme-preset="wabi-sabi"] .bui-table td {
+  border-bottom: 1px solid var(--bui-color-border);
+}
+
+/* ---- Toggle ---- */
+[data-theme-preset="wabi-sabi"] .bui-toggle__track {
+  background: var(--bui-color-bg-muted);
+}
+[data-theme-preset="wabi-sabi"] .bui-toggle[data-state="checked"] .bui-toggle__track,
+[data-theme-preset="wabi-sabi"] .bui-toggle__track[data-state="checked"] {
+  background: var(--bui-ws-clay);
+}

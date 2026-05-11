@@ -1,0 +1,352 @@
+/*
+ * bakerui theme preset — "lcars"
+ *
+ * Star Trek: TNG / DS9 computer interface tribute. Pure-black panels,
+ * candy-colored bars in orange / peach / mauve / blue, fat pill-rounded
+ * buttons, ALL-CAPS Helvetica-style labels, and a colored "elbow" stripe
+ * down the left edge of every card. Numbers and codes are encouraged.
+ *
+ * Light mode is a *daytime LCARS* riff (cream panel instead of black) so
+ * the same palette still reads in a bright window. Dark mode is the
+ * canonical Okudagram look — true #000 with vivid blocks. Opt in:
+ *
+ *   import "bakerui/themes/lcars.css";
+ *   <ThemeProvider preset="lcars"> ... </ThemeProvider>
+ */
+
+/* ---- Light (daytime LCARS — cream panel) ---- */
+[data-theme-preset="lcars"] {
+  --bui-color-bg: #f5e6cc;
+  --bui-color-bg-subtle: #f0dcb8;
+  --bui-color-bg-muted: #e8cf9e;
+  --bui-color-surface: #fdf2dc;
+  --bui-color-surface-raised: #ffffff;
+
+  --bui-color-border: #cc6633;
+  --bui-color-border-strong: #993300;
+
+  --bui-color-text: #1a0d00;
+  --bui-color-text-muted: #6b3a1a;
+  --bui-color-text-inverse: #000000;
+
+  /* LCARS orange — the signature Okudagram color */
+  --bui-color-accent: #cc6600;
+  --bui-color-accent-hover: #b35900;
+  --bui-color-accent-active: #994d00;
+  --bui-color-accent-fg: #000000;
+  --bui-color-accent-soft: #ffcc99;
+
+  --bui-color-success: #669966;
+  --bui-color-warning: #cc9933;
+  --bui-color-danger: #cc3333;
+  --bui-color-danger-fg: #000000;
+
+  --bui-color-focus-ring: #ff9966;
+
+  /* Canonical LCARS palette — used as accent stripes and badges */
+  --bui-lcars-orange: #ff9933;
+  --bui-lcars-peach: #ffcc99;
+  --bui-lcars-yellow: #ffcc66;
+  --bui-lcars-red: #cc6666;
+  --bui-lcars-mauve: #cc99cc;
+  --bui-lcars-blue: #9999cc;
+  --bui-lcars-cream: #ffeeaa;
+
+  /* Helvetica-ish; LCARS used Helvetica Ultra Compressed but we keep it
+     readable with system Helvetica + uppercase + tight tracking. */
+  --bui-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Aggressively rounded — every component reads as a pill or elbow */
+  --bui-radius-sm: 8px;
+  --bui-radius-md: 14px;
+  --bui-radius-lg: 22px;
+  --bui-radius-xl: 32px;
+  --bui-radius-full: 9999px;
+
+  /* No drop shadows — depth is signaled by colored bars, not shading */
+  --bui-shadow-xs: none;
+  --bui-shadow-sm: none;
+  --bui-shadow-md: none;
+  --bui-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Dark (canonical LCARS — true black) ---- */
+[data-theme-preset="lcars"][data-theme="dark"] {
+  /* Pure black, exactly like the Enterprise consoles */
+  --bui-color-bg: #000000;
+  --bui-color-bg-subtle: #0a0a0a;
+  --bui-color-bg-muted: #141414;
+  --bui-color-surface: #000000;
+  --bui-color-surface-raised: #0a0a0a;
+
+  --bui-color-border: #ff9933;
+  --bui-color-border-strong: #ffcc99;
+
+  /* LCARS body text is peach/cream on black, not white */
+  --bui-color-text: #ffcc99;
+  --bui-color-text-muted: #cc9966;
+  --bui-color-text-inverse: #000000;
+
+  --bui-color-accent: #ff9933;
+  --bui-color-accent-hover: #ffaa55;
+  --bui-color-accent-active: #ffbb77;
+  --bui-color-accent-fg: #000000;
+  --bui-color-accent-soft: #663300;
+
+  --bui-color-success: #99cc99;
+  --bui-color-warning: #ffcc66;
+  --bui-color-danger: #cc6666;
+  --bui-color-danger-fg: #000000;
+
+  --bui-color-focus-ring: #ffcc66;
+
+  --bui-lcars-orange: #ff9933;
+  --bui-lcars-peach: #ffcc99;
+  --bui-lcars-yellow: #ffcc66;
+  --bui-lcars-red: #cc6666;
+  --bui-lcars-mauve: #cc99cc;
+  --bui-lcars-blue: #9999cc;
+  --bui-lcars-cream: #ffeeaa;
+
+  --bui-shadow-xs: none;
+  --bui-shadow-sm: none;
+  --bui-shadow-md: none;
+  --bui-shadow-lg: 0 8px 24px rgba(255, 153, 51, 0.15);
+
+  --bui-color-overlay-backdrop: rgba(0, 0, 0, 0.85);
+}
+
+/* ---- Global type treatment ----
+   LCARS labels are ALL CAPS, tight tracked, with that distinctive
+   compressed feel. We apply uppercase + letter-spacing to headings,
+   buttons, badges, and form labels — but leave body paragraphs alone
+   so long-form text stays readable. */
+[data-theme-preset="lcars"] h1,
+[data-theme-preset="lcars"] h2,
+[data-theme-preset="lcars"] h3,
+[data-theme-preset="lcars"] h4,
+[data-theme-preset="lcars"] h5,
+[data-theme-preset="lcars"] h6,
+[data-theme-preset="lcars"] .bui-button,
+[data-theme-preset="lcars"] .bui-badge,
+[data-theme-preset="lcars"] .bui-field__label,
+[data-theme-preset="lcars"] .bui-tabs__trigger,
+[data-theme-preset="lcars"] .bui-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: var(--bui-font-weight-bold);
+  font-stretch: condensed;
+}
+
+/* ---- Cards & panels read as Okudagram frames ----
+   Cards get a fat colored "elbow" bar down the left edge — the most
+   recognizable LCARS shape. Achieved with a thick left border in the
+   accent color plus a generous top-left/bottom-left radius so the bar
+   curves into the panel. */
+[data-theme-preset="lcars"] .bui-card,
+[data-theme-preset="lcars"] .bui-alert,
+[data-theme-preset="lcars"] .bui-accordion {
+  border: none;
+  border-left: 16px solid var(--bui-lcars-orange);
+  border-radius: var(--bui-radius-xl) var(--bui-radius-md) var(--bui-radius-md)
+    var(--bui-radius-xl);
+  background: var(--bui-color-surface);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card header gets its own colored bar across the top — together with
+   the left elbow this forms the classic LCARS "L" frame */
+[data-theme-preset="lcars"] .bui-card__header {
+  background: var(--bui-lcars-peach);
+  color: #000;
+  margin: 0;
+  padding: var(--bui-space-3) var(--bui-space-4);
+  border-radius: 0 var(--bui-radius-md) 0 0;
+}
+[data-theme-preset="lcars"][data-theme="dark"] .bui-card__header {
+  background: var(--bui-lcars-peach);
+  color: #000;
+}
+
+/* Rotate the elbow color across cards — gives a panel of cards that
+   distinctive LCARS multi-bar look. */
+[data-theme-preset="lcars"] .bui-card:nth-of-type(2n) {
+  border-left-color: var(--bui-lcars-mauve);
+}
+[data-theme-preset="lcars"] .bui-card:nth-of-type(3n) {
+  border-left-color: var(--bui-lcars-blue);
+}
+[data-theme-preset="lcars"] .bui-card:nth-of-type(4n) {
+  border-left-color: var(--bui-lcars-yellow);
+}
+[data-theme-preset="lcars"] .bui-card:nth-of-type(5n) {
+  border-left-color: var(--bui-lcars-red);
+}
+
+/* ---- Popovers / dialogs / menus ----
+   Same elbow treatment but smaller, plus the deep-black backdrop so
+   they pop on the cream/black page. */
+[data-theme-preset="lcars"] .bui-dialog,
+[data-theme-preset="lcars"] .bui-popover,
+[data-theme-preset="lcars"] .bui-menu,
+[data-theme-preset="lcars"] .bui-combobox-content,
+[data-theme-preset="lcars"] .bui-datepicker__popover,
+[data-theme-preset="lcars"] .bui-timepicker__popover,
+[data-theme-preset="lcars"] .bui-toast,
+[data-theme-preset="lcars"] .bui-tooltip {
+  border: 2px solid var(--bui-lcars-orange);
+  border-radius: var(--bui-radius-lg);
+  background: var(--bui-color-surface-raised);
+}
+[data-theme-preset="lcars"][data-theme="dark"] .bui-dialog,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-popover,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-menu,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-combobox-content,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-datepicker__popover,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-timepicker__popover {
+  background: #000000;
+}
+
+/* Tooltips invert — solid orange capsule, black text */
+[data-theme-preset="lcars"] .bui-tooltip {
+  background: var(--bui-lcars-orange);
+  color: #000;
+  border-color: var(--bui-lcars-orange);
+  border-radius: var(--bui-radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--bui-font-weight-bold);
+}
+
+/* ---- Buttons are pure pill capsules ----
+   Filled in solid color, no border, no shadow — the LCARS button
+   language is purely shape + color. Each variant gets a distinct
+   palette slot. */
+[data-theme-preset="lcars"] .bui-button {
+  border-radius: var(--bui-radius-full);
+  border: none;
+  padding: var(--bui-space-2) var(--bui-space-5);
+  background: var(--bui-lcars-orange);
+  color: #000;
+  transition: filter var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="lcars"] .bui-button:not(:disabled):hover {
+  filter: brightness(1.1);
+}
+[data-theme-preset="lcars"] .bui-button:not(:disabled):active {
+  filter: brightness(0.9);
+}
+
+[data-theme-preset="lcars"] .bui-button--primary {
+  background: var(--bui-lcars-orange);
+  color: #000;
+}
+[data-theme-preset="lcars"] .bui-button--secondary {
+  background: var(--bui-lcars-mauve);
+  color: #000;
+}
+[data-theme-preset="lcars"] .bui-button--ghost {
+  background: transparent;
+  color: var(--bui-lcars-orange);
+}
+[data-theme-preset="lcars"] .bui-button--danger {
+  background: var(--bui-lcars-red);
+  color: #000;
+}
+
+/* ---- Inputs read as LCARS data fields ----
+   Black (or near-black) capsule with a bright border and accent text.
+   The radius is full pill so they look like Enterprise data slots. */
+[data-theme-preset="lcars"] .bui-input,
+[data-theme-preset="lcars"] .bui-textarea,
+[data-theme-preset="lcars"] .bui-select,
+[data-theme-preset="lcars"] .bui-combobox-trigger,
+[data-theme-preset="lcars"] .bui-datepicker__trigger,
+[data-theme-preset="lcars"] .bui-timepicker__trigger,
+[data-theme-preset="lcars"] .bui-input-wrapper {
+  border-radius: var(--bui-radius-full);
+  border: 2px solid var(--bui-lcars-orange);
+  background: var(--bui-color-surface);
+  padding-left: var(--bui-space-4);
+  padding-right: var(--bui-space-4);
+}
+[data-theme-preset="lcars"][data-theme="dark"] .bui-input,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-textarea,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-select,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-combobox-trigger,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-datepicker__trigger,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-timepicker__trigger,
+[data-theme-preset="lcars"][data-theme="dark"] .bui-input-wrapper {
+  background: #000;
+  color: var(--bui-lcars-peach);
+}
+
+/* Textarea can't be a pill — relax it back to a rounded rect */
+[data-theme-preset="lcars"] .bui-textarea {
+  border-radius: var(--bui-radius-lg);
+}
+
+[data-theme-preset="lcars"] .bui-input:focus-visible,
+[data-theme-preset="lcars"] .bui-input:focus-within,
+[data-theme-preset="lcars"] .bui-textarea:focus-visible {
+  outline: none;
+  border-color: var(--bui-lcars-yellow);
+  box-shadow: 0 0 0 3px rgba(255, 204, 102, 0.35);
+}
+
+/* ---- Badges are tiny status pills ----
+   Small caps text in a colored capsule — perfect for the LCARS "STATUS:
+   NOMINAL" register. */
+[data-theme-preset="lcars"] .bui-badge {
+  border-radius: var(--bui-radius-full);
+  padding: 2px 10px;
+  font-size: 0.7rem;
+  border: none;
+  background: var(--bui-lcars-orange);
+  color: #000;
+}
+
+/* ---- Tabs read as a row of pill triggers ---- */
+[data-theme-preset="lcars"] .bui-tabs__trigger {
+  border-radius: var(--bui-radius-full);
+  padding: var(--bui-space-2) var(--bui-space-4);
+  background: var(--bui-color-bg-muted);
+  color: var(--bui-color-text);
+  border: none;
+}
+[data-theme-preset="lcars"] .bui-tabs__trigger[data-state="active"] {
+  background: var(--bui-lcars-orange);
+  color: #000;
+}
+[data-theme-preset="lcars"][data-theme="dark"] .bui-tabs__trigger {
+  background: #1a1a1a;
+  color: var(--bui-lcars-peach);
+}
+[data-theme-preset="lcars"][data-theme="dark"] .bui-tabs__trigger[data-state="active"] {
+  background: var(--bui-lcars-orange);
+  color: #000;
+}
+
+/* ---- Tables ----
+   Header row is a solid LCARS bar; rows alternate black/charcoal in
+   dark mode for the data-screen feel. */
+[data-theme-preset="lcars"] .bui-table th {
+  background: var(--bui-lcars-orange);
+  color: #000;
+  border: none;
+}
+[data-theme-preset="lcars"][data-theme="dark"] .bui-table tbody tr:nth-child(even) {
+  background: #0a0a0a;
+}
+
+/* ---- Toggle / switch tracks ---- */
+[data-theme-preset="lcars"] .bui-toggle__track {
+  background: var(--bui-color-bg-muted);
+}
+[data-theme-preset="lcars"] .bui-toggle[data-state="checked"] .bui-toggle__track,
+[data-theme-preset="lcars"] .bui-toggle__track[data-state="checked"] {
+  background: var(--bui-lcars-orange);
+}

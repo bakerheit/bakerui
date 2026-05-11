@@ -1,0 +1,58 @@
+/* === NumberInput ==========================================================
+ * Composes <Input>, injecting a stacked +/− stepper column into the
+ * trailingAddon slot. The Input wrapper handles border/focus ring/sizing;
+ * we only style the stepper column itself.
+ */
+
+/* Drop the addon's default horizontal padding so our up/down buttons fill
+   the column edge-to-edge. The addon's left border still separates the
+   steppers from the input, which is what we want. */
+.bui-input-wrapper__addon:has(.bui-number-input__steppers) {
+  padding: 0;
+  background: transparent;
+}
+
+.bui-number-input__steppers {
+  display: inline-flex;
+  flex-direction: column;
+  align-self: stretch;
+  width: 22px;
+}
+
+.bui-number-input__step {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: var(--bui-color-text-muted);
+  cursor: pointer;
+  /* Match the wrapper's rounded corner on the outer edge only. The Input
+     wrapper clips overflow via its own border-radius, so we get a clean
+     pill against the input regardless. */
+  outline: none;
+}
+
+.bui-number-input__step--up {
+  border-bottom: 1px solid var(--bui-color-border);
+}
+
+.bui-number-input__step:hover:not(:disabled) {
+  background: var(--bui-color-bg-subtle);
+  color: var(--bui-color-text);
+}
+
+.bui-number-input__step:active:not(:disabled) {
+  background: var(--bui-color-bg-muted);
+}
+
+.bui-number-input__step:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Compact column for small/large sizes — keep the same 22px column for
+   consistency; the height adjusts because the wrapper height does. */

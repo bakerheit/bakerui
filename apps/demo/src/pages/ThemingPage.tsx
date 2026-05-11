@@ -79,6 +79,26 @@ const PRESET_THEMES: Array<{
     label: "Zine",
     description: "Photocopied punk paper, red spot color, stamped badges, paste-up tilt",
   },
+  {
+    id: "lcars",
+    label: "LCARS",
+    description: "Okudagram pill buttons, colored elbow frames, black panels",
+  },
+  {
+    id: "wabi-sabi",
+    label: "Wabi-Sabi",
+    description: "Washi paper, sumi ink, asymmetric corners, brushed underlines",
+  },
+  {
+    id: "glass26",
+    label: "Glass26",
+    description: "Spatial-glass panes, drifting aurora backdrop, depth-tier blur",
+  },
+  {
+    id: "ransom-note",
+    label: "Ransom Note",
+    description: "Mixed-font cut letters, taped paper cards on kraft desk",
+  },
 ];
 
 export function ThemingPage({

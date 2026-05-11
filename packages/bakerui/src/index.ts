@@ -4,6 +4,8 @@ import "./styles/reset.css";
 
 export * from "./components/Button";
 export * from "./components/Input";
+export * from "./components/NumberInput";
+export * from "./components/OTPInput";
 export * from "./components/Card";
 export * from "./components/Stack";
 export * from "./components/Sidebar";
@@ -38,6 +40,7 @@ export * from "./components/Pagination";
 export * from "./components/Slider";
 export * from "./components/Stepper";
 export * from "./components/TagInput";
+export * from "./components/Tree";
 
 export * from "./theme";
 export { cx } from "./utils/cx";

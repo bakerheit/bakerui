@@ -8,9 +8,11 @@ import {
   Pagination,
   Stack,
   Text,
+  Tree,
   type DataTableColumn,
   type FilterState,
   type SortState,
+  type TreeNode,
 } from "bakerui";
 import { DocExample, DocSection } from "../Doc";
 import { PageLayout } from "../PageLayout";
@@ -45,8 +47,247 @@ export function DataPage() {
         </Stack>
         <DataTableSection />
         <PaginationSection />
+        <TreeSection />
       </Stack>
     </PageLayout>
+  );
+}
+
+function FolderIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden>
+      <path d="M1.5 3.5a1 1 0 0 1 1-1h3l1 1h5a1 1 0 0 1 1 1V11a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V3.5z" />
+    </svg>
+  );
+}
+
+function FileIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      aria-hidden
+    >
+      <path d="M3.5 1.5h5l3 3V12a.5.5 0 0 1-.5.5h-7.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z" />
+      <path d="M8.5 1.5V4.5h3" />
+    </svg>
+  );
+}
+
+const FILE_TREE: TreeNode[] = [
+  {
+    value: "src",
+    label: "src",
+    icon: <FolderIcon />,
+    children: [
+      {
+        value: "components",
+        label: "components",
+        icon: <FolderIcon />,
+        children: [
+          { value: "Button.tsx", label: "Button.tsx", icon: <FileIcon /> },
+          { value: "Tree.tsx", label: "Tree.tsx", icon: <FileIcon /> },
+          { value: "Card.tsx", label: "Card.tsx", icon: <FileIcon /> },
+        ],
+      },
+      {
+        value: "utils",
+        label: "utils",
+        icon: <FolderIcon />,
+        children: [
+          { value: "cx.ts", label: "cx.ts", icon: <FileIcon /> },
+          { value: "portal.tsx", label: "portal.tsx", icon: <FileIcon /> },
+        ],
+      },
+      { value: "index.ts", label: "index.ts", icon: <FileIcon /> },
+    ],
+  },
+  {
+    value: "docs",
+    label: "docs",
+    icon: <FolderIcon />,
+    children: [
+      { value: "README.md", label: "README.md", icon: <FileIcon /> },
+      {
+        value: "guides",
+        label: "guides",
+        icon: <FolderIcon />,
+        children: [
+          { value: "intro.md", label: "intro.md", icon: <FileIcon /> },
+          { value: "theming.md", label: "theming.md", icon: <FileIcon /> },
+        ],
+      },
+    ],
+  },
+  { value: "package.json", label: "package.json", icon: <FileIcon />, disabled: true },
+];
+
+function TreeSection() {
+  const [selectedFile, setSelectedFile] = useState<string | null>("Tree.tsx");
+  const [permissions, setPermissions] = useState<string[]>([
+    "read.posts",
+    "write.posts",
+  ]);
+
+  return (
+    <DocSection
+      title="Tree"
+      description="Hierarchical disclosure list with keyboard navigation (Arrow keys, Home/End, Enter/Space) and roving tabindex. Single-select acts like a file browser; multi-select shows tri-state checkboxes that cascade through descendants."
+      propsTable={[
+        {
+          name: "data",
+          type: "TreeNode[]",
+          description: "Render tree from a data array. Each node has { value, label, icon?, disabled?, children? }. Mutually exclusive with children.",
+        },
+        {
+          name: "selectionMode",
+          type: '"single" | "multiple"',
+          default: '"single"',
+          description: "Multiple mode renders a tri-state checkbox on each row and cascades selection to descendants.",
+        },
+        {
+          name: "selected",
+          type: "string | string[] | null",
+          description: "Controlled selection. Pass a single value or an array depending on selectionMode.",
+        },
+        {
+          name: "defaultSelected",
+          type: "string | string[] | null",
+          description: "Initial selection when uncontrolled.",
+        },
+        {
+          name: "onSelectedChange",
+          type: "(selected: string | string[] | null) => void",
+          description: "Fires whenever the selection changes.",
+        },
+        {
+          name: "expanded",
+          type: "string[]",
+          description: "Controlled expansion set. Items not in the set render collapsed.",
+        },
+        {
+          name: "defaultExpanded",
+          type: "string[]",
+          description: "Initial expansion when uncontrolled.",
+        },
+        {
+          name: "onExpandedChange",
+          type: "(expanded: string[]) => void",
+          description: "Fires whenever the expansion set changes.",
+        },
+        {
+          name: "Tree.Item.value",
+          type: "string",
+          required: true,
+          description: "Stable identifier used for selection and expansion state.",
+        },
+        {
+          name: "Tree.Item.label",
+          type: "ReactNode",
+          required: true,
+          description: "Rendered row content. Nest <Tree.Item> as children to declare a subtree.",
+        },
+        {
+          name: "Tree.Item.icon",
+          type: "ReactNode",
+          description: "Optional leading icon rendered between the checkbox and label.",
+        },
+        {
+          name: "Tree.Item.disabled",
+          type: "boolean",
+          description: "Skipped during keyboard navigation; not selectable.",
+        },
+      ]}
+    >
+      <DocExample
+        label="File browser (single-select, data-driven)"
+        description="Pass `data` to render the tree from a TreeNode array. Use the chevron or ArrowRight/Left to expand; click a row (or press Enter) to select."
+        code={`const tree: TreeNode[] = [
+  { value: "src", label: "src", children: [
+    { value: "components", label: "components", children: [
+      { value: "Button.tsx", label: "Button.tsx" },
+    ]},
+  ]},
+];
+
+<Tree
+  data={tree}
+  defaultExpanded={["src", "components"]}
+  selected={selected}
+  onSelectedChange={setSelected as (v: string | string[] | null) => void}
+/>`}
+      >
+        <Stack gap="2" style={{ maxWidth: 360 }}>
+          <Tree
+            data={FILE_TREE}
+            defaultExpanded={["src", "components"]}
+            selected={selectedFile}
+            onSelectedChange={(next) => setSelectedFile(next as string | null)}
+            aria-label="Project files"
+          />
+          {selectedFile && (
+            <Text size="sm" tone="muted">
+              Selected: <code>{selectedFile}</code>
+            </Text>
+          )}
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="Multi-select with cascading checkboxes (compositional)"
+        description='Set selectionMode="multiple" to enable tri-state checkboxes. Checking a parent selects every descendant; unchecking any descendant flips the parent to a mixed state.'
+        code={`<Tree
+  selectionMode="multiple"
+  selected={perms}
+  onSelectedChange={setPerms as (v: string | string[] | null) => void}
+  defaultExpanded={["posts", "users"]}
+>
+  <Tree.Item value="posts" label="Posts">
+    <Tree.Item value="read.posts" label="Read" />
+    <Tree.Item value="write.posts" label="Write" />
+    <Tree.Item value="delete.posts" label="Delete" />
+  </Tree.Item>
+  <Tree.Item value="users" label="Users">
+    <Tree.Item value="read.users" label="Read" />
+    <Tree.Item value="write.users" label="Write" />
+  </Tree.Item>
+</Tree>`}
+      >
+        <Stack gap="3" style={{ maxWidth: 360 }}>
+          <Tree
+            selectionMode="multiple"
+            selected={permissions}
+            onSelectedChange={(next) => setPermissions(next as string[])}
+            defaultExpanded={["posts", "users"]}
+            aria-label="Permissions"
+          >
+            <Tree.Item value="posts" label="Posts">
+              <Tree.Item value="read.posts" label="Read" />
+              <Tree.Item value="write.posts" label="Write" />
+              <Tree.Item value="delete.posts" label="Delete" />
+            </Tree.Item>
+            <Tree.Item value="users" label="Users">
+              <Tree.Item value="read.users" label="Read" />
+              <Tree.Item value="write.users" label="Write" />
+              <Tree.Item value="admin.users" label="Admin" disabled />
+            </Tree.Item>
+            <Tree.Item value="billing" label="Billing">
+              <Tree.Item value="read.billing" label="Read" />
+              <Tree.Item value="write.billing" label="Write" />
+            </Tree.Item>
+          </Tree>
+          {permissions.length > 0 && (
+            <Text size="sm" tone="muted">
+              Granted: <code>{permissions.join(", ")}</code>
+            </Text>
+          )}
+        </Stack>
+      </DocExample>
+    </DocSection>
   );
 }
 

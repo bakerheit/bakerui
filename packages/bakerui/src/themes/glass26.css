@@ -1,0 +1,533 @@
+/*
+ * bakerui theme preset — "glass26"
+ *
+ * Next-gen spatial-computing glass — what 2026 glassmorphism looks like
+ * after visionOS, Apple's Liquid Glass, and Microsoft's Mica & Acrylic
+ * have all settled the language. Differs sharply from the existing
+ * `glassx` (thin frosted popovers only) and `frutiger-aero` (Y2K aqua
+ * gloss):
+ *
+ *   - Backdrop blur is *heavy* and *saturated* — the glass tints what's
+ *     behind it instead of just blurring it. This requires a colorful
+ *     page backdrop to read, so the page itself paints a slow-drifting
+ *     aurora-style gradient mesh.
+ *   - Every glass surface has a triple-layer treatment: (1) a top-edge
+ *     "rim light" via inset highlight, (2) a soft bottom shadow that
+ *     reads as depth, (3) a faint specular arc traced across the top
+ *     suggesting light from above-front.
+ *   - Surfaces stack in *depth tiers* — popovers are blurrier and
+ *     brighter than cards, dialogs blurrier still. The blur radius
+ *     itself encodes z-order.
+ *   - Buttons "lift" off the page — at rest they cast a soft shadow
+ *     plus a tinted color halo from the accent; press collapses both.
+ *   - Inputs read as recessed wells in the glass, not overlaid panes.
+ *
+ * Light mode is a bright "sunlit room" — pearl-white panes on a peach/
+ * lavender/sky gradient. Dark mode is "midnight room" — deep navy/
+ * indigo/violet glow with luminous translucent panes. Opt in:
+ *
+ *   import "bakerui/themes/glass26.css";
+ *   <ThemeProvider preset="glass26"> ... </ThemeProvider>
+ *
+ * Heads up: this theme requires `backdrop-filter` support. Safari/
+ * Chromium/Firefox 103+ all have it. The fallback (no blur) still
+ * looks fine — just opaque tinted panes — but loses the magic.
+ */
+
+/* ---- Light (sunlit pearl) ---- */
+[data-theme-preset="glass26"] {
+  /* The bg here is the *fallback* color — the real backdrop is painted
+     by the .bui-root-page rule below as a multi-blob gradient. We keep
+     this color in the same family so any unstyled corner blends in. */
+  --bui-color-bg: #f4ecf7;
+  --bui-color-bg-subtle: #ede4f2;
+  --bui-color-bg-muted: #e0d5e8;
+  --bui-color-surface: rgba(255, 255, 255, 0.55);
+  --bui-color-surface-raised: rgba(255, 255, 255, 0.7);
+
+  /* Borders are translucent white — the *rim* of the glass, not a stroke */
+  --bui-color-border: rgba(255, 255, 255, 0.6);
+  --bui-color-border-strong: rgba(255, 255, 255, 0.85);
+
+  --bui-color-text: #1a1530;
+  --bui-color-text-muted: #5d5775;
+  --bui-color-text-inverse: #ffffff;
+
+  /* Iridescent violet — feels electronic and 2026 without being neon */
+  --bui-color-accent: #7c3aed;
+  --bui-color-accent-hover: #6d28d9;
+  --bui-color-accent-active: #5b21b6;
+  --bui-color-accent-fg: #ffffff;
+  --bui-color-accent-soft: rgba(124, 58, 237, 0.18);
+
+  --bui-color-success: #059669;
+  --bui-color-warning: #d97706;
+  --bui-color-danger: #dc2626;
+  --bui-color-danger-fg: #ffffff;
+
+  --bui-color-focus-ring: #a78bfa;
+
+  /* Glass26 tokens — used by the panel/button/input rules below */
+  --bui-g26-blur-light: 12px;
+  --bui-g26-blur-card: 20px;
+  --bui-g26-blur-pop: 32px;
+  --bui-g26-blur-dialog: 48px;
+  --bui-g26-saturate: 180%;
+
+  /* Rim light + specular highlight + colored glow are layered into
+     every glass surface. Defined once here so component rules stay
+     readable. The "rim" is the 1px inset highlight along the top
+     edge; the "specular" is a wider, fainter arc that suggests a
+     light source above-front; the "halo" is a tinted outer glow that
+     gives the whole pane its accent flavor. */
+  --bui-g26-rim: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --bui-g26-rim-faint: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  --bui-g26-specular: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.08) 35%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  --bui-g26-tint: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+
+  /* Generous radii — visionOS reads as soft pebbles, not rectangles */
+  --bui-radius-sm: 8px;
+  --bui-radius-md: 14px;
+  --bui-radius-lg: 22px;
+  --bui-radius-xl: 32px;
+
+  /* Multi-layer floating shadows — short tinted close-shadow + long
+     soft far-shadow simulates ambient + sun light bouncing off the
+     desk surface beneath the glass. */
+  --bui-shadow-xs:
+    var(--bui-g26-rim-faint),
+    0 1px 2px rgba(26, 21, 48, 0.08);
+  --bui-shadow-sm:
+    var(--bui-g26-rim),
+    0 2px 4px rgba(26, 21, 48, 0.06),
+    0 4px 12px rgba(124, 58, 237, 0.08);
+  --bui-shadow-md:
+    var(--bui-g26-rim),
+    0 4px 8px rgba(26, 21, 48, 0.08),
+    0 12px 28px rgba(124, 58, 237, 0.12);
+  --bui-shadow-lg:
+    var(--bui-g26-rim),
+    0 8px 16px rgba(26, 21, 48, 0.1),
+    0 24px 48px rgba(124, 58, 237, 0.18);
+
+  --bui-color-overlay-backdrop: rgba(124, 58, 237, 0.12);
+}
+
+/* ---- Dark (midnight room) ---- */
+[data-theme-preset="glass26"][data-theme="dark"] {
+  --bui-color-bg: #0a0612;
+  --bui-color-bg-subtle: #120a1f;
+  --bui-color-bg-muted: #1a0e2a;
+  --bui-color-surface: rgba(40, 25, 65, 0.55);
+  --bui-color-surface-raised: rgba(55, 35, 85, 0.65);
+
+  --bui-color-border: rgba(180, 150, 230, 0.25);
+  --bui-color-border-strong: rgba(200, 170, 255, 0.4);
+
+  --bui-color-text: #f0e8ff;
+  --bui-color-text-muted: #b8a8d8;
+  --bui-color-text-inverse: #0a0612;
+
+  --bui-color-accent: #a78bfa;
+  --bui-color-accent-hover: #c4b5fd;
+  --bui-color-accent-active: #8b5cf6;
+  --bui-color-accent-fg: #0a0612;
+  --bui-color-accent-soft: rgba(167, 139, 250, 0.22);
+
+  --bui-color-success: #34d399;
+  --bui-color-warning: #fbbf24;
+  --bui-color-danger: #f87171;
+  --bui-color-danger-fg: #0a0612;
+
+  --bui-color-focus-ring: #c4b5fd;
+
+  --bui-g26-blur-light: 12px;
+  --bui-g26-blur-card: 24px;
+  --bui-g26-blur-pop: 40px;
+  --bui-g26-blur-dialog: 56px;
+  --bui-g26-saturate: 200%;
+
+  /* In dark mode the rim is faint white and the specular is dimmer —
+     too much top highlight in dark mode reads as plastic, not glass. */
+  --bui-g26-rim: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --bui-g26-rim-faint: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --bui-g26-specular: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.03) 35%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  --bui-g26-tint: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.18) 0%,
+    rgba(96, 165, 250, 0.08) 100%
+  );
+
+  --bui-shadow-xs:
+    var(--bui-g26-rim-faint),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+  --bui-shadow-sm:
+    var(--bui-g26-rim),
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(167, 139, 250, 0.14);
+  --bui-shadow-md:
+    var(--bui-g26-rim),
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 12px 28px rgba(167, 139, 250, 0.2);
+  --bui-shadow-lg:
+    var(--bui-g26-rim),
+    0 8px 16px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(167, 139, 250, 0.28);
+
+  --bui-color-overlay-backdrop: rgba(10, 6, 18, 0.7);
+}
+
+/* ---- Page backdrop: drifting aurora gradient mesh ----
+   The glass needs something colorful behind it to refract — so the
+   page itself is a multi-blob radial gradient. We animate the blob
+   positions on a very slow loop (60s) so the backdrop drifts the way
+   real ambient light shifts in a room. Respects reduced-motion. */
+@keyframes bui-g26-drift {
+  0%,
+  100% {
+    background-position:
+      0% 0%,
+      100% 0%,
+      50% 100%,
+      0% 100%;
+  }
+  50% {
+    background-position:
+      20% 20%,
+      80% 30%,
+      40% 80%,
+      20% 90%;
+  }
+}
+
+[data-theme-preset="glass26"].bui-root-page,
+[data-theme-preset="glass26"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(
+      ellipse 60% 50% at 15% 20%,
+      rgba(255, 200, 220, 0.65) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 85% 15%,
+      rgba(186, 230, 253, 0.6) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 50% at 50% 90%,
+      rgba(196, 181, 253, 0.55) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 35% at 10% 80%,
+      rgba(254, 215, 170, 0.5) 0%,
+      transparent 70%
+    );
+  background-size: 200% 200%;
+  background-attachment: fixed;
+  animation: bui-g26-drift 60s ease-in-out infinite;
+}
+
+[data-theme-preset="glass26"][data-theme="dark"].bui-root-page,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-root-page {
+  background-color: var(--bui-color-bg);
+  background-image:
+    radial-gradient(
+      ellipse 60% 50% at 15% 20%,
+      rgba(124, 58, 237, 0.55) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 85% 15%,
+      rgba(56, 189, 248, 0.45) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 50% at 50% 90%,
+      rgba(236, 72, 153, 0.45) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 35% at 10% 80%,
+      rgba(34, 197, 94, 0.3) 0%,
+      transparent 70%
+    );
+  background-size: 200% 200%;
+  background-attachment: fixed;
+  animation: bui-g26-drift 60s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme-preset="glass26"].bui-root-page,
+  [data-theme-preset="glass26"] .bui-root-page {
+    animation: none;
+  }
+}
+
+/* ---- Cards & raised surfaces ----
+   The canonical glass treatment. Three layers stacked into one element:
+     1. the translucent base color (--bui-color-surface)
+     2. backdrop-filter to blur+saturate what's behind
+     3. a foreground gradient via background-image for the specular arc
+   The triple shadow stack handles rim light + ambient depth + colored
+   halo. */
+[data-theme-preset="glass26"] .bui-card,
+[data-theme-preset="glass26"] .bui-alert,
+[data-theme-preset="glass26"] .bui-accordion,
+[data-theme-preset="glass26"] .bui-table-wrapper {
+  background-color: var(--bui-color-surface);
+  background-image: var(--bui-g26-specular);
+  background-repeat: no-repeat;
+  background-size: 100% 60%;
+  backdrop-filter: blur(var(--bui-g26-blur-card)) saturate(var(--bui-g26-saturate));
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-card))
+    saturate(var(--bui-g26-saturate));
+  border: 1px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-md);
+}
+
+/* Popovers sit one tier higher — blurrier, brighter, more lift */
+[data-theme-preset="glass26"] .bui-popover,
+[data-theme-preset="glass26"] .bui-menu,
+[data-theme-preset="glass26"] .bui-combobox-content,
+[data-theme-preset="glass26"] .bui-datepicker__popover,
+[data-theme-preset="glass26"] .bui-timepicker__popover,
+[data-theme-preset="glass26"] .bui-toast {
+  background-color: var(--bui-color-surface-raised);
+  background-image: var(--bui-g26-specular);
+  background-repeat: no-repeat;
+  background-size: 100% 60%;
+  backdrop-filter: blur(var(--bui-g26-blur-pop)) saturate(var(--bui-g26-saturate));
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-pop))
+    saturate(var(--bui-g26-saturate));
+  border: 1px solid var(--bui-color-border-strong);
+  box-shadow: var(--bui-shadow-lg);
+}
+
+/* Dialogs are the deepest tier — nearly opaque diffused glass */
+[data-theme-preset="glass26"] .bui-dialog {
+  background-color: var(--bui-color-surface-raised);
+  background-image: var(--bui-g26-specular);
+  background-repeat: no-repeat;
+  background-size: 100% 50%;
+  backdrop-filter: blur(var(--bui-g26-blur-dialog)) saturate(var(--bui-g26-saturate));
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-dialog))
+    saturate(var(--bui-g26-saturate));
+  border: 1px solid var(--bui-color-border-strong);
+  box-shadow: var(--bui-shadow-lg);
+}
+
+/* Tooltip is dense and small — needs less blur, more contrast */
+[data-theme-preset="glass26"] .bui-tooltip {
+  background-color: rgba(26, 21, 48, 0.85);
+  color: #fff;
+  backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--bui-shadow-md);
+}
+
+/* ---- Buttons lift off the page ----
+   At rest they hover via a tinted color shadow (the "halo" effect).
+   On hover the halo intensifies; on press both the lift and halo
+   collapse so the button physically settles into the glass. */
+[data-theme-preset="glass26"] .bui-button {
+  background-color: var(--bui-color-surface-raised);
+  background-image: var(--bui-g26-specular);
+  background-repeat: no-repeat;
+  background-size: 100% 60%;
+  backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(var(--bui-g26-saturate));
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-light))
+    saturate(var(--bui-g26-saturate));
+  border: 1px solid var(--bui-color-border);
+  box-shadow: var(--bui-shadow-sm);
+  transition:
+    transform var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="glass26"] .bui-button:not(:disabled):hover {
+  box-shadow: var(--bui-shadow-md);
+  transform: translateY(-1px);
+}
+[data-theme-preset="glass26"] .bui-button:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: var(--bui-shadow-xs);
+}
+
+/* Primary button — the accent color shows *through* the glass via a
+   tinted gradient overlay, so it reads as colored crystal rather than
+   a solid block of paint. The halo is much stronger here. */
+[data-theme-preset="glass26"] .bui-button--primary {
+  background-color: var(--bui-color-accent);
+  background-image:
+    var(--bui-g26-specular),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  color: var(--bui-color-accent-fg);
+  border-color: var(--bui-color-accent-active);
+  box-shadow:
+    var(--bui-g26-rim),
+    0 4px 12px rgba(124, 58, 237, 0.35),
+    0 8px 24px rgba(124, 58, 237, 0.25);
+}
+[data-theme-preset="glass26"][data-theme="dark"] .bui-button--primary {
+  box-shadow:
+    var(--bui-g26-rim),
+    0 4px 12px rgba(167, 139, 250, 0.4),
+    0 8px 24px rgba(167, 139, 250, 0.3);
+}
+[data-theme-preset="glass26"] .bui-button--primary:not(:disabled):hover {
+  box-shadow:
+    var(--bui-g26-rim),
+    0 6px 18px rgba(124, 58, 237, 0.45),
+    0 12px 32px rgba(124, 58, 237, 0.35);
+}
+
+[data-theme-preset="glass26"] .bui-button--ghost {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+[data-theme-preset="glass26"] .bui-button--ghost:not(:disabled):hover {
+  background-color: var(--bui-color-accent-soft);
+  box-shadow: none;
+  transform: none;
+}
+
+[data-theme-preset="glass26"] .bui-button--danger {
+  background-color: var(--bui-color-danger);
+  color: var(--bui-color-danger-fg);
+  border-color: var(--bui-color-danger);
+  box-shadow:
+    var(--bui-g26-rim),
+    0 4px 12px rgba(220, 38, 38, 0.35),
+    0 8px 24px rgba(220, 38, 38, 0.25);
+}
+
+/* ---- Inputs read as recessed wells in the glass ----
+   No outer lift, no specular — the inverse of a button. A faint inner
+   shadow on top suggests the field is set *into* the surface. The
+   focus state lights the rim in the accent color and adds a soft halo. */
+[data-theme-preset="glass26"] .bui-input,
+[data-theme-preset="glass26"] .bui-textarea,
+[data-theme-preset="glass26"] .bui-select,
+[data-theme-preset="glass26"] .bui-combobox-trigger,
+[data-theme-preset="glass26"] .bui-datepicker__trigger,
+[data-theme-preset="glass26"] .bui-timepicker__trigger,
+[data-theme-preset="glass26"] .bui-input-wrapper {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(140%);
+  border: 1px solid var(--bui-color-border);
+  box-shadow:
+    inset 0 1px 2px rgba(26, 21, 48, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+[data-theme-preset="glass26"][data-theme="dark"] .bui-input,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-textarea,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-select,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-combobox-trigger,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-datepicker__trigger,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-timepicker__trigger,
+[data-theme-preset="glass26"][data-theme="dark"] .bui-input-wrapper {
+  background-color: rgba(20, 12, 35, 0.45);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+[data-theme-preset="glass26"] .bui-input:focus-visible,
+[data-theme-preset="glass26"] .bui-input:focus-within,
+[data-theme-preset="glass26"] .bui-textarea:focus-visible {
+  outline: none;
+  border-color: var(--bui-color-accent);
+  box-shadow:
+    inset 0 1px 2px rgba(26, 21, 48, 0.06),
+    0 0 0 3px var(--bui-color-accent-soft),
+    0 0 16px rgba(124, 58, 237, 0.25);
+}
+
+/* ---- Badges as miniature glass chips ---- */
+[data-theme-preset="glass26"] .bui-badge {
+  background-color: var(--bui-color-accent-soft);
+  backdrop-filter: blur(8px) saturate(160%);
+  -webkit-backdrop-filter: blur(8px) saturate(160%);
+  border: 1px solid var(--bui-color-border);
+  box-shadow: var(--bui-g26-rim-faint);
+  border-radius: var(--bui-radius-md);
+  font-weight: var(--bui-font-weight-medium);
+}
+
+/* ---- Tabs ride on a glass rail ---- */
+[data-theme-preset="glass26"] .bui-tabs__list {
+  background-color: var(--bui-color-surface);
+  backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--bui-g26-blur-light)) saturate(160%);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  padding: 4px;
+  box-shadow: var(--bui-g26-rim-faint);
+}
+[data-theme-preset="glass26"] .bui-tabs__trigger {
+  background-color: transparent;
+  border: none;
+  border-radius: var(--bui-radius-md);
+  color: var(--bui-color-text-muted);
+}
+[data-theme-preset="glass26"] .bui-tabs__trigger[data-state="active"] {
+  background-color: var(--bui-color-surface-raised);
+  color: var(--bui-color-text);
+  box-shadow: var(--bui-shadow-sm);
+}
+
+/* ---- Toggle / switch ---- */
+[data-theme-preset="glass26"] .bui-toggle__track {
+  background-color: var(--bui-color-bg-muted);
+  box-shadow: inset 0 1px 2px rgba(26, 21, 48, 0.15);
+}
+[data-theme-preset="glass26"] .bui-toggle[data-state="checked"] .bui-toggle__track,
+[data-theme-preset="glass26"] .bui-toggle__track[data-state="checked"] {
+  background-color: var(--bui-color-accent);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+/* ---- Tables get a subtle glass shell ---- */
+[data-theme-preset="glass26"] .bui-table th {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  border-bottom: 1px solid var(--bui-color-border-strong);
+}
+[data-theme-preset="glass26"][data-theme="dark"] .bui-table th {
+  background-color: rgba(40, 25, 65, 0.4);
+}
+[data-theme-preset="glass26"] .bui-table tbody tr:hover {
+  background-color: var(--bui-color-accent-soft);
+}

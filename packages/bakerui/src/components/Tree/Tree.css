@@ -1,0 +1,128 @@
+/* === Tree =================================================================
+ * Hierarchical disclosure list. Each row is a single tabstop via roving
+ * tabindex; indentation is rendered via `--bui-tree-depth` so themes can
+ * tweak the step width without touching markup.
+ */
+
+.bui-tree {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--bui-font-size-sm);
+  color: var(--bui-color-text);
+  user-select: none;
+}
+
+.bui-tree-item {
+  display: contents;
+}
+
+.bui-tree-item__row {
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  /* Indentation is depth * step + base padding. Step matches the chevron
+     column so children align under their parent's label. */
+  padding-left: calc(var(--bui-tree-depth, 0) * var(--bui-space-5) + var(--bui-space-2));
+  padding-right: var(--bui-space-2);
+  height: var(--bui-control-height-sm);
+  border-radius: var(--bui-radius-sm);
+  cursor: pointer;
+  outline: none;
+}
+
+.bui-tree-item__row:hover:not([aria-disabled="true"]) {
+  background: var(--bui-color-bg-subtle);
+}
+
+.bui-tree-item__row:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--bui-color-focus-ring);
+}
+
+.bui-tree-item__row[data-selected="true"] {
+  background: color-mix(in srgb, var(--bui-color-accent) 12%, transparent);
+  color: var(--bui-color-text);
+}
+
+.bui-tree-item__row[data-selected="true"]:hover {
+  background: color-mix(in srgb, var(--bui-color-accent) 18%, transparent);
+}
+
+.bui-tree-item__row[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Chevron column reserves space whether or not the row has children, so
+   leaf and parent rows align. */
+.bui-tree-item__chevron {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bui-color-text-muted);
+}
+
+.bui-tree-item__chevron[data-visible="true"] {
+  cursor: pointer;
+}
+
+/* Checkbox column (multi-select mode) */
+.bui-tree-item__checkbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bui-color-border-strong);
+  border-radius: var(--bui-radius-sm);
+  background: var(--bui-color-surface);
+  color: var(--bui-color-surface);
+  transition:
+    background var(--bui-duration-fast) var(--bui-easing-standard),
+    border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-tree-item__checkbox[data-state="checked"],
+.bui-tree-item__checkbox[data-state="mixed"] {
+  background: var(--bui-color-accent);
+  border-color: var(--bui-color-accent);
+}
+
+.bui-tree-item__checkbox svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Optional icon column (e.g. file/folder glyphs) */
+.bui-tree-item__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--bui-color-text-muted);
+}
+
+.bui-tree-item__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The group wrapper carries no visual; indentation is handled per-row via
+   the depth custom property so the row spans the full tree width and
+   selection/hover backgrounds extend to the edges. */
+.bui-tree-item__group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Collapsed subtree. We mount the group regardless of expanded state so
+   children register in the node graph; this rule keeps `display: flex`
+   from overriding the browser's [hidden] { display: none } default. */
+.bui-tree-item__group[hidden] {
+  display: none;
+}

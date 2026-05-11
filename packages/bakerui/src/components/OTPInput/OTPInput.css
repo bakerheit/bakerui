@@ -1,0 +1,81 @@
+/* === OTPInput =============================================================
+ * One-time code entry. Renders one <input maxLength=1> per cell so each
+ * cell is its own focusable element (the most accessible approach); the
+ * component coordinates focus and treats `value` as a strict prefix
+ * (no middle gaps) — see the component doc.
+ */
+
+.bui-otp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+}
+
+.bui-otp__cell {
+  width: 2.5rem;
+  height: var(--bui-control-height-md);
+  padding: 0;
+  text-align: center;
+  font-family: inherit;
+  font-size: var(--bui-font-size-lg);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--bui-font-weight-medium);
+  color: var(--bui-color-text);
+  background: var(--bui-color-surface);
+  border: 1px solid var(--bui-color-border);
+  border-radius: var(--bui-radius-md);
+  outline: none;
+  transition:
+    border-color var(--bui-duration-fast) var(--bui-easing-standard),
+    box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+.bui-otp__cell:hover:not(:focus):not(:disabled) {
+  border-color: var(--bui-color-border-strong);
+}
+
+.bui-otp__cell:focus,
+.bui-otp__cell:focus-visible {
+  border-color: var(--bui-color-accent);
+  box-shadow: 0 0 0 3px var(--bui-color-focus-ring);
+}
+
+.bui-otp__cell[data-filled="true"] {
+  border-color: var(--bui-color-border-strong);
+}
+
+.bui-otp__cell:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--bui-color-bg-muted);
+}
+
+.bui-otp--invalid .bui-otp__cell {
+  border-color: var(--bui-color-danger);
+}
+.bui-otp--invalid .bui-otp__cell:focus,
+.bui-otp--invalid .bui-otp__cell:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bui-color-danger) 30%, transparent);
+}
+
+.bui-otp__separator {
+  color: var(--bui-color-text-muted);
+  user-select: none;
+  font-size: var(--bui-font-size-xl);
+  line-height: 1;
+  /* Pull the dash slightly closer to the cells than the default gap, so
+     "XXX – XXX" reads as a group rather than two separate inputs. */
+  margin: 0 calc(var(--bui-space-1) * -1);
+}
+
+/* Sizes */
+.bui-otp--sm .bui-otp__cell {
+  width: 2rem;
+  height: var(--bui-control-height-sm);
+  font-size: var(--bui-font-size-md);
+}
+.bui-otp--lg .bui-otp__cell {
+  width: 3rem;
+  height: var(--bui-control-height-lg);
+  font-size: var(--bui-font-size-xl);
+}

@@ -13,6 +13,8 @@ import {
   Heading,
   Input,
   MultiCombobox,
+  NumberInput,
+  OTPInput,
   Radio,
   RadioGroup,
   Select,
@@ -50,6 +52,8 @@ export function FormsPage() {
         <TimePickerSection />
         <DividerSection />
         <InputSection />
+        <NumberInputSection />
+        <OTPInputSection />
         <ProgressBarSection />
         <RadioSection />
         <SelectSection />
@@ -1967,6 +1971,263 @@ function FullFormExample() {
             <Button disabled={!agreed}>Create workspace</Button>
           </HStack>
         </Stack>
+      </DocExample>
+    </DocSection>
+  );
+}
+
+function NumberInputSection() {
+  const [quantity, setQuantity] = useState<number | null>(1);
+  const [price, setPrice] = useState<number | null>(19.99);
+  const [score, setScore] = useState<number | null>(50);
+  const invalidScore = score !== null && (score < 0 || score > 100);
+
+  return (
+    <DocSection
+      title="NumberInput"
+      description="A thin wrapper over Input that injects a +/− stepper column into the trailing addon. Inherits Input's size, invalid state, leading icon/addon, and Field integration. ArrowUp/Down step by `step`; PageUp/Down by 10×; Home/End jump to min/max; press-and-hold on a stepper repeats."
+      propsTable={[
+        {
+          name: "value",
+          type: "number | null",
+          description: "Controlled numeric value. `null` represents an empty field.",
+        },
+        {
+          name: "defaultValue",
+          type: "number | null",
+          description: "Initial value for uncontrolled use.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: number | null) => void",
+          description: "Fires with the parsed value (or null while empty).",
+        },
+        { name: "min", type: "number", description: "Minimum allowed value. Clamped on commit." },
+        { name: "max", type: "number", description: "Maximum allowed value. Clamped on commit." },
+        {
+          name: "step",
+          type: "number",
+          default: "1",
+          description: "Increment applied per +/− press and per ArrowUp/Down keystroke.",
+        },
+        {
+          name: "precision",
+          type: "number",
+          description: "Maximum decimal places kept on commit. Inferred from `step` when omitted (e.g. step 0.01 → 2).",
+        },
+        {
+          name: "hideSteppers",
+          type: "boolean",
+          description: "Hide the +/− column. Arrow keys still step.",
+        },
+        {
+          name: "…InputProps",
+          type: "InputProps",
+          description: "All other Input props are forwarded (inputSize, invalid, leadingIcon, leadingAddon, disabled, etc.).",
+        },
+      ]}
+    >
+      <DocExample
+        label="Quantity with min/max"
+        description="Default step is 1. Buttons disable at the boundaries; press-and-hold to repeat."
+        code={`const [qty, setQty] = useState<number | null>(1);
+
+<NumberInput
+  value={qty}
+  onValueChange={setQty}
+  min={0}
+  max={10}
+  leadingAddon="Qty"
+/>`}
+      >
+        <Stack gap="2" style={{ maxWidth: 240 }}>
+          <NumberInput
+            value={quantity}
+            onValueChange={setQuantity}
+            min={0}
+            max={10}
+            leadingAddon="Qty"
+            aria-label="Quantity"
+          />
+          <Text size="sm" tone="muted">
+            Value: <code>{quantity ?? "null"}</code>
+          </Text>
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="Currency (step + precision)"
+        description="A 0.01 step infers precision=2, so values round to cents on commit. Pair with `leadingAddon` to mark the currency."
+        code={`<NumberInput
+  value={price}
+  onValueChange={setPrice}
+  step={0.01}
+  min={0}
+  leadingAddon="$"
+/>`}
+      >
+        <Stack gap="2" style={{ maxWidth: 240 }}>
+          <NumberInput
+            value={price}
+            onValueChange={setPrice}
+            step={0.01}
+            min={0}
+            leadingAddon="$"
+            aria-label="Price"
+          />
+          <Text size="sm" tone="muted">
+            Value: <code>{price ?? "null"}</code>
+          </Text>
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="Invalid state + Field integration"
+        description="NumberInput forwards Input's `invalid` prop. Field's auto-wiring works because NumberInput renders a real <input> under the hood."
+        code={`<Field label="Score (0–100)" error={invalid ? "Out of range" : undefined}>
+  <NumberInput value={score} onValueChange={setScore} min={0} max={100} />
+</Field>`}
+      >
+        <Field
+          label="Score (0–100)"
+          error={invalidScore ? "Out of range — clamped on blur." : undefined}
+        >
+          <NumberInput
+            value={score}
+            onValueChange={setScore}
+            min={0}
+            max={100}
+          />
+        </Field>
+      </DocExample>
+    </DocSection>
+  );
+}
+
+function OTPInputSection() {
+  const [code, setCode] = useState("");
+  const [pinCode, setPinCode] = useState("");
+  const [verified, setVerified] = useState<"idle" | "ok" | "fail">("idle");
+
+  return (
+    <DocSection
+      title="OTPInput"
+      description="One-time code entry. Each cell is its own focusable input — typing auto-advances, Backspace pops back, paste fills sequentially. The value is treated as a strict prefix (clicking a filled cell truncates everything after it), matching iOS-style code entry."
+      propsTable={[
+        { name: "length", type: "number", default: "6", description: "Number of cells." },
+        {
+          name: "value / defaultValue",
+          type: "string",
+          description: "Up to `length` chars. Always a prefix — no middle gaps.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string) => void",
+          description: "Fires whenever the value changes.",
+        },
+        {
+          name: "onComplete",
+          type: "(value: string) => void",
+          description: "Fires once when all cells become filled.",
+        },
+        {
+          name: "pattern",
+          type: '"numeric" | "alphanumeric" | RegExp',
+          default: '"numeric"',
+          description: "Per-character validator. Invalid characters are dropped on type and paste.",
+        },
+        {
+          name: "mask",
+          type: "boolean",
+          description: "Render filled cells as a bullet glyph for sensitive codes.",
+        },
+        {
+          name: "separatorAt",
+          type: "number",
+          description: "Render a visual separator before this 0-indexed cell (e.g. 3 for `XXX–XXX`).",
+        },
+        {
+          name: "invalid",
+          type: "boolean",
+          description: "Error styling on all cells. Use after a failed verify.",
+        },
+        { name: "disabled", type: "boolean", description: "Disable the entire group." },
+        {
+          name: "inputSize",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "Cell height. Matches the Input size scale.",
+        },
+      ]}
+    >
+      <DocExample
+        label="6-digit verification code"
+        description="Default numeric pattern. Type sequentially or paste a code to fill at once."
+        code={`const [code, setCode] = useState("");
+
+<OTPInput
+  value={code}
+  onValueChange={setCode}
+  onComplete={(value) => verify(value)}
+  aria-label="Verification code"
+/>`}
+      >
+        <Stack gap="3">
+          <OTPInput
+            value={code}
+            onValueChange={(next) => {
+              setCode(next);
+              setVerified("idle");
+            }}
+            onComplete={(value) => setVerified(value === "123456" ? "ok" : "fail")}
+            aria-label="Verification code"
+            invalid={verified === "fail"}
+          />
+          <Text size="sm" tone="muted">
+            {verified === "ok"
+              ? "✓ Code accepted."
+              : verified === "fail"
+                ? "Code didn't match (try 123456)."
+                : "Type a 6-digit code."}
+          </Text>
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="PIN with separator + mask"
+        description="4-cell PIN with a separator before cell 2, rendered as bullets via `mask`."
+        code={`<OTPInput
+  length={4}
+  pattern="numeric"
+  separatorAt={2}
+  mask
+  inputSize="lg"
+  aria-label="PIN"
+/>`}
+      >
+        <Stack gap="2">
+          <OTPInput
+            length={4}
+            pattern="numeric"
+            separatorAt={2}
+            mask
+            inputSize="lg"
+            value={pinCode}
+            onValueChange={setPinCode}
+            aria-label="PIN"
+          />
+          <Text size="sm" tone="muted">
+            Underlying value: <code>{pinCode || "(empty)"}</code>
+          </Text>
+        </Stack>
+      </DocExample>
+
+      <DocExample
+        label="Alphanumeric invite code"
+        description="Switch the pattern to allow letters and digits — useful for invite codes."
+        code={`<OTPInput length={8} pattern="alphanumeric" aria-label="Invite code" />`}
+      >
+        <OTPInput length={8} pattern="alphanumeric" aria-label="Invite code" />
       </DocExample>
     </DocSection>
   );
