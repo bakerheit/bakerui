@@ -6,6 +6,43 @@ reflects what library consumers will see when they upgrade. The format is
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the
 project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- `Combobox.Trigger` and `MultiCombobox.Trigger`: new `leadingIcon`,
+  `trailingIcon`, `leadingAddon`, and `trailingAddon` props — full parity with
+  `Input`'s addon API. The trigger is now a wrapper element holding the border
+  and focus ring, with addons as siblings of the inner click target.
+- `Popover.Title` and `Popover.Description` subcomponents — registering either
+  auto-wires `aria-labelledby` / `aria-describedby` on the popover dialog
+  (mirrors the `Dialog.Title` / `Dialog.Description` pattern).
+
+### Fixed
+- `usePosition` (Combobox, MultiCombobox, Popover, DropdownMenu, Tooltip,
+  Select, DatePicker, TimePicker): scrolling inside an open overlay's own
+  content no longer triggers repositioning. The capture-phase scroll listener
+  now filters out scrolls that originate inside the floating content, fixing
+  a visible horizontal drift on end-aligned placements.
+- `Sidebar`: the root `<aside>` now exposes `id="bui-sidebar"` so that
+  `Sidebar.Trigger`'s `aria-controls="bui-sidebar"` resolves to an actual
+  element for assistive tech.
+- `Combobox.Trigger` and `MultiCombobox.Trigger`: now declare
+  `aria-autocomplete="list"`, completing the WAI-ARIA 1.2 contract for
+  `role="combobox"`.
+- `glassx` theme: Combobox popup no longer flashes its tinted background
+  before the blur on open. Skipping the parent's `opacity: 0 → 1` transition
+  keeps `backdrop-filter` active from the first frame (Chrome/Safari disable
+  the filter on descendants whenever an ancestor has `opacity < 1`).
+- `glassx` theme: Combobox trigger label, search input, and list items now
+  all render in white with a dark text-shadow halo in light mode, so text
+  stays legible against the translucent surface. Hovered and selected items
+  keep the same halo as their neighbors (previously the halo dropped on
+  hover, washing out the row).
+- `glassx` theme: Combobox item labels no longer clip the text-shadow halo
+  at their left edge when a leading element (the check column) sits beside
+  them. Inline padding gives the halo room inside the label's overflow
+  clip; matching negative margin preserves the visible layout.
+
 ## [0.5.0] - 2026-05-11
 
 ### Added

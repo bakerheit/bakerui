@@ -7,42 +7,55 @@
  * so any theme tweak that retouches Combobox automatically tracks here.
  */
 
+/* Trigger — wrapper holds border/focus; inner __field is the role=combobox
+   interactive area. Addons sit as siblings of __field. */
 .bui-multicombobox-trigger {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--bui-space-1);
+  display: inline-flex;
+  align-items: stretch;
   width: 100%;
-  min-height: var(--bui-control-height-md);
-  padding: 3px var(--bui-control-padding-x-md) 3px var(--bui-space-2);
   font-family: inherit;
   font-size: var(--bui-font-size-md);
   color: var(--bui-color-text);
   background: var(--bui-color-surface);
   border: 1px solid var(--bui-color-border);
   border-radius: var(--bui-radius-md);
-  cursor: pointer;
   transition:
     border-color var(--bui-duration-fast) var(--bui-easing-standard),
     box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
 }
 
-.bui-multicombobox-trigger:hover:not([aria-disabled="true"]):not([aria-expanded="true"]) {
+.bui-multicombobox-trigger:hover:not(:focus-within):not(:has(> .bui-multicombobox-trigger__field[aria-expanded="true"])):not(.bui-multicombobox-trigger--disabled) {
   border-color: var(--bui-color-border-strong);
 }
 
-.bui-multicombobox-trigger:focus-visible,
-.bui-multicombobox-trigger[aria-expanded="true"] {
-  outline: none;
+.bui-multicombobox-trigger:focus-within,
+.bui-multicombobox-trigger:has(> .bui-multicombobox-trigger__field[aria-expanded="true"]) {
   border-color: var(--bui-color-accent);
   box-shadow: 0 0 0 3px var(--bui-color-focus-ring);
 }
 
-.bui-multicombobox-trigger--disabled,
-.bui-multicombobox-trigger[aria-disabled="true"] {
+.bui-multicombobox-trigger--disabled {
   opacity: 0.55;
-  cursor: not-allowed;
   background: var(--bui-color-bg-muted);
+}
+.bui-multicombobox-trigger--disabled .bui-multicombobox-trigger__field {
+  cursor: not-allowed;
+}
+
+.bui-multicombobox-trigger__field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bui-space-1);
+  min-height: var(--bui-control-height-md);
+  padding: 3px var(--bui-control-padding-x-md) 3px var(--bui-space-2);
+  cursor: pointer;
+  outline: none;
+}
+.bui-multicombobox-trigger__field:focus-visible {
+  outline: none;
 }
 
 .bui-multicombobox-trigger__values {
@@ -63,6 +76,46 @@
   color: var(--bui-color-text-muted);
   display: inline-flex;
   align-items: center;
+}
+
+/* Addons & icons (mirror Combobox / Input). */
+.bui-multicombobox-trigger__addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--bui-space-3);
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-font-size-sm);
+  background: var(--bui-color-bg-subtle);
+  white-space: nowrap;
+}
+.bui-multicombobox-trigger__addon--leading {
+  border-right: 1px solid var(--bui-color-border);
+  border-radius: calc(var(--bui-radius-md) - 1px) 0 0 calc(var(--bui-radius-md) - 1px);
+}
+.bui-multicombobox-trigger__addon--trailing {
+  border-left: 1px solid var(--bui-color-border);
+  border-radius: 0 calc(var(--bui-radius-md) - 1px) calc(var(--bui-radius-md) - 1px) 0;
+}
+
+.bui-multicombobox-trigger__icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--bui-color-text-muted);
+}
+.bui-multicombobox-trigger__icon--leading {
+  padding-left: var(--bui-space-3);
+}
+.bui-multicombobox-trigger__icon--trailing {
+  padding-right: var(--bui-space-3);
+}
+
+.bui-multicombobox-trigger:has(> .bui-multicombobox-trigger__icon--leading) .bui-multicombobox-trigger__field,
+.bui-multicombobox-trigger:has(> .bui-multicombobox-trigger__addon--leading) .bui-multicombobox-trigger__field {
+  padding-left: var(--bui-space-1);
+}
+.bui-multicombobox-trigger:has(> .bui-multicombobox-trigger__icon--trailing) .bui-multicombobox-trigger__field,
+.bui-multicombobox-trigger:has(> .bui-multicombobox-trigger__addon--trailing) .bui-multicombobox-trigger__field {
+  padding-right: var(--bui-space-1);
 }
 
 /* --- Chip --------------------------------------------------------------

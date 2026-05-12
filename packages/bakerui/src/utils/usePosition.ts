@@ -144,7 +144,21 @@ export function usePosition({
   useEffect(() => {
     if (!open) return;
 
-    window.addEventListener("scroll", update, true);
+    // Scrolls that originate inside the popover content (e.g. scrolling
+    // through a long Combobox list) don't move the trigger, so they must
+    // not trigger a reposition. Without this guard, sub-pixel rounding and
+    // scrollbar-gutter changes during the inner scroll visibly shift the
+    // popover — most noticeable with end-aligned placements where x is
+    // anchored to the content's right edge.
+    const handleScroll = (event: Event) => {
+      const target = event.target;
+      if (target instanceof Node && contentRef.current?.contains(target)) {
+        return;
+      }
+      update();
+    };
+
+    window.addEventListener("scroll", handleScroll, true);
     window.addEventListener("resize", update);
 
     let observer: ResizeObserver | null = null;
@@ -155,7 +169,7 @@ export function usePosition({
     }
 
     return () => {
-      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("scroll", handleScroll, true);
       window.removeEventListener("resize", update);
       observer?.disconnect();
     };

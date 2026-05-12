@@ -213,7 +213,7 @@
 [data-theme-preset="neon-sprawl"] .bui-input:focus-within,
 [data-theme-preset="neon-sprawl"] .bui-textarea:focus-visible,
 [data-theme-preset="neon-sprawl"] .bui-select:focus-visible,
-[data-theme-preset="neon-sprawl"] .bui-combobox-trigger:focus-visible,
+[data-theme-preset="neon-sprawl"] .bui-combobox-trigger:focus-within,
 [data-theme-preset="neon-sprawl"] .bui-datepicker__trigger:focus-visible,
 [data-theme-preset="neon-sprawl"] .bui-timepicker__trigger:focus-visible {
   outline: none;

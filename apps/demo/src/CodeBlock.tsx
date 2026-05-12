@@ -66,6 +66,15 @@ function tokenize(source: string): Token[] {
   // treated as the tag close.
   let inTag = false;
   let tagExprDepth = 0;
+  // Track JSX children nesting so identifiers inside tag children (e.g. the
+  // "Edit profile" in `<Dialog.Title>Edit profile</Dialog.Title>`) render as
+  // text rather than as components. `jsxDepth` is the number of currently
+  // open (non-self-closing) tags; `jsxExprDepth` counts unmatched `{` braces
+  // inside JSX children so expressions like `{Component}` still classify
+  // capitalized identifiers as components.
+  let jsxDepth = 0;
+  let jsxExprDepth = 0;
+  let currentTagIsClosing = false;
 
   while (i < source.length) {
     const ch = source[i];
@@ -147,6 +156,7 @@ function tokenize(source: string): Token[] {
         i += 1;
         inTag = true;
         tagExprDepth = 0;
+        currentTagIsClosing = false;
         continue;
       }
       if (rest.startsWith("</") && /[a-zA-Z]/.test(source[i + 2] ?? "")) {
@@ -154,6 +164,7 @@ function tokenize(source: string): Token[] {
         i += 2;
         inTag = true;
         tagExprDepth = 0;
+        currentTagIsClosing = true;
         continue;
       }
     }
@@ -164,12 +175,36 @@ function tokenize(source: string): Token[] {
         tokens.push({ type: "tag-bracket", value: "/>" });
         i += 2;
         inTag = false;
+        // self-closing: no jsxDepth change
         continue;
       }
       if (ch === ">") {
         tokens.push({ type: "tag-bracket", value: ">" });
         i += 1;
         inTag = false;
+        if (currentTagIsClosing) {
+          jsxDepth = Math.max(0, jsxDepth - 1);
+        } else {
+          jsxDepth += 1;
+        }
+        continue;
+      }
+    }
+
+    // Brace tracking inside JSX children (outside any tag header). Lets
+    // `{Component}` expressions still mark `Component` as a component while
+    // surrounding tag-children text stays plain.
+    if (!inTag && jsxDepth > 0) {
+      if (ch === "{") {
+        jsxExprDepth += 1;
+        tokens.push({ type: "punctuation", value: ch });
+        i += 1;
+        continue;
+      }
+      if (ch === "}" && jsxExprDepth > 0) {
+        jsxExprDepth -= 1;
+        tokens.push({ type: "punctuation", value: ch });
+        i += 1;
         continue;
       }
     }
@@ -203,8 +238,10 @@ function tokenize(source: string): Token[] {
         } else {
           type = "attribute";
         }
-      } else if (/^[A-Z]/.test(value)) {
-        // Capitalized identifier outside a tag — e.g., a referenced component or constructor.
+      } else if (/^[A-Z]/.test(value) && !(jsxDepth > 0 && jsxExprDepth === 0)) {
+        // Capitalized identifier in expression context — e.g., a referenced
+        // component or constructor. Suppressed in JSX children text so words
+        // like "Edit" in `<Title>Edit profile</Title>` render as plain text.
         type = "component";
       } else if (next === "(") {
         type = "function";

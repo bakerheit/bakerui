@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -25,6 +26,12 @@ interface PopoverContextValue {
   setOpen: (next: boolean) => void;
   triggerRef: React.MutableRefObject<HTMLElement | null>;
   contentRef: React.MutableRefObject<HTMLDivElement | null>;
+  titleId: string;
+  descriptionId: string;
+  registerTitle: () => () => void;
+  registerDescription: () => () => void;
+  hasTitle: boolean;
+  hasDescription: boolean;
 }
 
 const PopoverContext = createContext<PopoverContextValue | null>(null);
@@ -61,9 +68,34 @@ export function PopoverRoot({
     [controlled, onOpenChange],
   );
 
+  const titleId = useId();
+  const descriptionId = useId();
+  const [titleCount, setTitleCount] = useState(0);
+  const [descriptionCount, setDescriptionCount] = useState(0);
+
+  const registerTitle = useCallback(() => {
+    setTitleCount((c) => c + 1);
+    return () => setTitleCount((c) => c - 1);
+  }, []);
+  const registerDescription = useCallback(() => {
+    setDescriptionCount((c) => c + 1);
+    return () => setDescriptionCount((c) => c - 1);
+  }, []);
+
   const value = useMemo<PopoverContextValue>(
-    () => ({ open, setOpen, triggerRef, contentRef }),
-    [open, setOpen],
+    () => ({
+      open,
+      setOpen,
+      triggerRef,
+      contentRef,
+      titleId,
+      descriptionId,
+      registerTitle,
+      registerDescription,
+      hasTitle: titleCount > 0,
+      hasDescription: descriptionCount > 0,
+    }),
+    [open, setOpen, titleId, descriptionId, registerTitle, registerDescription, titleCount, descriptionCount],
   );
 
   return <PopoverContext.Provider value={value}>{children}</PopoverContext.Provider>;
@@ -122,7 +154,16 @@ const PopoverContent = forwardRef<HTMLDivElement, ContentProps>(function Popover
   { placement = "bottom", offset = 8, className, style, children, ...rest },
   ref,
 ) {
-  const { open, setOpen, triggerRef, contentRef } = usePopover("Content");
+  const {
+    open,
+    setOpen,
+    triggerRef,
+    contentRef,
+    titleId,
+    descriptionId,
+    hasTitle,
+    hasDescription,
+  } = usePopover("Content");
   const [mountState, setMountState] = useState<"closed" | "open">("closed");
   const position = usePosition({ triggerRef, contentRef, open, placement, offset });
 
@@ -171,6 +212,8 @@ const PopoverContent = forwardRef<HTMLDivElement, ContentProps>(function Popover
           }}
           role="dialog"
           tabIndex={-1}
+          aria-labelledby={hasTitle ? titleId : undefined}
+          aria-describedby={hasDescription ? descriptionId : undefined}
           data-state={mountState}
           data-placement={position?.placement}
           className={cx("bui-root bui-popover", className)}
@@ -207,13 +250,40 @@ const PopoverClose = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButt
   },
 );
 
+const PopoverTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(
+  function PopoverTitle({ className, ...rest }, ref) {
+    const { titleId, registerTitle } = usePopover("Title");
+    useEffect(() => registerTitle(), [registerTitle]);
+    return <h2 ref={ref} id={titleId} className={cx("bui-popover__title", className)} {...rest} />;
+  },
+);
+
+const PopoverDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
+  function PopoverDescription({ className, ...rest }, ref) {
+    const { descriptionId, registerDescription } = usePopover("Description");
+    useEffect(() => registerDescription(), [registerDescription]);
+    return (
+      <p
+        ref={ref}
+        id={descriptionId}
+        className={cx("bui-popover__description", className)}
+        {...rest}
+      />
+    );
+  },
+);
+
 type PopoverComponent = typeof PopoverRoot & {
   Trigger: typeof PopoverTrigger;
   Content: typeof PopoverContent;
+  Title: typeof PopoverTitle;
+  Description: typeof PopoverDescription;
   Close: typeof PopoverClose;
 };
 
 export const Popover = PopoverRoot as PopoverComponent;
 Popover.Trigger = PopoverTrigger;
 Popover.Content = PopoverContent;
+Popover.Title = PopoverTitle;
+Popover.Description = PopoverDescription;
 Popover.Close = PopoverClose;

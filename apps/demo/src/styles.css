@@ -227,6 +227,38 @@ body {
   letter-spacing: -0.01em;
 }
 
+/* Topbar search — uses Combobox with leadingIcon for a search-style trigger. */
+.demo-search {
+  width: 260px;
+}
+.demo-search__list {
+  min-width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.demo-search__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--bui-space-3);
+  width: 100%;
+}
+.demo-search__row-category {
+  font-size: var(--bui-font-size-xs);
+  color: var(--bui-color-text-muted);
+}
+/* In glassx, the muted token resolves to a dark gray that disappears
+   against the glass backdrop. Drop the color override so the category
+   inherits the item's white fill (and the halo it already inherits). */
+[data-theme-preset="glassx"] .demo-search__row-category {
+  color: inherit;
+}
+@media (max-width: 800px) {
+  .demo-search {
+    display: none;
+  }
+}
+
 /* External link in the sidebar footer */
 .demo-sidebar-link {
   display: inline-flex;

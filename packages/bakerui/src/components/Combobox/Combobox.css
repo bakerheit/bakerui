@@ -1,37 +1,54 @@
-/* Trigger — looks like a Select button. */
+/* Trigger — wrapper holds the border/focus ring; the inner button is the
+   click target. Addons sit as siblings of the button (mirrors Input). */
 .bui-combobox-trigger {
   display: inline-flex;
-  align-items: center;
-  gap: var(--bui-space-2);
+  align-items: stretch;
   width: 100%;
-  height: var(--bui-control-height-md);
-  padding: 0 var(--bui-control-padding-x-md);
   font-family: inherit;
   font-size: var(--bui-font-size-md);
   color: var(--bui-color-text);
   background: var(--bui-color-surface);
   border: 1px solid var(--bui-color-border);
   border-radius: var(--bui-radius-md);
-  cursor: pointer;
   transition:
     border-color var(--bui-duration-fast) var(--bui-easing-standard),
     box-shadow var(--bui-duration-fast) var(--bui-easing-standard);
 }
 
-.bui-combobox-trigger:hover:not([aria-disabled="true"]):not([aria-expanded="true"]) {
+.bui-combobox-trigger:hover:not(:focus-within):not(:has(> .bui-combobox-trigger__button[aria-expanded="true"])):not(:has(> .bui-combobox-trigger__button:disabled)) {
   border-color: var(--bui-color-border-strong);
 }
-.bui-combobox-trigger:focus-visible,
-.bui-combobox-trigger[aria-expanded="true"] {
-  outline: none;
+.bui-combobox-trigger:focus-within,
+.bui-combobox-trigger:has(> .bui-combobox-trigger__button[aria-expanded="true"]) {
   border-color: var(--bui-color-accent);
   box-shadow: 0 0 0 3px var(--bui-color-focus-ring);
 }
-.bui-combobox-trigger:disabled,
-.bui-combobox-trigger[aria-disabled="true"] {
+.bui-combobox-trigger:has(> .bui-combobox-trigger__button:disabled) {
   opacity: 0.55;
-  cursor: not-allowed;
   background: var(--bui-color-bg-muted);
+}
+
+.bui-combobox-trigger__button {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  height: var(--bui-control-height-md);
+  padding: 0 var(--bui-control-padding-x-md);
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.bui-combobox-trigger__button:disabled {
+  cursor: not-allowed;
+}
+.bui-combobox-trigger__button:focus-visible {
+  outline: none;
 }
 
 .bui-combobox-trigger__label {
@@ -52,6 +69,47 @@
   color: var(--bui-color-text-muted);
   display: inline-flex;
   align-items: center;
+}
+
+/* Addons & icons — visual parity with Input. */
+.bui-combobox-trigger__addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--bui-space-3);
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-font-size-sm);
+  background: var(--bui-color-bg-subtle);
+  white-space: nowrap;
+}
+.bui-combobox-trigger__addon--leading {
+  border-right: 1px solid var(--bui-color-border);
+  border-radius: calc(var(--bui-radius-md) - 1px) 0 0 calc(var(--bui-radius-md) - 1px);
+}
+.bui-combobox-trigger__addon--trailing {
+  border-left: 1px solid var(--bui-color-border);
+  border-radius: 0 calc(var(--bui-radius-md) - 1px) calc(var(--bui-radius-md) - 1px) 0;
+}
+
+.bui-combobox-trigger__icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--bui-color-text-muted);
+}
+.bui-combobox-trigger__icon--leading {
+  padding-left: var(--bui-space-3);
+}
+.bui-combobox-trigger__icon--trailing {
+  padding-right: var(--bui-space-3);
+}
+
+/* Tighten the button's matching side padding when an adjacent icon/addon is present. */
+.bui-combobox-trigger:has(> .bui-combobox-trigger__icon--leading) .bui-combobox-trigger__button,
+.bui-combobox-trigger:has(> .bui-combobox-trigger__addon--leading) .bui-combobox-trigger__button {
+  padding-left: var(--bui-space-2);
+}
+.bui-combobox-trigger:has(> .bui-combobox-trigger__icon--trailing) .bui-combobox-trigger__button,
+.bui-combobox-trigger:has(> .bui-combobox-trigger__addon--trailing) .bui-combobox-trigger__button {
+  padding-right: var(--bui-space-2);
 }
 
 /* Anchor wrapper — same pattern as DropdownMenu/Popover. */

@@ -259,9 +259,10 @@
 [data-theme-preset="glassx"] .bui-combobox-item,
 [data-theme-preset="glassx"] .bui-combobox-empty,
 [data-theme-preset="glassx"] .bui-combobox-group__label {
+  color: #fff;
   text-shadow:
-    0 0 4px rgba(255, 255, 255, 0.7),
-    0 0 8px rgba(255, 255, 255, 0.45);
+    0 0 4px rgba(1, 1, 1, 0.7),
+    0 0 8px rgba(1, 1, 1, 0.75);
 }
 [data-theme-preset="glassx"][data-theme="dark"] .bui-combobox-item,
 [data-theme-preset="glassx"][data-theme="dark"] .bui-combobox-empty,
@@ -270,10 +271,18 @@
     0 0 4px rgba(0, 0, 0, 0.75),
     0 0 10px rgba(0, 0, 0, 0.5);
 }
-[data-theme-preset="glassx"] .bui-combobox-item[data-highlighted="true"],
-[data-theme-preset="glassx"] .bui-combobox-item[data-selected="true"] {
-  text-shadow: none;
+/* The label's overflow:hidden (needed for text-overflow: ellipsis) clips
+   the text-shadow halo at its edges, which is visible whenever another
+   element (e.g. the check column) sits adjacent to the text. Adding inline
+   padding gives the halo room inside the clip box; negative margin keeps
+   the visible layout — gap between check and text — unchanged. */
+[data-theme-preset="glassx"] .bui-combobox-item__label {
+  padding-inline: 10px;
+  margin-inline: -10px;
 }
+/* Highlighted/selected items keep the same color + halo as the rest of
+   the list, so the only thing that changes on hover is the row's
+   background — text stays legible across the transition. */
 
 /* DatePicker day cells + month label + weekday headers */
 [data-theme-preset="glassx"] .bui-datepicker__day,
@@ -310,11 +319,18 @@
   background-image: var(--bui-glassx-floaty-tint);
   box-shadow: var(--bui-glassx-rim), var(--bui-shadow-lg);
   border-color: var(--bui-color-border);
+  /* Skip the base opacity:0→1 open transition. Chrome/Safari disable
+     `backdrop-filter` on descendants whenever an ancestor has opacity<1,
+     which makes the popover briefly show its tint without the blur — a
+     white flash before the glass settles. Holding opacity at 1 and
+     animating only the scale keeps the blur active from the first frame. */
+  opacity: 1;
+  transition: transform var(--bui-duration-fast) var(--bui-easing-standard);
 }
 [data-theme-preset="glassx"] .bui-combobox-input-wrapper,
 [data-theme-preset="glassx"] .bui-combobox-list {
-  backdrop-filter: blur(6px) saturate(140%);
-  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  backdrop-filter: blur(5px) saturate(100%);
+  -webkit-backdrop-filter: blur(5px) saturate(100%);
 }
 
 /* Multi-line containers shouldn't pill. */

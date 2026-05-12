@@ -129,6 +129,7 @@ export const SidebarRoot = forwardRef<HTMLElement, SidebarProps>(function Sideba
   const inner = (
     <aside
       ref={ref}
+      id="bui-sidebar"
       className={cx("bui-sidebar", `bui-sidebar--${position}`, className)}
       data-state={open ? "open" : "closed"}
       style={mergedStyle}

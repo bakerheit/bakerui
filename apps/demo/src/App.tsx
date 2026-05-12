@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Badge,
   Button,
+  Combobox,
   Sidebar,
   ThemeProvider,
   Toaster,
@@ -184,6 +185,31 @@ const COMPONENT_NAV: ComponentNavCategory[] = [
 
 const ALL_PAGE_NAV: PageNavItem[] = PAGE_NAV_GROUPS.flatMap((g) => g.items);
 
+interface SearchEntry {
+  label: string;
+  category: string;
+  page: PageId;
+  anchor?: string;
+}
+
+const SEARCH_INDEX: SearchEntry[] = [
+  ...PAGE_NAV_GROUPS.flatMap((group) =>
+    group.items.map<SearchEntry>((item) => ({
+      label: item.label,
+      category: group.label,
+      page: item.id,
+    })),
+  ),
+  ...COMPONENT_NAV.flatMap((category) =>
+    category.items.map<SearchEntry>((item) => ({
+      label: item.label,
+      category: `Components · ${category.label}`,
+      page: "components",
+      anchor: item.anchor,
+    })),
+  ),
+];
+
 export function App() {
   const [page, setPage] = useState<PageId>("home");
   const [theme, setTheme] = useState<ThemeName>("light");
@@ -256,6 +282,12 @@ export function App() {
             <Brand />
             <Badge tone="accent">{VERSION_LABEL}</Badge>
             <Topbar.Spacer />
+            <TopbarSearch
+              onSelect={(entry) => {
+                if (entry.anchor) navigateToComponent(entry.anchor);
+                else navigate(entry.page);
+              }}
+            />
             <Tooltip>
               <Tooltip.Trigger asChild>
                 <Button
@@ -404,6 +436,59 @@ export function titleFor(page: PageId): string {
   return ALL_PAGE_NAV.find((item) => item.id === page)?.label ?? "bakerui";
 }
 
+interface TopbarSearchProps {
+  onSelect: (entry: SearchEntry) => void;
+}
+
+function entryKey(entry: SearchEntry): string {
+  return `${entry.page}#${entry.anchor ?? ""}`;
+}
+
+const SEARCH_INDEX_BY_KEY = new Map(
+  SEARCH_INDEX.map((entry) => [entryKey(entry), entry]),
+);
+
+function TopbarSearch({ onSelect }: TopbarSearchProps) {
+  return (
+    <div className="demo-search">
+      <Combobox
+        value={null}
+        onValueChange={(value) => {
+          if (!value) return;
+          const entry = SEARCH_INDEX_BY_KEY.get(value);
+          if (entry) onSelect(entry);
+        }}
+      >
+        <Combobox.Trigger
+          placeholder="Search docs…"
+          leadingIcon={<SearchIcon />}
+        />
+        <Combobox.Content placement="bottom-end" matchTriggerWidth={false}>
+          <Combobox.Input placeholder="Search components and pages…" />
+          <Combobox.List className="demo-search__list">
+            {SEARCH_INDEX.map((entry) => {
+              const key = entryKey(entry);
+              return (
+                <Combobox.Item
+                  key={key}
+                  value={key}
+                  keywords={[entry.label, entry.category]}
+                >
+                  <span className="demo-search__row">
+                    <span className="demo-search__row-label">{entry.label}</span>
+                    <span className="demo-search__row-category">{entry.category}</span>
+                  </span>
+                </Combobox.Item>
+              );
+            })}
+            <Combobox.Empty>No matches.</Combobox.Empty>
+          </Combobox.List>
+        </Combobox.Content>
+      </Combobox>
+    </div>
+  );
+}
+
 function Brand() {
   return (
     <div className="demo-brand">
@@ -501,6 +586,24 @@ function RegisterIcon() {
       <circle cx="6.5" cy="5" r="2.5" />
       <path d="M2.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4" />
       <path d="M12 5v4M14 7h-4" />
+    </svg>
+  );
+}
+function SearchIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="7" cy="7" r="4.5" />
+      <path d="M10.5 10.5L14 14" />
     </svg>
   );
 }

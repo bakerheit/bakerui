@@ -149,10 +149,29 @@ export function ComboboxRoot({
 
 interface TriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value"> {
   placeholder?: string;
+  /** Icon rendered inside the trigger on the leading edge (no border). */
+  leadingIcon?: ReactNode;
+  /** Icon rendered inside the trigger on the trailing edge, before the chevron (no border). */
+  trailingIcon?: ReactNode;
+  /** Bordered addon block before the trigger (e.g., "https://"). */
+  leadingAddon?: ReactNode;
+  /** Bordered addon block after the trigger (e.g., ".com"). */
+  trailingAddon?: ReactNode;
 }
 
 const ComboboxTrigger = forwardRef<HTMLButtonElement, TriggerProps>(function ComboboxTrigger(
-  { placeholder = "Select…", onClick, className, children, ...rest },
+  {
+    placeholder = "Select…",
+    leadingIcon,
+    trailingIcon,
+    leadingAddon,
+    trailingAddon,
+    onClick,
+    className,
+    style,
+    children,
+    ...rest
+  },
   ref,
 ) {
   const ctx = useCombobox("Trigger");
@@ -172,28 +191,60 @@ const ComboboxTrigger = forwardRef<HTMLButtonElement, TriggerProps>(function Com
   };
 
   return (
-    <button
-      ref={composedRef}
-      type="button"
-      role="combobox"
-      aria-expanded={ctx.open}
-      aria-controls={`${ctx.baseId}-list`}
-      aria-haspopup="listbox"
-      onClick={handleClick}
+    <span
       className={cx(
         "bui-combobox-trigger",
         ctx.value === null && "bui-combobox-trigger--empty",
         className,
       )}
-      {...rest}
+      style={style}
     >
-      <span className="bui-combobox-trigger__label">
-        {children ?? ctx.selectedLabel ?? placeholder}
-      </span>
-      <span className="bui-combobox-trigger__chevron" aria-hidden>
-        <ChevronIcon />
-      </span>
-    </button>
+      {leadingAddon && (
+        <span className="bui-combobox-trigger__addon bui-combobox-trigger__addon--leading">
+          {leadingAddon}
+        </span>
+      )}
+      {leadingIcon && (
+        <span
+          className="bui-combobox-trigger__icon bui-combobox-trigger__icon--leading"
+          aria-hidden
+        >
+          {leadingIcon}
+        </span>
+      )}
+      <button
+        ref={composedRef}
+        type="button"
+        role="combobox"
+        aria-expanded={ctx.open}
+        aria-controls={`${ctx.baseId}-list`}
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        onClick={handleClick}
+        className="bui-combobox-trigger__button"
+        {...rest}
+      >
+        <span className="bui-combobox-trigger__label">
+          {children ?? ctx.selectedLabel ?? placeholder}
+        </span>
+        <span className="bui-combobox-trigger__chevron" aria-hidden>
+          <ChevronIcon />
+        </span>
+      </button>
+      {trailingIcon && (
+        <span
+          className="bui-combobox-trigger__icon bui-combobox-trigger__icon--trailing"
+          aria-hidden
+        >
+          {trailingIcon}
+        </span>
+      )}
+      {trailingAddon && (
+        <span className="bui-combobox-trigger__addon bui-combobox-trigger__addon--trailing">
+          {trailingAddon}
+        </span>
+      )}
+    </span>
   );
 });
 

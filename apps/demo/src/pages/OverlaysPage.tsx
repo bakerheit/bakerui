@@ -641,7 +641,23 @@ export function PopoverSection() {
         {
           name: "Popover.Close",
           type: "component",
-          description: "Subcomponent that closes the popover on click and restores focus to the trigger. Supports asChild.",
+          description: "Subcomponent that closes the popover on click and restores focus to the trigger.",
+        },
+        {
+          name: "Popover.Close.asChild",
+          type: "boolean",
+          default: "false",
+          description: "Clone the child (e.g., a Button) and wire the close handler onto it instead of rendering a default <button>.",
+        },
+        {
+          name: "Popover.Title",
+          type: "component",
+          description: "Optional heading inside the popover content. When rendered, the dialog's aria-labelledby is wired to it automatically.",
+        },
+        {
+          name: "Popover.Description",
+          type: "component",
+          description: "Optional descriptive text inside the popover content. When rendered, the dialog's aria-describedby is wired to it automatically.",
         },
       ]}
     >

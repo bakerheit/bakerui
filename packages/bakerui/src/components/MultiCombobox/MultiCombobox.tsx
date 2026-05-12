@@ -191,10 +191,31 @@ export function MultiComboboxRoot({
 interface TriggerProps extends Omit<HTMLAttributes<HTMLDivElement>, "onSelect"> {
   placeholder?: string;
   disabled?: boolean;
+  /** Icon rendered inside the trigger on the leading edge (no border). */
+  leadingIcon?: ReactNode;
+  /** Icon rendered inside the trigger on the trailing edge, before the chevron (no border). */
+  trailingIcon?: ReactNode;
+  /** Bordered addon block before the trigger (e.g., "https://"). */
+  leadingAddon?: ReactNode;
+  /** Bordered addon block after the trigger (e.g., ".com"). */
+  trailingAddon?: ReactNode;
 }
 
 const MultiComboboxTrigger = forwardRef<HTMLDivElement, TriggerProps>(function MultiComboboxTrigger(
-  { placeholder = "Select…", disabled, onClick, onKeyDown, className, children, ...rest },
+  {
+    placeholder = "Select…",
+    disabled,
+    leadingIcon,
+    trailingIcon,
+    leadingAddon,
+    trailingAddon,
+    onClick,
+    onKeyDown,
+    className,
+    style,
+    children,
+    ...rest
+  },
   ref,
 ) {
   const ctx = useMultiCombobox("Trigger");
@@ -229,52 +250,84 @@ const MultiComboboxTrigger = forwardRef<HTMLDivElement, TriggerProps>(function M
   return (
     <div
       ref={composedRef}
-      role="combobox"
-      tabIndex={disabled ? -1 : 0}
-      aria-expanded={ctx.open}
-      aria-controls={`${ctx.baseId}-list`}
-      aria-haspopup="listbox"
-      aria-disabled={disabled || undefined}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
       className={cx(
         "bui-multicombobox-trigger",
         isEmpty && "bui-multicombobox-trigger--empty",
         disabled && "bui-multicombobox-trigger--disabled",
         className,
       )}
-      {...rest}
+      style={style}
     >
-      <div className="bui-multicombobox-trigger__values">
-        {children ??
-          (isEmpty ? (
-            <span className="bui-multicombobox-trigger__placeholder">{placeholder}</span>
-          ) : (
-            ctx.value.map((val) => {
-              const label = ctx.labelMap.current.get(val) ?? val;
-              return (
-                <Badge key={val} className="bui-multicombobox-chip">
-                  <span className="bui-multicombobox-chip__label">{label}</span>
-                  <button
-                    type="button"
-                    className="bui-multicombobox-chip__remove"
-                    aria-label={`Remove ${label}`}
-                    disabled={disabled}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      ctx.remove(val);
-                    }}
-                  >
-                    <XIcon />
-                  </button>
-                </Badge>
-              );
-            })
-          ))}
+      {leadingAddon && (
+        <span className="bui-multicombobox-trigger__addon bui-multicombobox-trigger__addon--leading">
+          {leadingAddon}
+        </span>
+      )}
+      {leadingIcon && (
+        <span
+          className="bui-multicombobox-trigger__icon bui-multicombobox-trigger__icon--leading"
+          aria-hidden
+        >
+          {leadingIcon}
+        </span>
+      )}
+      <div
+        className="bui-multicombobox-trigger__field"
+        role="combobox"
+        tabIndex={disabled ? -1 : 0}
+        aria-expanded={ctx.open}
+        aria-controls={`${ctx.baseId}-list`}
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        aria-disabled={disabled || undefined}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        {...rest}
+      >
+        <div className="bui-multicombobox-trigger__values">
+          {children ??
+            (isEmpty ? (
+              <span className="bui-multicombobox-trigger__placeholder">{placeholder}</span>
+            ) : (
+              ctx.value.map((val) => {
+                const label = ctx.labelMap.current.get(val) ?? val;
+                return (
+                  <Badge key={val} className="bui-multicombobox-chip">
+                    <span className="bui-multicombobox-chip__label">{label}</span>
+                    <button
+                      type="button"
+                      className="bui-multicombobox-chip__remove"
+                      aria-label={`Remove ${label}`}
+                      disabled={disabled}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        ctx.remove(val);
+                      }}
+                    >
+                      <XIcon />
+                    </button>
+                  </Badge>
+                );
+              })
+            ))}
+        </div>
+        <span className="bui-multicombobox-trigger__chevron" aria-hidden>
+          <ChevronIcon />
+        </span>
       </div>
-      <span className="bui-multicombobox-trigger__chevron" aria-hidden>
-        <ChevronIcon />
-      </span>
+      {trailingIcon && (
+        <span
+          className="bui-multicombobox-trigger__icon bui-multicombobox-trigger__icon--trailing"
+          aria-hidden
+        >
+          {trailingIcon}
+        </span>
+      )}
+      {trailingAddon && (
+        <span className="bui-multicombobox-trigger__addon bui-multicombobox-trigger__addon--trailing">
+          {trailingAddon}
+        </span>
+      )}
     </div>
   );
 });
