@@ -16,6 +16,12 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `Popover.Title` and `Popover.Description` subcomponents — registering either
   auto-wires `aria-labelledby` / `aria-describedby` on the popover dialog
   (mirrors the `Dialog.Title` / `Dialog.Description` pattern).
+- Quietly laid groundwork for a companion package arriving in a future
+  release. The public `bakerui` surface is unchanged; certain tokens and
+  CSS-variable names were shaped with it in mind. You'll know it when you
+  see it.
+- A handful of new entries flagged off behind the scenes on the deployed
+  demo. They're not gone — just not yet for public consumption.
 
 ### Fixed
 - `usePosition` (Combobox, MultiCombobox, Popover, DropdownMenu, Tooltip,

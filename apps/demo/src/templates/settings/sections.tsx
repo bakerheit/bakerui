@@ -54,10 +54,10 @@ export function ProfileSection() {
         </Text>
       </Stack>
 
-      <HStack gap="4" align="center">
+      <HStack gap="4" align="center" wrap>
         <Avatar name={name} size="xl" tone="accent" />
         <Stack gap="2">
-          <HStack gap="2">
+          <HStack gap="2" wrap>
             <Button variant="secondary" size="sm">
               Upload photo
             </Button>
@@ -88,7 +88,7 @@ export function ProfileSection() {
         />
       </Field>
 
-      <HStack gap="2" justify="flex-end">
+      <HStack gap="2" justify="flex-end" wrap>
         <Button variant="ghost">Cancel</Button>
         <Button>Save changes</Button>
       </HStack>
@@ -242,7 +242,7 @@ export function SecuritySection() {
         </Button>
       </SettingRow>
 
-      <HStack gap="2" justify="flex-end">
+      <HStack gap="2" justify="flex-end" wrap>
         <Button variant="ghost">Cancel</Button>
         <Button>Update password</Button>
       </HStack>

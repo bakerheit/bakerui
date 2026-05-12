@@ -44,7 +44,12 @@
   --bui-color-focus-ring: rgba(0, 122, 255, 0.5);
 
   --bui-radius-sm: 10px;
-  --bui-radius-md: 999px;
+  /* `--bui-radius-md` used to be pinned to 999px to give controls the
+     glassx pill aesthetic, but that bled into every container that uses
+     this token (custom card chrome, addons, etc.) and turned them into
+     giant ovals. Keep the token at a sane container radius and apply the
+     pill only to the specific control classes below. */
+  --bui-radius-md: 14px;
   --bui-radius-lg: 26px;
   --bui-radius-xl: 32px;
 
@@ -150,6 +155,36 @@
     radial-gradient(at 18% 76%, rgba(59, 130, 246, 0.4) 0%, transparent 55%),
     linear-gradient(135deg, #1a1543 0%, #0a0a18 50%, #1c1430 100%);
   background-attachment: fixed;
+}
+
+/* ---- Pill-shaped controls ------------------------------------------
+   The glassx signature is fully rounded controls. Now that
+   `--bui-radius-md` is a sane container radius, the pill shape is
+   applied explicitly to the specific control classes below — so any
+   custom CSS using `--bui-radius-md` gets a normal container radius. */
+[data-theme-preset="glassx"] .bui-button,
+[data-theme-preset="glassx"] .bui-input-wrapper,
+[data-theme-preset="glassx"] .bui-input-wrapper__addon,
+[data-theme-preset="glassx"] .bui-select,
+[data-theme-preset="glassx"] .bui-combobox-trigger,
+[data-theme-preset="glassx"] .bui-combobox-trigger__button,
+[data-theme-preset="glassx"] .bui-multicombobox-trigger,
+[data-theme-preset="glassx"] .bui-multicombobox-trigger__field,
+[data-theme-preset="glassx"] .bui-datepicker__trigger,
+[data-theme-preset="glassx"] .bui-timepicker__trigger,
+[data-theme-preset="glassx"] .bui-tabs__trigger,
+[data-theme-preset="glassx"] .bui-pagination__btn,
+[data-theme-preset="glassx"] .bui-tag-input__tag {
+  border-radius: 999px;
+}
+/* Addon corners on the leading/trailing edges of an Input wrapper need
+   the pill rounding only on the outer edge, so the band hugs the
+   wrapper's pill silhouette. */
+[data-theme-preset="glassx"] .bui-input-wrapper__addon:first-child {
+  border-radius: 999px 0 0 999px;
+}
+[data-theme-preset="glassx"] .bui-input-wrapper__addon:last-child {
+  border-radius: 0 999px 999px 0;
 }
 
 /* ---- Standard glassy surfaces: light blur, more transparency ----

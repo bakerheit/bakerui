@@ -16,6 +16,39 @@ export default defineConfig(({ command }) => ({
         find: /^bakerui$/,
         replacement: resolve(__dirname, "../../packages/bakerui/src/index.ts"),
       },
+      {
+        find: /^bakeruipro$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/index.ts"),
+      },
+      // CSS subpaths — point at the source so the demo doesn't need a built dist.
+      {
+        find: /^bakeruipro\/core\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/core/core.css"),
+      },
+      {
+        find: /^bakeruipro\/audio\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/audio/audio.css"),
+      },
+      {
+        find: /^bakeruipro\/video\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/video/video.css"),
+      },
+      {
+        find: /^bakeruipro\/calendar\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/calendar/calendar.css"),
+      },
+      {
+        find: /^bakeruipro\/commerce\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/commerce/commerce.css"),
+      },
+      {
+        find: /^bakeruipro\/pos\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/pos/pos.css"),
+      },
+      {
+        find: /^bakeruipro\/chat\.css$/,
+        replacement: resolve(__dirname, "../../../bakeruipro/src/chat/chat.css"),
+      },
     ],
   },
   server: {

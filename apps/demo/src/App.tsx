@@ -36,6 +36,26 @@ import { ThemingPage } from "./pages/ThemingPage";
 import { TokensPage } from "./pages/TokensPage";
 import { ChangelogPage } from "./pages/ChangelogPage";
 import { GettingStartedPage } from "./pages/GettingStartedPage";
+import { AddonPacksPage } from "./pages/AddonPacksPage";
+import { AudioPackOverviewPage } from "./pages/AudioPackOverviewPage";
+import { AudioPackDawPage } from "./pages/AudioPackDawPage";
+import { AudioPackComponentsPage } from "./pages/AudioPackComponentsPage";
+import { VideoPackOverviewPage } from "./pages/VideoPackOverviewPage";
+import { VideoPackEditorPage } from "./pages/VideoPackEditorPage";
+import { VideoPackComponentsPage } from "./pages/VideoPackComponentsPage";
+import { CalendarPackOverviewPage } from "./pages/CalendarPackOverviewPage";
+import { CalendarPackPlannerPage } from "./pages/CalendarPackPlannerPage";
+import { CalendarPackComponentsPage } from "./pages/CalendarPackComponentsPage";
+import { CommercePackOverviewPage } from "./pages/CommercePackOverviewPage";
+import { CommercePackStorefrontPage } from "./pages/CommercePackStorefrontPage";
+import { CommercePackComponentsPage } from "./pages/CommercePackComponentsPage";
+import { PosPackOverviewPage } from "./pages/PosPackOverviewPage";
+import { PosPackTerminalPage } from "./pages/PosPackTerminalPage";
+import { PosPackComponentsPage } from "./pages/PosPackComponentsPage";
+import { ChatPackOverviewPage } from "./pages/ChatPackOverviewPage";
+import { ChatPackPlaygroundPage } from "./pages/ChatPackPlaygroundPage";
+import { ChatPackComponentsPage } from "./pages/ChatPackComponentsPage";
+import { flags } from "./featureFlags";
 import { TocSlotContext } from "./PageLayout";
 import { VERSION_LABEL } from "./version";
 
@@ -45,6 +65,25 @@ type PageId =
   | "templates-settings"
   | "templates-login"
   | "templates-register"
+  | "addon-packs"
+  | "packs-audio-overview"
+  | "packs-audio-daw"
+  | "packs-audio-components"
+  | "packs-video-overview"
+  | "packs-video-editor"
+  | "packs-video-components"
+  | "packs-calendar-overview"
+  | "packs-calendar-planner"
+  | "packs-calendar-components"
+  | "packs-commerce-overview"
+  | "packs-commerce-storefront"
+  | "packs-commerce-components"
+  | "packs-pos-overview"
+  | "packs-pos-terminal"
+  | "packs-pos-components"
+  | "packs-chat-overview"
+  | "packs-chat-playground"
+  | "packs-chat-components"
   | "theming"
   | "tokens"
   | "changelog"
@@ -77,6 +116,142 @@ const PAGE_NAV_GROUPS: PageNavGroup[] = [
       { id: "templates-settings", label: "Settings", icon: <TemplatesIcon /> },
       { id: "templates-login", label: "Login", icon: <LoginIcon /> },
       { id: "templates-register", label: "Register", icon: <RegisterIcon /> },
+    ],
+  },
+  {
+    label: "Addon Packs",
+    items: [
+      {
+        id: "addon-packs",
+        label: "All packs",
+        icon: <AddonPacksIcon />,
+      },
+    ],
+  },
+  {
+    label: "Audio Production Pack",
+    items: [
+      {
+        id: "packs-audio-overview",
+        label: "Overview",
+        icon: <AudioPackIcon />,
+        badge: "Early",
+      },
+      {
+        id: "packs-audio-daw",
+        label: "DAW demo",
+        icon: <AudioPackIcon />,
+      },
+      {
+        id: "packs-audio-components",
+        label: "Components",
+        icon: <AudioPackIcon />,
+      },
+    ],
+  },
+  {
+    label: "Video Editor Pack",
+    items: [
+      {
+        id: "packs-video-overview",
+        label: "Overview",
+        icon: <VideoPackIcon />,
+        badge: "Early",
+      },
+      {
+        id: "packs-video-editor",
+        label: "Editor demo",
+        icon: <VideoPackIcon />,
+      },
+      {
+        id: "packs-video-components",
+        label: "Components",
+        icon: <VideoPackIcon />,
+      },
+    ],
+  },
+  {
+    label: "Calendar Pack",
+    items: [
+      {
+        id: "packs-calendar-overview",
+        label: "Overview",
+        icon: <CalendarPackIcon />,
+        badge: "Early",
+      },
+      {
+        id: "packs-calendar-planner",
+        label: "Planner demo",
+        icon: <CalendarPackIcon />,
+      },
+      {
+        id: "packs-calendar-components",
+        label: "Components",
+        icon: <CalendarPackIcon />,
+      },
+    ],
+  },
+  {
+    label: "Commerce Pack",
+    items: [
+      {
+        id: "packs-commerce-overview",
+        label: "Overview",
+        icon: <CommercePackIcon />,
+        badge: "Early",
+      },
+      {
+        id: "packs-commerce-storefront",
+        label: "Storefront demo",
+        icon: <CommercePackIcon />,
+      },
+      {
+        id: "packs-commerce-components",
+        label: "Components",
+        icon: <CommercePackIcon />,
+      },
+    ],
+  },
+  {
+    label: "Restaurant POS Pack",
+    items: [
+      {
+        id: "packs-pos-overview",
+        label: "Overview",
+        icon: <PosPackIcon />,
+        badge: "Early",
+      },
+      {
+        id: "packs-pos-terminal",
+        label: "Terminal demo",
+        icon: <PosPackIcon />,
+      },
+      {
+        id: "packs-pos-components",
+        label: "Components",
+        icon: <PosPackIcon />,
+      },
+    ],
+  },
+  {
+    label: "Chat / AI Pack",
+    items: [
+      {
+        id: "packs-chat-overview",
+        label: "Overview",
+        icon: <ChatPackIcon />,
+        badge: "Early",
+      },
+      {
+        id: "packs-chat-playground",
+        label: "Playground",
+        icon: <ChatPackIcon />,
+      },
+      {
+        id: "packs-chat-components",
+        label: "Components",
+        icon: <ChatPackIcon />,
+      },
     ],
   },
   {
@@ -183,7 +358,29 @@ const COMPONENT_NAV: ComponentNavCategory[] = [
   },
 ];
 
-const ALL_PAGE_NAV: PageNavItem[] = PAGE_NAV_GROUPS.flatMap((g) => g.items);
+/**
+ * Filter pack groups based on feature flags before any consumer sees the
+ * nav structure. This keeps the sidebar, search index, and `ALL_PAGE_NAV`
+ * lookup table in sync — a flag-disabled pack disappears from all three.
+ */
+const PACK_GROUP_FLAGS: Record<string, keyof typeof flags> = {
+  "Addon Packs": "showAddons",
+  "Audio Production Pack": "showAudioPack",
+  "Video Editor Pack": "showVideoPack",
+  "Calendar Pack": "showCalendarPack",
+  "Commerce Pack": "showCommercePack",
+  "Restaurant POS Pack": "showPosPack",
+  "Chat / AI Pack": "showChatPack",
+};
+
+const VISIBLE_PAGE_NAV_GROUPS: PageNavGroup[] = PAGE_NAV_GROUPS.filter((g) => {
+  const flag = PACK_GROUP_FLAGS[g.label];
+  return flag ? flags[flag] : true;
+});
+
+const ALL_PAGE_NAV: PageNavItem[] = VISIBLE_PAGE_NAV_GROUPS.flatMap(
+  (g) => g.items,
+);
 
 interface SearchEntry {
   label: string;
@@ -193,7 +390,7 @@ interface SearchEntry {
 }
 
 const SEARCH_INDEX: SearchEntry[] = [
-  ...PAGE_NAV_GROUPS.flatMap((group) =>
+  ...VISIBLE_PAGE_NAV_GROUPS.flatMap((group) =>
     group.items.map<SearchEntry>((item) => ({
       label: item.label,
       category: group.label,
@@ -314,8 +511,8 @@ export function App() {
             >
               <Sidebar.Body>
                 {/* Page-level nav (Get started / Templates / Design system) */}
-                <Sidebar.Group label={PAGE_NAV_GROUPS[0].label}>
-                  {PAGE_NAV_GROUPS[0].items.map((item) => (
+                <Sidebar.Group label={VISIBLE_PAGE_NAV_GROUPS[0].label}>
+                  {VISIBLE_PAGE_NAV_GROUPS[0].items.map((item) => (
                     <Sidebar.Item
                       key={item.id}
                       icon={item.icon}
@@ -346,8 +543,8 @@ export function App() {
                   </Sidebar.Group>
                 ))}
 
-                {/* Remaining page groups (Templates, Design system) */}
-                {PAGE_NAV_GROUPS.slice(1).map((group) => (
+                {/* Remaining page groups (Templates, addon packs, Design system) */}
+                {VISIBLE_PAGE_NAV_GROUPS.slice(1).map((group) => (
                   <div key={group.label}>
                     <Sidebar.Separator />
                     <Sidebar.Group label={group.label}>
@@ -396,6 +593,64 @@ export function App() {
                 {page === "templates-settings" && <SettingsTemplatesPage />}
                 {page === "templates-login" && <LoginTemplatesPage />}
                 {page === "templates-register" && <RegisterTemplatesPage />}
+                {flags.showAddons && page === "addon-packs" && (
+                  <AddonPacksPage
+                    onOpenAudio={() => navigate("packs-audio-overview")}
+                    onOpenVideo={() => navigate("packs-video-overview")}
+                    onOpenCalendar={() => navigate("packs-calendar-overview")}
+                    onOpenCommerce={() => navigate("packs-commerce-overview")}
+                    onOpenPos={() => navigate("packs-pos-overview")}
+                    onOpenChat={() => navigate("packs-chat-overview")}
+                  />
+                )}
+                {flags.showAudioPack && page === "packs-audio-overview" && (
+                  <AudioPackOverviewPage
+                    onDawDemo={() => navigate("packs-audio-daw")}
+                    onComponents={() => navigate("packs-audio-components")}
+                  />
+                )}
+                {flags.showAudioPack && page === "packs-audio-daw" && <AudioPackDawPage />}
+                {flags.showAudioPack && page === "packs-audio-components" && <AudioPackComponentsPage />}
+                {flags.showVideoPack && page === "packs-video-overview" && (
+                  <VideoPackOverviewPage
+                    onEditor={() => navigate("packs-video-editor")}
+                    onComponents={() => navigate("packs-video-components")}
+                  />
+                )}
+                {flags.showVideoPack && page === "packs-video-editor" && <VideoPackEditorPage />}
+                {flags.showVideoPack && page === "packs-video-components" && <VideoPackComponentsPage />}
+                {flags.showCalendarPack && page === "packs-calendar-overview" && (
+                  <CalendarPackOverviewPage
+                    onPlanner={() => navigate("packs-calendar-planner")}
+                    onComponents={() => navigate("packs-calendar-components")}
+                  />
+                )}
+                {flags.showCalendarPack && page === "packs-calendar-planner" && <CalendarPackPlannerPage />}
+                {flags.showCalendarPack && page === "packs-calendar-components" && <CalendarPackComponentsPage />}
+                {flags.showCommercePack && page === "packs-commerce-overview" && (
+                  <CommercePackOverviewPage
+                    onStorefront={() => navigate("packs-commerce-storefront")}
+                    onComponents={() => navigate("packs-commerce-components")}
+                  />
+                )}
+                {flags.showCommercePack && page === "packs-commerce-storefront" && <CommercePackStorefrontPage />}
+                {flags.showCommercePack && page === "packs-commerce-components" && <CommercePackComponentsPage />}
+                {flags.showPosPack && page === "packs-pos-overview" && (
+                  <PosPackOverviewPage
+                    onTerminal={() => navigate("packs-pos-terminal")}
+                    onComponents={() => navigate("packs-pos-components")}
+                  />
+                )}
+                {flags.showPosPack && page === "packs-pos-terminal" && <PosPackTerminalPage />}
+                {flags.showPosPack && page === "packs-pos-components" && <PosPackComponentsPage />}
+                {flags.showChatPack && page === "packs-chat-overview" && (
+                  <ChatPackOverviewPage
+                    onPlayground={() => navigate("packs-chat-playground")}
+                    onComponents={() => navigate("packs-chat-components")}
+                  />
+                )}
+                {flags.showChatPack && page === "packs-chat-playground" && <ChatPackPlaygroundPage />}
+                {flags.showChatPack && page === "packs-chat-components" && <ChatPackComponentsPage />}
                 {page === "theming" && (
                   <ThemingPage
                     theme={theme}
@@ -586,6 +841,133 @@ function RegisterIcon() {
       <circle cx="6.5" cy="5" r="2.5" />
       <path d="M2.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4" />
       <path d="M12 5v4M14 7h-4" />
+    </svg>
+  );
+}
+function AudioPackIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 10V6M5 12V4M8 10.5V5.5M11 12V4M14 10V6" />
+    </svg>
+  );
+}
+function CalendarPackIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="3.5" width="12" height="10" rx="1.5" />
+      <path d="M2 6.5h12" />
+      <path d="M5.5 2v3M10.5 2v3" />
+      <rect x="4.5" y="8.5" width="2" height="2" rx="0.3" fill="currentColor" />
+    </svg>
+  );
+}
+function CommercePackIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 3h2l1.4 7.2a1.5 1.5 0 0 0 1.5 1.2h5.3a1.5 1.5 0 0 0 1.5-1.1L15 5H5" />
+      <circle cx="6.5" cy="13.5" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="13.5" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+function PosPackIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2.5" y="3" width="11" height="9" rx="1.5" />
+      <path d="M5 6h6M5 8.5h4" />
+      <path d="M4.5 14l1-2M11.5 14l-1-2" />
+    </svg>
+  );
+}
+function ChatPackIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2.5 4.5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H7l-3 2.5V11.5a2 2 0 0 1-1.5-1.94V4.5z" />
+      <circle cx="6" cy="7" r="0.7" fill="currentColor" stroke="none" />
+      <circle cx="8" cy="7" r="0.7" fill="currentColor" stroke="none" />
+      <circle cx="10" cy="7" r="0.7" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+function VideoPackIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="3.5" width="12" height="9" rx="1.5" />
+      <path d="M4 3.5V12.5M12 3.5V12.5" />
+      <path d="M2 6.5h2M2 9.5h2M12 6.5h2M12 9.5h2" />
+      <path d="M7 6.5L10 8L7 9.5V6.5z" fill="currentColor" />
+    </svg>
+  );
+}
+function AddonPacksIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 2.5L13.5 5L8 7.5L2.5 5L8 2.5z" />
+      <path d="M2.5 8L8 10.5L13.5 8" />
+      <path d="M2.5 11L8 13.5L13.5 11" />
     </svg>
   );
 }
