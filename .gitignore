@@ -5,3 +5,14 @@ dist
 .vite
 test-results
 playwright-report
+
+# env files — local / build-time config, never committed.
+# `.env.example` files are allowed so the available variables are
+# documented in the repo without leaking values. The `!.env/` line
+# un-ignores any directory literally named `.env` (we keep env files
+# under `apps/demo/src/.env/`); file-level patterns below still ignore
+# the contents.
+.env
+.env.*
+!.env/
+!.env.example

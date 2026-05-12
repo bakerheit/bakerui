@@ -7,6 +7,9 @@ import { resolve } from "node:path";
 export default defineConfig(({ command }) => ({
   base: command === "build" ? "/bakerui/" : "/",
   plugins: [react()],
+  // Env files live under `src/.env/` so they're co-located with the
+  // demo source rather than scattered at the workspace root.
+  envDir: resolve(__dirname, "src/.env"),
   resolve: {
     // Use the array form so the alias only matches the bare specifier
     // `bakerui` — subpaths like `bakerui/themes/brutalist.css` fall through
