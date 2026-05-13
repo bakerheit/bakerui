@@ -1092,6 +1092,30 @@ export function ComboboxSection() {
           description: "Shown in the trigger when no value is selected.",
         },
         {
+          name: "Combobox.Trigger.leadingIcon",
+          type: "ReactNode",
+          since: "Unreleased",
+          description: "Inset icon at the start of the trigger.",
+        },
+        {
+          name: "Combobox.Trigger.trailingIcon",
+          type: "ReactNode",
+          since: "Unreleased",
+          description: "Inset icon at the end (before the chevron).",
+        },
+        {
+          name: "Combobox.Trigger.leadingAddon",
+          type: "ReactNode",
+          since: "Unreleased",
+          description: "Bordered addon at the start of the trigger — full parity with Input's addon API.",
+        },
+        {
+          name: "Combobox.Trigger.trailingAddon",
+          type: "ReactNode",
+          since: "Unreleased",
+          description: "Bordered addon at the end of the trigger.",
+        },
+        {
           name: "Combobox.Content.placement",
           type: "Placement",
           default: '"bottom-start"',
@@ -1241,6 +1265,7 @@ export function MultiComboboxSection() {
   return (
     <DocSection
       title="MultiCombobox"
+      since="0.5.0"
       description="Searchable picker for selecting many values at once. Selected items render as chips inside the trigger; clicking an item in the popover toggles it without closing. Backspace on the empty search box pops the last selection."
       propsTable={[
         {
@@ -1547,6 +1572,7 @@ export function DatePickerSection() {
   return (
     <DocSection
       title="DatePicker"
+      since="0.2.0"
       description="Calendar-grid date selection in an anchored popover. Localized weekday and month labels via Intl.DateTimeFormat — no date library required. Keyboard nav: arrows step a day, PageUp/Down step a month, Home/End jump to start/end of week, Enter selects."
       propsTable={[
         {
@@ -1728,6 +1754,7 @@ export function TimePickerSection() {
   return (
     <DocSection
       title="TimePicker"
+      since="0.3.2"
       description={
         <>
           iOS-style time picker — three side-by-side scroll wheels (Hours · Minutes · AM/PM with{" "}
@@ -1985,6 +2012,7 @@ export function NumberInputSection() {
   return (
     <DocSection
       title="NumberInput"
+      since="0.5.0"
       description="A thin wrapper over Input that injects a +/− stepper column into the trailing addon. Inherits Input's size, invalid state, leading icon/addon, and Field integration. ArrowUp/Down step by `step`; PageUp/Down by 10×; Home/End jump to min/max; press-and-hold on a stepper repeats."
       propsTable={[
         {
@@ -2112,6 +2140,7 @@ export function OTPInputSection() {
   return (
     <DocSection
       title="OTPInput"
+      since="0.5.0"
       description="One-time code entry. Each cell is its own focusable input — typing auto-advances, Backspace pops back, paste fills sequentially. The value is treated as a strict prefix (clicking a filled cell truncates everything after it), matching iOS-style code entry."
       propsTable={[
         { name: "length", type: "number", default: "6", description: "Number of cells." },
@@ -2238,6 +2267,7 @@ export function TagInputSection() {
   return (
     <DocSection
       title="TagInput"
+      since="0.5.0"
       description="Comma-separated chip input. Enter, Tab, or comma commits the current text as a tag; Backspace on empty input removes the last tag; paste with commas or newlines bulk-adds. Duplicates blocked by default, opt in with `allowDuplicates`."
       propsTable={[
         { name: "value", type: "string[]", description: "Controlled list of tags." },

@@ -1,5 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
 import {
+  Badge,
   DataTable,
   Heading,
   Stack,
@@ -7,6 +8,7 @@ import {
   type DataTableColumn,
 } from "bakerui";
 import { CodeBlock } from "./CodeBlock";
+import { entryStateAt, useDocVersion, type DocVersion } from "./docVersion";
 
 export function slug(input: string): string {
   return input
@@ -32,6 +34,20 @@ export interface PropDef {
   description?: ReactNode;
   /** Show a required indicator next to the name. */
   required?: boolean;
+  /**
+   * Library version this prop first shipped in (e.g. `"0.4.0"`). When set,
+   * the row is hidden if the reader is viewing an earlier version, and a
+   * small "since" badge appears in the API table. Omit for props that
+   * have always existed.
+   */
+  since?: DocVersion;
+  /**
+   * Library version this prop was deprecated in. From that version
+   * onward, the row renders struck-through with a tooltip-style note.
+   */
+  deprecated?: DocVersion;
+  /** Short reason / migration hint shown when the prop is deprecated. */
+  deprecatedReason?: ReactNode;
 }
 
 export interface DocSectionProps {
@@ -43,6 +59,15 @@ export interface DocSectionProps {
   props?: string[];
   /** Full prop reference rendered as a DataTable below the examples. */
   propsTable?: PropDef[];
+  /**
+   * Library version this component first shipped in. When the reader is
+   * viewing an earlier version, the entire section disappears.
+   */
+  since?: DocVersion;
+  /** Library version this component was deprecated in. */
+  deprecated?: DocVersion;
+  /** Reason / migration note for the deprecation banner. */
+  deprecatedReason?: ReactNode;
   children: ReactNode;
 }
 
@@ -52,20 +77,56 @@ export function DocSection({
   description,
   props,
   propsTable,
+  since,
+  deprecated,
+  deprecatedReason,
   children,
 }: DocSectionProps) {
   const sectionId = id ?? slug(title);
+  const versionCtx = useDocVersion();
+  const state = versionCtx
+    ? entryStateAt({ since, deprecated }, versionCtx.version)
+    : "visible";
+
+  if (state === "hidden") return null;
+
+  const isDeprecated = state === "deprecated";
+  // Show the version badge whenever this section is gated by a since
+  // tag — even if it's the latest. Subtle and gives readers a quick
+  // sense of "this is newer than X."
+  const showSinceBadge = !!since;
+
   return (
     <SectionContext.Provider value={{ id: sectionId }}>
       <section
         id={sectionId}
         className="doc-section"
+        data-deprecated={isDeprecated || undefined}
         data-toc-section
         data-toc-label={title}
       >
         <Stack gap="4">
           <Stack gap="2">
-            <Heading level={2}>{title}</Heading>
+            <div className="doc-section__heading">
+              <Heading level={2}>{title}</Heading>
+              {showSinceBadge && (
+                <Badge tone="accent" className="doc-section__since">
+                  v{since}+
+                </Badge>
+              )}
+              {isDeprecated && (
+                <Badge tone="warning" className="doc-section__deprecated-chip">
+                  Deprecated
+                </Badge>
+              )}
+            </div>
+            {isDeprecated && (
+              <div className="doc-section__deprecation" role="status">
+                <strong>Deprecated as of v{deprecated}.</strong>{" "}
+                {deprecatedReason ??
+                  "This component will be removed in a future release."}
+              </div>
+            )}
             {description && <Text tone="muted">{description}</Text>}
             {props && props.length > 0 && (
               <div className="demo-props">
@@ -90,17 +151,56 @@ export function DocSection({
 
 function PropsTable({ rows, sectionId }: { rows: PropDef[]; sectionId: string }) {
   const apiId = `${sectionId}-api`;
-  const columns: DataTableColumn<PropDef>[] = [
+  const versionCtx = useDocVersion();
+  const currentVersion = versionCtx?.version;
+
+  // Annotate each row with its computed visibility state for the
+  // current viewing version. Hidden rows drop out entirely; deprecated
+  // rows stay visible but render with strike-through styling.
+  const visibleRows = rows.reduce<Array<PropDef & { __state: "visible" | "deprecated" }>>(
+    (acc, row) => {
+      const state = currentVersion
+        ? entryStateAt(
+            { since: row.since, deprecated: row.deprecated },
+            currentVersion,
+          )
+        : "visible";
+      if (state === "hidden") return acc;
+      acc.push({ ...row, __state: state });
+      return acc;
+    },
+    [],
+  );
+
+  if (visibleRows.length === 0) return null;
+
+  const columns: DataTableColumn<(typeof visibleRows)[number]>[] = [
     {
       key: "name",
       header: "Prop",
-      width: 200,
+      width: 220,
       cell: (p) => (
-        <span className="doc-prop-name">
+        <span
+          className="doc-prop-name"
+          data-deprecated={p.__state === "deprecated" || undefined}
+        >
           <code>{p.name}</code>
           {p.required && (
             <span className="doc-prop-required" aria-label="required">
               *
+            </span>
+          )}
+          {p.since && (
+            <span className="doc-prop-since" title={`Added in v${p.since}`}>
+              v{p.since}+
+            </span>
+          )}
+          {p.__state === "deprecated" && (
+            <span
+              className="doc-prop-deprecated-chip"
+              title={typeof p.deprecatedReason === "string" ? p.deprecatedReason : undefined}
+            >
+              Deprecated
             </span>
           )}
         </span>
@@ -126,7 +226,19 @@ function PropsTable({ rows, sectionId }: { rows: PropDef[]; sectionId: string })
       key: "description",
       header: "Description",
       cell: (p) =>
-        p.description ? (
+        p.__state === "deprecated" && p.deprecatedReason ? (
+          <span className="doc-prop-description">
+            <span className="doc-prop-deprecated-reason">
+              {p.deprecatedReason}
+            </span>
+            {p.description && (
+              <>
+                <br />
+                <span style={{ opacity: 0.7 }}>{p.description}</span>
+              </>
+            )}
+          </span>
+        ) : p.description ? (
           <span className="doc-prop-description">{p.description}</span>
         ) : null,
     },
@@ -145,7 +257,7 @@ function PropsTable({ rows, sectionId }: { rows: PropDef[]; sectionId: string })
       </Heading>
       <DataTable
         columns={columns}
-        data={rows}
+        data={visibleRows}
         rowKey={(p) => p.name}
         density="compact"
         zebra

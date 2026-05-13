@@ -69,9 +69,11 @@ export function ComponentsPage() {
         <Stack gap="2">
           <Heading level={1}>Components</Heading>
           <Text tone="muted">
-            Every component in bakerui, grouped by category. Pick one from the sidebar
-            to jump to it, or scroll through to browse — each section anchors at{" "}
-            <code>#component-name</code> for deep-linking.
+            Every component in bakerui, grouped by category. Pick one from the
+            sidebar to jump to it, or scroll through to browse — each section
+            anchors at <code>#component-name</code> for deep-linking. Use the
+            "API version" picker in the top bar to view the API as it shipped
+            in a specific release.
           </Text>
         </Stack>
 

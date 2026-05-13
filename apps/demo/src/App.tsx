@@ -56,8 +56,12 @@ import { ChatPackOverviewPage } from "./pages/ChatPackOverviewPage";
 import { ChatPackPlaygroundPage } from "./pages/ChatPackPlaygroundPage";
 import { ChatPackComponentsPage } from "./pages/ChatPackComponentsPage";
 import { flags } from "./featureFlags";
+import { VersionProvider } from "./docVersion";
+import { VersionPicker } from "./VersionPicker";
+import { CHANGELOG } from "./changelog";
+
+const VERSION_LIST = CHANGELOG.map((r) => r.version);
 import { TocSlotContext } from "./PageLayout";
-import { VERSION_LABEL } from "./version";
 
 type PageId =
   | "home"
@@ -473,11 +477,11 @@ export function App() {
       tokens={tokens}
     >
       <Sidebar.Provider defaultOpen={!isMobile}>
+        <VersionProvider versions={VERSION_LIST}>
         <div className="demo-shell">
           <Topbar>
             <Sidebar.Trigger />
             <Brand />
-            <Badge tone="accent">{VERSION_LABEL}</Badge>
             <Topbar.Spacer />
             <TopbarSearch
               onSelect={(entry) => {
@@ -485,6 +489,7 @@ export function App() {
                 else navigate(entry.page);
               }}
             />
+            <VersionPicker />
             <Tooltip>
               <Tooltip.Trigger asChild>
                 <Button
@@ -680,6 +685,7 @@ export function App() {
             </TocSlotContext.Provider>
           </div>
         </div>
+        </VersionProvider>
       </Sidebar.Provider>
       <Toaster position="bottom-right" />
     </ThemeProvider>

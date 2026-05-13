@@ -284,6 +284,7 @@ export function DrawerSection() {
   return (
     <DocSection
       title="Drawer"
+      since="0.2.0"
       description="Edge-anchored modal panel. Reuses Dialog's focus trap, ESC, body scroll lock, and backdrop dismissal — but slides in from a chosen side. Same compound API: Trigger / Content / Header / Title / Description / Body / Footer / Close."
       propsTable={[
         {
@@ -625,6 +626,18 @@ export function PopoverSection() {
           type: "boolean",
           default: "false",
           description: "Clone the child (e.g., a Button) and wire toggle handlers onto it.",
+        },
+        {
+          name: "Popover.Title",
+          type: "ReactNode",
+          since: "Unreleased",
+          description: "Subcomponent — registering it auto-wires `aria-labelledby` on the popover's dialog role.",
+        },
+        {
+          name: "Popover.Description",
+          type: "ReactNode",
+          since: "Unreleased",
+          description: "Subcomponent — registering it auto-wires `aria-describedby` on the popover's dialog role.",
         },
         {
           name: "Popover.Content.placement",

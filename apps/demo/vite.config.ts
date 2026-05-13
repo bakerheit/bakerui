@@ -61,5 +61,9 @@ export default defineConfig(({ command }) => ({
     // other devices on the same wifi (e.g. mobile testing). Vite prints both
     // the localhost URL and the LAN URL on startup.
     host: true,
+    // Allow tunneled hosts during dev. Vite blocks unknown Host headers by
+    // default (CVE-2024-23331 hardening) — opting into the common tunnel
+    // providers lets `cloudflared` / `ngrok` reach the dev server.
+    allowedHosts: [".trycloudflare.com", ".ngrok-free.app", ".ngrok.app"],
   },
 }));

@@ -136,6 +136,7 @@ export function TreeSection() {
   return (
     <DocSection
       title="Tree"
+      since="0.5.0"
       description="Hierarchical disclosure list with keyboard navigation (Arrow keys, Home/End, Enter/Space) and roving tabindex. Single-select acts like a file browser; multi-select shows tri-state checkboxes that cascade through descendants."
       propsTable={[
         {
